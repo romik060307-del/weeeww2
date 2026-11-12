@@ -1,0 +1,18 @@
+OHLI SOCIAL v3.6.20 — VIDEO CALL FULLSCREEN & PERFORMANCE PATCH
+
+1. UI panggilan video satu-lawan-satu diubah menjadi layar penuh, mengikuti pola WhatsApp: video lawan bicara mengisi layar, video diri sendiri tampil sebagai jendela kecil, dan ketukan pada jendela kecil menukar tampilan utama.
+2. Kontrol panggilan yang sudah ada dipertahankan: mute mikrofon, matikan kamera, akhiri, ubah panggilan suara ke video, dan screen share jika browser mendukung. Ditambahkan kontrol ganti kamera depan/belakang.
+3. Avatar panggilan tetap menjadi fallback sampai stream video lawan bicara benar-benar mulai diputar.
+4. Thumbnail Story/Sorotan di profil diberi ukuran tetap dan rasio 1:1 supaya benar-benar bulat pada layar HP.
+5. Permintaan samping beranda Social (Story, saran pengguna, trending) dimulai paralel dengan feed, bukan menunggu feed selesai satu per satu.
+6. Polling chat adaptif: chat aktif tetap sering diperbarui; pesan latar, kontak, Story, pengguna, serta Live dicek lebih jarang saat tidak relevan atau browser berada di background.
+7. Pembacaan semua file JSON saat startup dipindah ke worker thread. Binding server ditunda sampai data siap sehingga parsing file besar tidak memblokir main thread service Android.
+8. HTML statis di-cache dalam memori server untuk mengurangi pembacaan aset berulang.
+9. Ketika antrean worker penuh, permintaan baru mendapat HTTP 503 terkendali; accept thread tidak lagi menjalankan handler berat secara langsung.
+10. Health endpoint publik tidak lagi menampilkan jumlah akun dan pesan.
+11. VersionName 3.6.20; versionCode 49.
+
+BATASAN / PENGUJIAN:
+- Implementasi UI fullscreen tidak mengganti transport WebRTC; kualitas lintas jaringan membutuhkan konfigurasi STUN/TURN yang sesuai. Source belum menyertakan kredensial TURN.
+- Penyimpanan JSON belum dimigrasikan ke SQLite agar data lama tidak berisiko rusak tanpa rencana migrasi dan rollback tersendiri.
+- Belum dilakukan build Gradle penuh, tes panggilan dua perangkat, atau benchmark pada perangkat server nyata di lingkungan ini.

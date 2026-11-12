@@ -1,0 +1,1256 @@
+/* OHLI Social — new responsive app shell. Existing chat styles remain isolated in index.html. */
+:root{--ohli-navy:#091329;--ohli-navy-2:#111d3b;--ohli-blue:#4263ff;--ohli-violet:#8757ff;--ohli-ink:#18223b;--ohli-muted:#73809d;--ohli-line:#e5eaf4;--ohli-surface:#fff;--ohli-canvas:#f3f5fb;--ohli-shadow:0 12px 35px rgba(16,31,69,.07);--ohli-radius:18px}
+#ohliSocialShell[hidden]{display:none!important}#ohliSocialShell{position:fixed;inset:0;z-index:12;display:grid;grid-template-columns:240px minmax(0,1fr);grid-template-rows:72px minmax(0,1fr);grid-template-areas:"top top" "nav stage";background:var(--ohli-canvas);color:var(--ohli-ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
+#ohliSocialShell *{box-sizing:border-box}#ohliSocialShell button,#ohliSocialShell input,#ohliSocialShell textarea,#ohliSocialShell select{font:inherit}#ohliSocialShell button{cursor:pointer}#ohliSocialShell button:focus-visible,#ohliSocialShell input:focus-visible,#ohliSocialShell textarea:focus-visible,#ohliSocialShell select:focus-visible{outline:3px solid #8e9fff;outline-offset:2px}
+.ohli-topbar{grid-area:top;display:flex;align-items:center;gap:24px;padding:0 28px;background:linear-gradient(105deg,#09132b,#111d3b 64%,#142b57);border-bottom:1px solid #ffffff12;color:#fff;min-width:0;z-index:2}
+.ohli-brand{border:0;background:transparent;color:#fff;display:flex;align-items:center;gap:10px;flex:none;padding:0;text-align:left}.ohli-logo{width:38px;height:38px;display:grid;place-items:center;border-radius:50% 47% 50% 46%;background:conic-gradient(from 215deg,#8757ff,#386bff,#35c9f4,#8757ff);box-shadow:0 0 0 5px #ffffff08;position:relative;color:transparent}.ohli-logo:after{content:"";width:17px;height:17px;border-radius:50%;background:#091329;box-shadow:5px 0 0 1px #8757ff;transform:translateX(-2px)}.ohli-brand strong{font-size:22px;letter-spacing:-.8px;font-weight:850}.ohli-brand span{display:block;color:#a9bbf3;font-size:12px;margin-top:2px;font-weight:500;letter-spacing:0}
+.ohli-global-search{display:flex;align-items:center;gap:10px;max-width:600px;width:min(44vw,600px);height:42px;padding:0 14px;background:#ffffff10;border:1px solid #ffffff16;border-radius:14px;color:#c2ccef}.ohli-global-search svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;flex:none}.ohli-global-search input{width:100%;min-width:0;border:0;outline:0!important;background:transparent;color:#fff;font-size:13px}.ohli-global-search input::placeholder{color:#a5b1d0}.ohli-topbar-spacer{flex:1}.ohli-status-pill{white-space:nowrap;display:flex;gap:8px;align-items:center;color:#c7d1f1;font-size:11px}.ohli-status-dot{width:7px;height:7px;border-radius:50%;background:#35d4a0;box-shadow:0 0 0 4px #35d4a01a}.ohli-user-top{display:flex;align-items:center;gap:10px;flex:none;border:0;background:transparent;color:#fff;padding:5px;border-radius:13px}.ohli-user-top:hover{background:#ffffff12}.ohli-user-top .ohli-avatar{width:36px;height:36px}.ohli-user-label{text-align:left;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ohli-user-label strong{display:block;font-size:12px}.ohli-user-label small{display:block;font-size:10px;color:#a8b6dc;margin-top:3px}
+.ohli-sidebar{grid-area:nav;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:6px;padding:21px 13px 15px;background:#0b1530;color:#bdc9ec;border-right:1px solid #1b2a4e}.ohli-nav-caption{font-size:9px;font-weight:850;letter-spacing:.14em;text-transform:uppercase;color:#63749f;padding:12px 13px 7px}.ohli-nav-link{display:flex;gap:13px;align-items:center;width:100%;min-height:44px;padding:10px 13px;border:1px solid transparent;border-radius:12px;background:transparent;color:#b6c2e6;text-align:left;font-size:12px;font-weight:650;transition:background .15s,border-color .15s,color .15s}.ohli-nav-link svg{width:19px;height:19px;flex:none;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}.ohli-nav-link:hover{background:#152344;color:#fff}.ohli-nav-link.active{background:linear-gradient(105deg,#293a83,#392e78);border-color:#6678dd45;color:#fff;box-shadow:inset 3px 0 #7e91ff}.ohli-nav-link .ohli-nav-badge{margin-left:auto;min-width:20px;height:20px;padding:0 6px;display:grid;place-items:center;border-radius:99px;background:#e75c87;color:white;font-size:10px}.ohli-nav-spacer{flex:1;min-height:10px}.ohli-nav-foot{padding:14px 12px 2px;border-top:1px solid #233153;color:#8191bd;font-size:10px;line-height:1.55}.ohli-theme-button{display:flex;align-items:center;gap:10px;width:100%;padding:11px 13px;border:1px solid #26365d;border-radius:12px;background:#101d3b;color:#c6d1f0;font-size:11px;text-align:left}.ohli-theme-button svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7}
+.ohli-stage{grid-area:stage;min-width:0;min-height:0;overflow:auto;overscroll-behavior:contain;padding:27px clamp(14px,2.4vw,38px) 38px;scrollbar-gutter:stable}.ohli-stage-head{display:flex;align-items:flex-start;gap:16px;justify-content:space-between;max-width:1320px;margin:0 auto 22px}.ohli-stage-head h1{font-size:25px;line-height:1.16;letter-spacing:-.8px;margin:0;color:#14203d}.ohli-stage-head p{font-size:12px;color:var(--ohli-muted);margin:7px 0 0;line-height:1.5}.ohli-stage-actions{display:flex;align-items:center;gap:8px;flex:none}.ohli-page-content{width:100%;max-width:1320px;margin:0 auto}.ohli-home-grid{display:grid;grid-template-columns:minmax(0,760px) minmax(220px,275px);gap:21px;align-items:start}.ohli-feed-column,.ohli-rail-column{display:flex;flex-direction:column;gap:15px;min-width:0}.ohli-card{background:var(--ohli-surface);border:1px solid var(--ohli-line);border-radius:var(--ohli-radius);box-shadow:0 5px 20px rgba(18,34,74,.035);min-width:0}.ohli-compose{padding:18px}.ohli-compose-top{display:flex;gap:12px;align-items:flex-start}.ohli-avatar{display:grid;place-items:center;overflow:hidden;flex:none;width:43px;height:43px;border-radius:50%;color:white;font-weight:800;font-size:13px;background:linear-gradient(140deg,#526dff,#a363f7);letter-spacing:-.3px}.ohli-avatar img{width:100%;height:100%;object-fit:cover}.ohli-compose textarea{width:100%;min-width:0;min-height:55px;resize:vertical;border:0;background:transparent;outline:none!important;padding:8px 0;color:#1a2441;font-size:14px;line-height:1.55}.ohli-compose textarea::placeholder{color:#8993ab}.ohli-compose-divider{height:1px;background:#edf0f7;margin:11px 0 13px 55px}.ohli-compose-bottom{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.ohli-audience{border:1px solid #e5e9f4;border-radius:10px;background:#f8f9fd;color:#687692;font-size:11px;padding:9px 10px;max-width:160px}.ohli-compose-actions{display:flex;align-items:center;gap:7px;margin-left:auto}.ohli-btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;min-height:39px;padding:9px 13px;border:1px solid #e2e7f3;border-radius:11px;background:#f7f8fc;color:#4d5d7d;font-size:11px;font-weight:750;white-space:nowrap}.ohli-btn svg{height:16px;width:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.ohli-btn:hover{background:#edf1ff;border-color:#d2dcff;color:#3552e8}.ohli-btn-primary{background:linear-gradient(105deg,#4b62ff,#8a58ff);border-color:transparent;color:white;box-shadow:0 6px 16px #5669ff27}.ohli-btn-primary:hover{color:#fff;background:linear-gradient(105deg,#394ff0,#7950ee)}.ohli-btn-danger{color:#bc3655;background:#fff5f7;border-color:#ffdce4}.ohli-btn:disabled{opacity:.55;cursor:wait}.ohli-composer-file{display:none}
+.ohli-feed-tabs{display:flex;align-items:center;gap:5px;background:#e9edf7;padding:4px;border-radius:12px;margin-bottom:1px}.ohli-feed-tab{flex:1;min-height:37px;border:0;border-radius:9px;background:transparent;color:#73809d;font-size:11px;font-weight:750}.ohli-feed-tab.active{background:#fff;color:#3152ef;box-shadow:0 2px 9px #1929570c}.ohli-post{padding:18px 18px 14px}.ohli-post-head{display:flex;align-items:center;gap:10px;min-width:0}.ohli-post-author{display:flex;align-items:center;gap:10px;min-width:0;border:0;background:transparent;text-align:left;padding:0;color:inherit;flex:1}.ohli-post-author-copy{min-width:0}.ohli-post-author-copy strong{display:block;font-size:12px;color:#1b2645;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ohli-post-author-copy small{display:block;font-size:10px;color:#8993ab;margin-top:4px}.ohli-post-menu{border:0;background:transparent;border-radius:10px;color:#8390aa;width:34px;height:34px;font-size:19px}.ohli-post-menu:hover{background:#f1f3fa}.ohli-post-text{font-size:13px;line-height:1.7;color:#323f5e;white-space:pre-wrap;overflow-wrap:anywhere;margin:15px 0 13px}.ohli-post-media{display:block;width:100%;max-height:620px;object-fit:contain;border-radius:13px;background:#10182d;margin:8px 0 12px}.ohli-post video.ohli-post-media{aspect-ratio:9/16;max-height:70vh}.ohli-post-stats{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0 11px;color:#8993ab;font-size:10px;border-bottom:1px solid #edf0f6}.ohli-post-actions{display:flex;align-items:center;gap:3px;padding-top:9px}.ohli-post-actions .ohli-btn{flex:1;min-width:0;border:0;background:transparent;padding:9px 6px;min-height:38px;color:#7a86a0;font-size:10px}.ohli-post-actions .ohli-btn:hover{background:#f5f6fc}.ohli-post-actions .ohli-btn.is-active{color:#4b5fff;background:#f0f2ff}.ohli-post-actions .ohli-btn.is-liked{color:#e34d85}.ohli-post-comments{margin-top:10px;padding-top:10px;border-top:1px solid #edf0f6}.ohli-comment{display:flex;gap:9px;margin:10px 0}.ohli-comment .ohli-avatar{width:30px;height:30px;font-size:10px}.ohli-comment-copy{flex:1;min-width:0;background:#f5f7fc;border-radius:12px;padding:8px 10px}.ohli-comment-copy strong{font-size:10px;color:#2b3858}.ohli-comment-copy p{margin:4px 0 0;font-size:11px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;color:#56617c}.ohli-comment-form{display:flex;gap:8px;align-items:center;margin-top:10px}.ohli-comment-form input{flex:1;min-width:0;padding:11px 12px;border:1px solid #e3e8f2;border-radius:99px;background:#fff;color:#263452;font-size:12px}.ohli-comment-form button{border:0;border-radius:50%;width:38px;height:38px;display:grid;place-items:center;background:#4e63ff;color:#fff}.ohli-comment-form svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
+.ohli-rail-card{padding:17px}.ohli-rail-title{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:850;color:#253252;margin-bottom:13px}.ohli-rail-title small{color:#929bb0;font-size:10px;font-weight:600}.ohli-user-suggestion{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #f0f2f8}.ohli-user-suggestion:last-child{border-bottom:0;padding-bottom:0}.ohli-user-suggestion .ohli-avatar{width:36px;height:36px;font-size:11px}.ohli-user-copy{flex:1;min-width:0}.ohli-user-copy strong{display:block;font-size:11px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.ohli-user-copy small{display:block;font-size:9px;color:#8993ab;margin-top:4px}.ohli-follow-mini{border:1px solid #dce2ff;background:#f2f4ff;color:#4d61f4;border-radius:9px;padding:7px 9px;font-size:10px;font-weight:800;flex:none}.ohli-trend{padding:10px 0;border-bottom:1px solid #eff1f7}.ohli-trend:last-child{border-bottom:0;padding-bottom:0}.ohli-trend small{font-size:9px;color:#9aa3b7}.ohli-trend strong{display:block;font-size:11px;color:#31405f;margin-top:4px}.ohli-trend span{display:block;font-size:9px;color:#939db2;margin-top:4px}.ohli-rail-footer{font-size:9px;line-height:1.8;color:#98a1b4;padding:5px 3px}
+.ohli-empty{padding:42px 22px;text-align:center;border:1px dashed #d7dfef;border-radius:16px;background:#ffffffa6}.ohli-empty-icon{width:54px;height:54px;display:grid;place-items:center;margin:0 auto 13px;border-radius:17px;background:#eef1ff;color:#5b65e8}.ohli-empty-icon svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.7}.ohli-empty h3{font-size:14px;margin:0;color:#293654}.ohli-empty p{font-size:11px;color:#7e89a4;max-width:350px;line-height:1.7;margin:8px auto 0}.ohli-loading{display:flex;flex-direction:column;gap:12px}.ohli-skeleton{height:115px;border-radius:16px;background:linear-gradient(100deg,#e9edf6 15%,#f6f7fb 35%,#e9edf6 55%);background-size:200% 100%;animation:ohli-shimmer 1.35s infinite}.ohli-error{padding:15px;border-radius:12px;border:1px solid #f7d6df;background:#fff7f8;color:#a63853;font-size:12px;line-height:1.6}.ohli-page-inline-error{margin-bottom:14px}.ohli-hint{font-size:10px;color:#8a95ae;line-height:1.6}.ohli-result-section{margin-top:20px}.ohli-result-section h2{font-size:13px;margin:0 0 11px;color:#263555}.ohli-result-list{display:flex;flex-direction:column;gap:10px}.ohli-profile-hero{padding:0;overflow:hidden}.ohli-cover{height:125px;background:linear-gradient(115deg,#111d45,#334fa6 48%,#9a60ec);position:relative}.ohli-profile-summary{padding:0 22px 20px}.ohli-profile-summary .ohli-avatar{width:76px;height:76px;border:4px solid #fff;margin-top:-38px;position:relative}.ohli-profile-title{display:flex;align-items:flex-start;gap:12px;justify-content:space-between;margin-top:8px}.ohli-profile-title h2{font-size:20px;letter-spacing:-.5px;margin:0;color:#182341}.ohli-profile-title p{font-size:11px;color:#8993ab;margin:5px 0 0}.ohli-profile-bio{font-size:12px;line-height:1.7;color:#586582;white-space:pre-wrap;margin-top:12px}.ohli-profile-stats{display:flex;gap:25px;margin-top:17px}.ohli-profile-stats strong{display:block;color:#263452;font-size:14px}.ohli-profile-stats small{display:block;color:#8792aa;font-size:10px;margin-top:3px}.ohli-tab-strip{display:flex;gap:4px;padding:5px;background:#e9edf7;border-radius:12px;margin:15px 0}.ohli-tab-strip button{flex:1;min-height:37px;border:0;border-radius:9px;background:transparent;color:#7a86a0;font-size:11px;font-weight:750}.ohli-tab-strip button.active{background:white;color:#3553ed;box-shadow:0 2px 9px #182d5b0c}
+.ohli-story-row{display:flex;gap:14px;overflow-x:auto;padding:2px 0 6px;scroll-snap-type:x proximity}.ohli-story-item{flex:none;width:78px;border:0;background:transparent;text-align:center;color:#596582;padding:0;scroll-snap-align:start}.ohli-story-ring{width:66px;height:66px;padding:3px;border-radius:50%;margin:0 auto 7px;background:conic-gradient(from 30deg,#9c5bff,#4263ff,#56c7ee,#9c5bff)}.ohli-story-ring.seen{background:#c6cddd}.ohli-story-ring>span{display:grid;place-items:center;width:100%;height:100%;border:3px solid #fff;border-radius:50%;background:#eef1ff;color:#5c60df;font-size:18px;font-weight:800}.ohli-story-item strong{display:block;font-size:10px;max-width:78px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-weight:650}.ohli-story-item small{display:block;font-size:9px;color:#a0a8ba;margin-top:4px}.ohli-story-add{background:#fff;border:1px dashed #d6def2}.ohli-story-add span{background:#f2f4ff;color:#5267f5}
+.ohli-video-feed{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:15px;align-items:start}.ohli-video-card{overflow:hidden;background:#10182e;border:1px solid #202e4f;border-radius:16px;color:white;position:relative}.ohli-video-card video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;max-height:620px;background:#080e1d}.ohli-video-meta{padding:13px}.ohli-video-meta strong{display:block;font-size:12px}.ohli-video-meta p{font-size:11px;line-height:1.55;color:#c3cce3;margin:7px 0 10px;white-space:pre-wrap}.ohli-video-actions{display:flex;gap:6px;flex-wrap:wrap}.ohli-video-actions .ohli-btn{background:#1b2949;border-color:#2a3a64;color:#e1e7ff}
+.ohli-list-card{padding:17px;display:flex;align-items:center;gap:13px}.ohli-list-card .ohli-avatar{width:48px;height:48px}.ohli-list-copy{flex:1;min-width:0}.ohli-list-copy strong{display:block;font-size:12px;color:#253351}.ohli-list-copy p{font-size:11px;color:#77829b;line-height:1.55;margin:5px 0 0}.ohli-list-meta{font-size:9px;color:#9aa4b9;margin-top:5px}.ohli-notification{display:flex;align-items:flex-start;gap:12px;padding:15px;border-bottom:1px solid #edf0f7;background:white}.ohli-notification:first-child{border-radius:16px 16px 0 0}.ohli-notification:last-child{border-bottom:0;border-radius:0 0 16px 16px}.ohli-notification.unread{background:#f5f7ff}.ohli-notification-icon{width:36px;height:36px;border-radius:13px;display:grid;place-items:center;background:#edf1ff;color:#5969f4;flex:none}.ohli-notification-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}.ohli-notification-copy{flex:1;min-width:0;font-size:11px;color:#50607e;line-height:1.6}.ohli-notification-copy strong{color:#213052}.ohli-notification-copy small{display:block;color:#929bb0;font-size:9px;margin-top:4px}
+.ohli-modal-backdrop{position:fixed;inset:0;z-index:40;background:#06112c90;display:flex;align-items:center;justify-content:center;padding:18px}.ohli-modal-backdrop[hidden]{display:none}.ohli-modal{background:white;color:#1c2847;width:min(100%,520px);max-height:min(88dvh,760px);overflow:auto;border-radius:20px;box-shadow:0 30px 100px #03081760;padding:22px}.ohli-modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.ohli-modal-head h2{font-size:17px;margin:0}.ohli-modal-close{width:36px;height:36px;border:0;border-radius:11px;background:#f0f2f9;color:#5e6b87;font-size:22px}.ohli-field{display:block;margin:13px 0}.ohli-field label{display:block;font-size:10px;font-weight:800;color:#6b7893;margin-bottom:7px}.ohli-field input,.ohli-field textarea,.ohli-field select{width:100%;border:1px solid #dfe5f1;border-radius:11px;padding:12px 13px;background:#fbfcff;color:#233151;font-size:12px}.ohli-field textarea{min-height:86px;resize:vertical}.ohli-modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:19px}.ohli-story-viewer{position:fixed;inset:0;background:#050a18f5;z-index:35;display:flex;align-items:center;justify-content:center;padding:20px;color:white}.ohli-story-viewer[hidden]{display:none}.ohli-story-screen{width:min(100%,430px);height:min(88dvh,800px);display:flex;flex-direction:column;position:relative;border-radius:20px;overflow:hidden;background:#121b31;border:1px solid #ffffff24}.ohli-story-progress{height:3px;background:#ffffff40;margin:12px 12px 4px}.ohli-story-progress span{display:block;height:100%;width:100%;background:#fff}.ohli-story-owner{display:flex;align-items:center;gap:10px;padding:10px 14px;z-index:1}.ohli-story-owner small{display:block;color:#bdc8e7;font-size:10px;margin-top:3px}.ohli-story-owner .ohli-story-close{margin-left:auto;color:white;background:#ffffff1a}.ohli-story-media{display:flex;align-items:center;justify-content:center;flex:1;min-height:0;position:relative}.ohli-story-media img,.ohli-story-media video{width:100%;height:100%;object-fit:contain}.ohli-story-text{position:absolute;left:12px;right:12px;bottom:16px;padding:12px;border-radius:12px;background:#06102bbd;color:white;font-size:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.ohli-toast{position:fixed;z-index:60;left:50%;bottom:24px;transform:translateX(-50%);padding:12px 17px;border-radius:12px;background:#142247;color:#fff;box-shadow:0 15px 40px #0003;font-size:12px;max-width:calc(100% - 28px)}.ohli-toast[hidden]{display:none}.ohli-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@keyframes ohli-shimmer{to{background-position:-200% 0}}
+#ohliSocialShell.ohli-dark{--ohli-canvas:#090f20;--ohli-surface:#111a30;--ohli-ink:#eff2ff;--ohli-muted:#a0acc9;--ohli-line:#263352;--ohli-shadow:0 12px 35px #0002;color:#eef2ff}#ohliSocialShell.ohli-dark .ohli-stage-head h1,#ohliSocialShell.ohli-dark .ohli-post-author-copy strong,#ohliSocialShell.ohli-dark .ohli-post-text,#ohliSocialShell.ohli-dark .ohli-rail-title,#ohliSocialShell.ohli-dark .ohli-rail-title,#ohliSocialShell.ohli-dark .ohli-user-copy strong,#ohliSocialShell.ohli-dark .ohli-trend strong,#ohliSocialShell.ohli-dark .ohli-profile-title h2,#ohliSocialShell.ohli-dark .ohli-profile-stats strong,#ohliSocialShell.ohli-dark .ohli-list-copy strong,#ohliSocialShell.ohli-dark .ohli-result-section h2,#ohliSocialShell.ohli-dark .ohli-empty h3{color:#f0f3ff}#ohliSocialShell.ohli-dark .ohli-compose textarea,#ohliSocialShell.ohli-dark .ohli-comment-form input,#ohliSocialShell.ohli-dark .ohli-field input,#ohliSocialShell.ohli-dark .ohli-field textarea,#ohliSocialShell.ohli-dark .ohli-field select{background:#0b1429;color:#edf1ff;border-color:#293858}#ohliSocialShell.ohli-dark .ohli-feed-tabs,#ohliSocialShell.ohli-dark .ohli-tab-strip,#ohliSocialShell.ohli-dark .ohli-audience,#ohliSocialShell.ohli-dark .ohli-btn:not(.ohli-btn-primary),#ohliSocialShell.ohli-dark .ohli-comment-copy,#ohliSocialShell.ohli-dark .ohli-empty{background:#0d172d;color:#b8c4e4;border-color:#263452}#ohliSocialShell.ohli-dark .ohli-feed-tab.active,#ohliSocialShell.ohli-dark .ohli-tab-strip button.active{background:#1a2746;color:#dfe5ff}#ohliSocialShell.ohli-dark .ohli-compose-divider,#ohliSocialShell.ohli-dark .ohli-post-stats,#ohliSocialShell.ohli-dark .ohli-post-actions,#ohliSocialShell.ohli-dark .ohli-post-comments,#ohliSocialShell.ohli-dark .ohli-comment-copy{border-color:#263451}#ohliSocialShell.ohli-dark .ohli-comment-copy p,#ohliSocialShell.ohli-dark .ohli-profile-bio,#ohliSocialShell.ohli-dark .ohli-list-copy p{color:#b7c3e1}#ohliSocialShell.ohli-dark .ohli-notification{background:#111a30;border-color:#263451;color:#bec9e6}#ohliSocialShell.ohli-dark .ohli-notification.unread{background:#172343}#ohliSocialShell.ohli-dark .ohli-notification-copy strong{color:#f2f4ff}#ohliSocialShell.ohli-dark .ohli-cover{filter:saturate(.8)}
+@media(max-width:1120px){.ohli-home-grid{grid-template-columns:minmax(0,1fr) 230px;gap:14px}.ohli-stage{padding:23px 17px 30px}.ohli-topbar{padding:0 18px;gap:16px}.ohli-sidebar{padding-left:10px;padding-right:10px}}
+@media(max-width:850px){#ohliSocialShell{grid-template-columns:1fr;grid-template-rows:61px minmax(0,1fr) calc(66px + env(safe-area-inset-bottom));grid-template-areas:"top" "stage" "nav"}.ohli-topbar{padding:0 14px;gap:12px}.ohli-brand strong{font-size:19px}.ohli-brand span{display:none}.ohli-logo{width:33px;height:33px}.ohli-global-search{width:auto;max-width:none;flex:1;height:38px}.ohli-user-label,.ohli-status-pill{display:none}.ohli-user-top{padding:2px}.ohli-sidebar{position:relative;overflow:visible;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:1fr;gap:0;padding:5px 5px max(6px,env(safe-area-inset-bottom));border-top:1px solid #dfe5f2;border-right:0;background:#fff;color:#78839c;box-shadow:0 -7px 24px #1b2d5810;z-index:5}.ohli-nav-caption,.ohli-nav-spacer,.ohli-nav-foot,.ohli-theme-button{display:none!important}.ohli-nav-link{height:53px;min-height:0;align-self:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;border-radius:12px;padding:5px 2px;background:transparent;color:#7d87a0;font-size:9px;font-weight:700;white-space:nowrap}.ohli-nav-link svg{width:20px;height:20px}.ohli-nav-link.active{background:#edf0ff;color:#475df3;box-shadow:none}.ohli-nav-link[data-page="create"]{background:transparent;color:#fff}.ohli-nav-link[data-page="create"] svg{width:35px;height:35px;padding:8px;border-radius:13px;background:linear-gradient(130deg,#4c63ff,#9657ff);box-shadow:0 5px 13px #5668ff42}.ohli-sidebar .ohli-nav-link:not([data-mobile-primary="true"]){display:none}.ohli-sidebar .ohli-nav-link[data-page="home"],.ohli-sidebar .ohli-nav-link[data-page="videos"],.ohli-sidebar .ohli-nav-link[data-page="create"],.ohli-sidebar .ohli-nav-link[data-page="story"],.ohli-sidebar .ohli-nav-link[data-page="chat"]{display:flex}.ohli-stage{padding:20px 12px max(22px,env(safe-area-inset-bottom));}.ohli-stage-head{margin-bottom:17px;align-items:center}.ohli-stage-head h1{font-size:22px}.ohli-stage-head p{font-size:11px}.ohli-home-grid{grid-template-columns:minmax(0,1fr)}.ohli-rail-column{display:none}.ohli-compose{padding:14px}.ohli-post{padding:15px 13px 12px}.ohli-post-actions .ohli-btn{font-size:10px}.ohli-profile-summary{padding:0 15px 17px}.ohli-stage-actions .ohli-btn{min-height:35px;padding:7px 10px;font-size:10px}.ohli-story-row{gap:10px}.ohli-video-feed{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ohli-video-meta{padding:10px}.ohli-video-meta p{font-size:10px}.ohli-list-card{padding:13px}.ohli-modal{padding:19px}.ohli-story-viewer{padding:0}.ohli-story-screen{height:100dvh;width:100%;border-radius:0;max-height:100dvh;border:0}}
+@media(max-width:430px){.ohli-topbar{gap:9px}.ohli-global-search{padding:0 10px}.ohli-global-search input{font-size:11px}.ohli-stage{padding-left:9px;padding-right:9px}.ohli-stage-head h1{font-size:20px}.ohli-compose-bottom{gap:6px}.ohli-audience{max-width:123px;padding:8px 6px;font-size:10px}.ohli-compose-actions{gap:5px}.ohli-compose-actions .ohli-btn{padding:8px 10px;min-height:35px}.ohli-video-feed{grid-template-columns:repeat(2,minmax(0,1fr))}.ohli-post-actions .ohli-btn{padding-left:3px;padding-right:3px}.ohli-avatar{width:39px;height:39px}.ohli-post-author-copy strong{font-size:11px}}
+@media(prefers-reduced-motion:reduce){#ohliSocialShell *,#ohliSocialShell *:before,#ohliSocialShell *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Mobile overflow navigation: gives access to every destination without crowding the bottom bar. */
+.ohli-mobile-menu{display:none;align-items:center;justify-content:center;flex:none;width:38px;height:38px;border:1px solid #ffffff20;border-radius:12px;color:#fff;background:#ffffff0c;font-size:20px;line-height:1}
+.ohli-nav-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.ohli-nav-picker .ohli-btn{justify-content:flex-start;white-space:normal;min-width:0;text-align:left}
+.ohli-nav-picker .ohli-btn svg{flex:none}
+@media(max-width:850px){.ohli-mobile-menu{display:flex}.ohli-topbar{gap:8px}.ohli-global-search{min-width:80px}.ohli-brand{flex:none}.ohli-nav-picker{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:400px){.ohli-brand{gap:0}.ohli-logo{width:30px;height:30px}.ohli-global-search{gap:6px}.ohli-mobile-menu{width:34px;height:34px}.ohli-nav-picker{grid-template-columns:minmax(0,1fr)}}
+.ohli-post-manage-menu{display:flex;flex-direction:column;gap:9px}.ohli-post-manage-menu .ohli-btn{justify-content:flex-start;white-space:normal}.ohli-post-manage-menu .ohli-btn-danger{color:#bc3655;background:#fff5f7;border-color:#ffdce4}
+
+/* ===== v1.7: scroll, layout HP, video pendek ala TikTok, grid media ===== */
+.ohli-stage{display:block!important;-webkit-overflow-scrolling:touch}
+.ohli-global-search input{-webkit-appearance:none;appearance:none}
+.ohli-trend{display:block;width:100%;text-align:left;background:transparent;border:0;color:inherit;font:inherit;cursor:pointer}
+@media(max-width:850px){#ohliPrimaryNav,#ohliCommunityNav{display:contents}
+#ohliSocialShell.ohli-dark .ohli-sidebar{background:#0b1530;border-top-color:#1b2a4e;box-shadow:none}
+#ohliSocialShell.ohli-dark .ohli-nav-link{color:#9fb0dc}#ohliSocialShell.ohli-dark .ohli-nav-link.active{background:#1d2a5a;color:#fff}}
+.ohli-vwrap{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ohli-vplay{position:absolute;left:50%;top:50%;width:66px;height:66px;margin:-33px 0 0 -33px;border-radius:50%;background:#000a;color:#fff;display:grid;place-items:center;opacity:0;transition:opacity .15s;pointer-events:none}
+.ohli-vplay svg,.ohli-tile-badge svg{width:28px;height:28px;fill:currentColor;stroke:none}
+.ohli-vwrap.paused .ohli-vplay{opacity:1}
+.ohli-vsound,.ohli-reel-btn{border:0;color:#fff;background:#0008;display:grid;place-items:center;border-radius:50%}
+.ohli-vsound{position:absolute;right:10px;bottom:10px;width:34px;height:34px;padding:0}
+.ohli-vsound svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9}
+.ohli-stage.is-reels{padding:0!important;overflow:hidden;display:flex!important;flex-direction:column;background:#000}
+.is-reels .ohli-stage-head{display:none}
+.is-reels .ohli-page-content{flex:1;min-height:0;height:100%;max-width:520px}
+.ohli-reels{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}
+.ohli-reels::-webkit-scrollbar{display:none}
+.ohli-reel{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;background:#000;overflow:hidden}
+.ohli-reel .ohli-vwrap{height:100%}.ohli-reel video{display:block;width:100%;height:100%;object-fit:cover;background:#000}
+.ohli-reel-shade{position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(transparent,#000b);pointer-events:none}
+.ohli-reel-info{position:absolute;left:14px;right:76px;bottom:16px;color:#fff;z-index:2;text-shadow:0 1px 4px #000a}
+.ohli-reel-author{border:0;background:transparent;color:#fff;font-weight:800;font-size:14px;padding:0}
+.ohli-reel-info p{margin:6px 0 0;font-size:13px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;max-height:4.6em;overflow:hidden}
+.ohli-reel-side{position:absolute;right:9px;bottom:18px;display:flex;flex-direction:column;align-items:center;gap:14px;z-index:2}
+.ohli-reel-btn{width:46px;height:46px;padding:0;position:relative}.ohli-reel-btn svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8}
+.ohli-reel-btn small{position:absolute;top:100%;margin-top:2px;font-size:11px;font-weight:700;color:#fff;text-shadow:0 1px 3px #000}
+.ohli-reel-side .ohli-reel-btn{margin-bottom:12px}
+.ohli-reel-btn.is-liked svg{fill:#ff3b6b;stroke:#ff3b6b}
+.ohli-reel-bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:#fff3;z-index:3}.ohli-reel-bar i{display:block;height:100%;width:0;background:#fff}
+.ohli-media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.ohli-media-tile{position:relative;aspect-ratio:1/1;padding:0;border:0;overflow:hidden;background:#10182d;border-radius:4px}
+.ohli-media-tile img,.ohli-media-tile video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.ohli-tile-badge{position:absolute;right:6px;top:6px;color:#fff;filter:drop-shadow(0 1px 3px #000)}.ohli-tile-badge svg{width:20px;height:20px}
+
+/* ===== v1.8: layout chat ala WhatsApp. Desktop = 2 panel + rel ikon, HP = layar terpisah (daftar / percakapan) ===== */
+#app{--w-bg:#0b141a;--w-panel:#111b21;--w-head:#202c33;--w-line:#233138;--w-txt:#e9edef;--w-mut:#8696a0;--w-out:#005c4b;--w-in:#202c33;--w-inp:#2a3942;--w-g:#25d366;--w-wall:#0b141a}
+body.v5-light #app{--w-bg:#f0f2f5;--w-panel:#fff;--w-head:#f0f2f5;--w-line:#e9edef;--w-txt:#111b21;--w-mut:#667781;--w-out:#d9fdd3;--w-in:#fff;--w-inp:#fff;--w-wall:#efeae2}
+#app,#app .sidebar,#app .items,#app .side-head,#app .search-row,#app .side-bottom{background:var(--w-panel)!important;color:var(--w-txt)!important;border-color:var(--w-line)!important}
+#app .side-head{display:flex!important;align-items:center;justify-content:space-between;gap:8px;padding:max(10px,env(safe-area-inset-top)) 14px 6px!important;min-height:0!important;border:0!important}
+#app .app-brand-icon,#app .app-brand-copy small,#app .my-profile{display:none!important}
+#app .app-brand-copy strong{font-size:20px!important;font-weight:800;color:var(--w-g)!important}
+#app .ohli-legacy-return{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:99px;padding:7px 12px;background:var(--w-head);color:var(--w-txt);font-size:12px;font-weight:700;flex:none}
+#app .ohli-legacy-return svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;transform:scaleX(-1)}
+#app .head-actions{display:flex!important;gap:2px}
+#app .icon-btn{color:var(--w-mut)!important;background:transparent!important;border:0!important;box-shadow:none!important}
+#app .icon-btn:hover{background:var(--w-head)!important}
+#app .search-row{padding:6px 14px 8px!important;border:0!important}
+#app #contactSearch{width:100%;height:36px;border:0!important;border-radius:10px!important;background:var(--w-head)!important;color:var(--w-txt)!important;padding:0 14px!important}
+#app #listTitle{color:var(--w-txt)!important;font-size:21px!important;font-weight:700!important;padding:6px 16px!important;margin:0!important;text-transform:none!important;letter-spacing:0!important}
+#app .items{overflow-y:auto!important;min-height:0}
+#app .contact{padding:10px 16px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:var(--w-txt)!important}
+#app .contact:hover,#app .contact.active{background:var(--w-head)!important}
+#app .contact-name{color:var(--w-txt)!important;font-weight:500!important}#app .contact-preview,#app .contact-time{color:var(--w-mut)!important}
+#app .side-bottom{padding:6px 16px!important;font-size:11px;border:0!important}
+#app .nav-tabs{background:var(--w-panel)!important;border-color:var(--w-line)!important}
+#app .side-extra-actions{display:none!important}
+#app .nav-tab{display:flex!important;flex-direction:column!important;align-items:center;justify-content:center;gap:3px!important;background:transparent!important;border:0!important;box-shadow:none!important;color:var(--w-mut)!important;font-size:10px!important;padding:4px 0!important;min-height:0!important}
+#app .nav-tab::before{display:none!important}#app .nav-tab .oi{width:24px;height:24px}
+#app .nav-tab.active{color:var(--w-g)!important}
+#app .main{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--w-wall)!important;color:var(--w-txt)!important}
+#app .main-head{flex:none;background:var(--w-head)!important;color:var(--w-txt)!important;border:0!important;border-bottom:1px solid var(--w-line)!important;box-shadow:none!important}
+#app .peer-title{color:var(--w-txt)!important;font-weight:600!important}#app .peer-subtitle{color:var(--w-mut)!important}
+#app .peer-info{min-width:0}#app .peer-title,#app .peer-subtitle{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#app #mainBody{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+#app .messages{background-color:var(--w-wall)!important}
+#app .welcome-view,#app .status-view,#app .calls-view{background:var(--w-bg)!important;color:var(--w-txt)!important}
+#app .view-card{background:var(--w-panel)!important;color:var(--w-txt)!important;border:1px solid var(--w-line)!important}
+#app .subtle,#app .hint{color:var(--w-mut)!important}
+#app .bubble{background:var(--w-in)!important;color:var(--w-txt)!important;border:0!important;border-radius:8px!important;box-shadow:0 1px 1px #0003!important}
+#app .bubble-row.mine .bubble{background:var(--w-out)!important}
+#app .bubble-meta,#app .bubble-meta *{color:var(--w-mut)!important}
+#app .day-label{background:var(--w-head)!important;color:var(--w-mut)!important;border:0!important}
+#app .compose{flex:none;background:var(--w-head)!important;border:0!important;box-shadow:none!important;align-items:center!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom))!important}
+#app .compose-icon{background:transparent!important;border:0!important;color:var(--w-mut)!important}
+#app .compose textarea,#app .compose input,#app #messageInput{background:var(--w-inp)!important;color:var(--w-txt)!important;border:0!important;border-radius:22px!important;min-width:0}
+#app .send-btn{background:var(--w-g)!important;color:#fff!important;border:0!important;border-radius:50%!important}
+/* DESKTOP: panel kiri (rel ikon + daftar) dan percakapan kanan */
+@media(min-width:760px){
+body{padding:0!important}
+#app.app:not([hidden]){display:grid!important;grid-template-columns:clamp(340px,32vw,440px) minmax(0,1fr)!important;width:100%!important;max-width:none!important;height:100dvh!important;min-height:0!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important}
+#app .sidebar{display:grid!important;grid-template-columns:68px minmax(0,1fr)!important;grid-template-rows:auto auto auto minmax(0,1fr) auto!important;grid-template-areas:"nav head" "nav search" "nav title" "nav items" "nav status"!important;border-right:1px solid var(--w-line)!important}
+#app .side-head{grid-area:head}#app .search-row{grid-area:search}#app #listTitle{grid-area:title}#app .items{grid-area:items}#app .side-bottom{grid-area:status}
+#app .nav-tabs{grid-area:nav;display:flex!important;flex-direction:column;align-items:center;gap:4px!important;position:static!important;width:auto!important;padding:12px 6px!important;background:var(--w-head)!important;border:0!important;border-right:1px solid var(--w-line)!important}
+#app .nav-tab{width:56px;height:56px;border-radius:12px!important}#app .nav-tab.active{background:var(--w-line)!important}
+#app .back-btn{display:none!important}#app .main{display:flex!important}
+#app .compose-icon{width:40px;height:40px}
+}
+/* HP: layar daftar -> layar percakapan penuh, bar tab hanya di layar daftar */
+@media(max-width:759px){
+html,body{height:100%;overflow:hidden}body{padding:0!important}
+#app.app:not([hidden]){display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;position:fixed!important;inset:0 auto auto 0;width:100%!important;max-width:none!important;height:var(--rkm-viewport-height,100dvh)!important;min-height:0!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important}
+#app .sidebar{grid-area:1/1;display:flex!important;flex-direction:column;min-height:0;border:0!important;padding-bottom:calc(60px + env(safe-area-inset-bottom))}
+#app .main{grid-area:1/1;display:none!important}
+#app.page-open .main{display:flex!important}
+#app.page-open .sidebar{display:contents!important}
+#app.page-open .sidebar>:not(.nav-tabs){display:none!important}
+#app .nav-tabs{display:flex!important;flex-direction:row;position:fixed!important;left:0;right:0;bottom:0;z-index:50;height:calc(58px + env(safe-area-inset-bottom));padding:4px 4px env(safe-area-inset-bottom)!important;background:var(--w-panel)!important;border:0!important;border-top:1px solid var(--w-line)!important}
+#app .nav-tab{flex:1;min-width:0}
+#app.page-open:not(.chat-open) .main{padding-bottom:calc(60px + env(safe-area-inset-bottom))}
+#app.page-open:not(.chat-open) .back-btn{display:none!important}
+#app.chat-open .nav-tabs{display:none!important}
+#app.chat-open .main{padding-bottom:0}
+#app .back-btn{display:grid}
+#app .main-head{height:auto!important;min-height:56px!important;padding:max(8px,env(safe-area-inset-top)) 6px 8px!important;gap:6px!important}
+#app .main-head .avatar{width:38px!important;height:38px!important}
+#app .peer-actions .icon-btn{width:36px!important;height:38px!important}
+#app .messages{padding:10px 8px!important}#app .bubble{max-width:86%!important}
+}
+@media(max-width:520px){#app .compose>.compose-icon:nth-child(n+3){display:none!important}}
+#app .app-brand{display:none!important}#app .head-actions{margin-left:auto}
+@media(min-width:760px){#app .nav-tabs{justify-content:flex-start!important;align-content:flex-start!important}}
+@media(min-width:760px){#app .nav-tab{flex:0 0 56px!important;height:56px!important}}
+
+/* ===== v1.9 ===== */
+.ohli-avatar{position:relative;overflow:hidden}.ohli-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ohli-avatar-xl{width:84px!important;height:84px!important;font-size:26px}
+.ohli-story-flat{padding:2px 0 6px}
+.ohli-cover{position:relative;background-size:cover!important;background-position:center!important}
+.ohli-cover-menu{position:absolute;right:10px;top:10px;width:40px;height:40px;border-radius:50%;border:0;background:#0007;color:#fff;display:grid;place-items:center}
+.ohli-cover-menu svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9}
+.ohli-vwrap,.ohli-ed-stage{container-type:inline-size}
+.ohli-vwrap[style*="aspect-ratio"] video{height:100%}
+.ohli-ovl{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.ohli-ovl-item{position:absolute;transform:translate(-50%,-50%);font-weight:800;text-align:center;text-shadow:0 1px 6px #000a;white-space:pre-wrap;max-width:90%;line-height:1.15}
+[data-page="home"] .ohli-stage-head,[data-page="create"] .ohli-stage-head,[data-page="videos"] .ohli-stage-head{display:none!important}
+/* video pendek: tab atas ala TikTok */
+.ohli-reels-wrap{position:relative;height:100%}
+.ohli-reels-top{position:absolute;left:0;right:0;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:max(10px,env(safe-area-inset-top)) 12px 18px;background:linear-gradient(#0009,transparent);color:#fff}
+.ohli-reels-tabs{display:flex;gap:20px}.ohli-reels-tabs button{background:none;border:0;border-bottom:2px solid transparent;color:#ffffffb8;font-weight:700;font-size:16px;padding:6px 2px}.ohli-reels-tabs button.on{color:#fff;border-color:#fff}
+.ohli-reel-live,.ohli-reel-search{background:none;border:0;color:#fff;display:flex;flex-direction:column;align-items:center;font-weight:800;font-size:10px;min-width:44px}
+.ohli-reel-live svg,.ohli-reel-search svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.9}
+.ohli-reels-empty{height:100%;display:grid;place-items:center;color:#fff;padding:20px}
+.ohli-reel-av{width:48px;height:48px;border-radius:50%;border:2px solid #fff;padding:0;background:none;overflow:hidden;margin-bottom:4px}
+.ohli-reel-av .ohli-avatar{width:100%;height:100%}
+.ohli-reel-btn.is-on svg{stroke:#2ee6a6}
+.ohli-reels .ohli-reel-side{bottom:24px}
+/* lembar bawah */
+.ohli-sheet-bg{position:fixed;inset:0;z-index:90;background:#0007;display:flex;align-items:flex-end;justify-content:center}
+.ohli-sheet{width:100%;max-width:560px;max-height:80vh;background:#fff;color:#111;border-radius:18px 18px 0 0;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}
+.ohli-dark .ohli-sheet{background:#121a30;color:#e9edff}
+.ohli-sheet-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #8883}.ohli-sheet-head button{border:0;background:none;color:inherit;font-size:20px}
+.ohli-sheet-list{overflow-y:auto;padding:8px 16px;flex:1;min-height:110px}
+.ohli-sheet-form{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #8883}.ohli-sheet-form input{flex:1;border-radius:20px;border:1px solid #8884;padding:10px 14px;background:transparent;color:inherit}.ohli-sheet-form button{border:0;background:none;color:inherit}
+.ohli-share-friends{display:flex;gap:14px;overflow-x:auto;padding:14px 16px}.ohli-share-friends button{border:0;background:none;color:inherit;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;min-width:64px}
+.ohli-share-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 16px 16px}.ohli-share-grid button{border:1px solid #8884;background:transparent;color:inherit;border-radius:12px;padding:14px 6px;font-weight:700}
+.ohli-ep-cover{height:120px;border-radius:14px;background-size:cover;background-position:center}.ohli-ep-av{margin:-34px 0 8px 14px}
+.ohli-ep-btns{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.ohli-field{display:block;margin:10px 0;font-size:12px;font-weight:700}.ohli-field input,.ohli-field textarea{display:block;width:100%;margin-top:4px;border:1px solid #8884;border-radius:10px;padding:10px;background:transparent;color:inherit;font:inherit}
+/* editor Buat konten */
+.ohli-create{max-width:520px;margin:0 auto}.ohli-create-pick{display:flex;flex-direction:column;align-items:center;gap:12px;padding:32px 18px;text-align:center}
+.ohli-ed-stage{position:relative;background:#000;border-radius:16px;overflow:hidden;margin:0 auto}.ohli-ed-stage img,.ohli-ed-stage video{width:100%;height:100%;object-fit:cover;display:block}
+.ohli-ed-stage .ohli-ovl{pointer-events:auto}.ohli-ed-stage .ohli-ovl-item{pointer-events:auto;touch-action:none;cursor:grab;padding:2px 6px;border-radius:8px}.ohli-ed-stage .ohli-ovl-item.sel{outline:2px dashed #fff}
+.ohli-ed-tools{display:flex;gap:8px;overflow-x:auto;padding:10px 0}.ohli-ed-tools button{flex:none;border:1px solid #8884;background:transparent;color:inherit;border-radius:20px;padding:8px 14px;font-weight:700}.ohli-ed-tools button:disabled{opacity:.4}
+.ohli-ed-stickers{display:flex;flex-wrap:wrap;gap:6px}.ohli-ed-stickers button{font-size:26px;border:0;background:#8882;border-radius:12px;width:46px;height:46px}
+#crPanel label{display:block;margin:6px 0}#crPanel input[type=range]{width:100%}
+#crCap{width:100%;margin:10px 0;border:1px solid #8884;border-radius:12px;padding:10px;background:transparent;color:inherit;font:inherit}
+.ohli-ed-row{display:flex;gap:8px;align-items:center}.ohli-ed-row select{flex:1;padding:10px;border-radius:10px;border:1px solid #8884;background:transparent;color:inherit}
+/* HP: bar bawah ikon saja (6), tanpa tulisan; bar atas hanya di Beranda & Story */
+@media(max-width:850px){
+#ohliSocialShell .ohli-sidebar{display:grid!important;grid-template-columns:repeat(6,1fr)!important;gap:0!important;padding:4px 2px calc(4px + env(safe-area-inset-bottom))!important}
+#ohliSocialShell .ohli-nav-link{flex-direction:column;justify-content:center;align-items:center;min-height:46px;padding:6px 0!important;border-radius:12px;gap:0!important}
+#ohliSocialShell .ohli-nav-link>span{display:none!important}#ohliSocialShell .ohli-nav-link svg{width:26px;height:26px}
+#ohliSocialShell .ohli-nav-link[data-page="create"]{background:linear-gradient(135deg,#4f6bff,#8b5cf6)!important;color:#fff!important;margin:2px 8px;min-height:40px;border-radius:14px}
+#ohliSocialShell:not([data-page="home"]):not([data-page="story"]) .ohli-topbar{display:none!important}
+#ohliSocialShell[data-page="profile"] .ohli-stage-head{display:none!important}
+#ohliSocialShell[data-page="videos"] .ohli-sidebar{background:#000!important;border-color:#222!important}#ohliSocialShell[data-page="videos"] .ohli-nav-link{color:#fff!important}
+#ohliSocialShell{top:var(--rkm-viewport-top,0px)!important;bottom:auto!important;height:var(--rkm-viewport-height,100dvh)!important}
+.ohli-home-grid{display:flex!important;flex-direction:column;gap:14px}
+.ohli-home-grid>.ohli-feed-column{display:contents!important}
+.ohli-feed-tabs{order:1}#ohliStoryStrip{order:2}
+.ohli-home-grid>.ohli-rail-column{display:contents!important}
+.ohli-rail-column>.ohli-rail-card:first-child{display:block!important;order:3}
+.ohli-rail-column>.ohli-rail-card:nth-child(2){display:block!important;order:6}
+.ohli-rail-footer{display:none!important}
+.ohli-home-grid>.ohli-feed-column>#ohliFeedList{display:flex!important;flex-direction:column;gap:14px;order:4}#ohliFeedMore{order:5}
+#ohliSuggestions>*:nth-child(n+4){display:none}
+}
+/* chat: tanpa kotak hijau fokus; bar balasan & kutipan ala WA */
+#app textarea:focus,#app input:focus,#app button:focus{outline:none!important;box-shadow:none!important}
+@media(max-width:759px){#app.app:not([hidden]){top:var(--rkm-viewport-top,0px)!important}}
+#app .wa-replybar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--w-head);border-top:1px solid var(--w-line);color:var(--w-txt)}
+#app .wa-replybar .q{flex:1;min-width:0;border-left:4px solid #25d366;padding:4px 8px;background:#0001;border-radius:6px}
+#app .wa-replybar b{display:block;color:#25d366;font-size:13px}#app .wa-replybar span{display:block;font-size:13px;color:var(--w-mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#app .wa-replybar button{border:0;background:none;color:var(--w-mut);font-size:20px}
+#app .wa-quote{border-left:4px solid #25d366;background:#0000000d;border-radius:6px;padding:4px 8px;margin-bottom:4px}#app .wa-quote b{display:block;color:#128c7e;font-size:12.5px}#app .wa-quote span{display:block;font-size:13px;color:var(--w-mut);max-height:3.2em;overflow:hidden}
+@media(max-width:850px){
+#ohliSocialShell{grid-template-rows:61px minmax(0,1fr) calc(58px + env(safe-area-inset-bottom))!important}
+#ohliSocialShell:not([data-page="home"]):not([data-page="story"]){grid-template-rows:0 minmax(0,1fr) calc(58px + env(safe-area-inset-bottom))!important}
+#ohliSocialShell .ohli-nav-link[data-page="create"] svg{width:24px;height:24px;stroke:#fff}
+}
+.ohli-feed-tabs{display:flex}.ohli-feed-tab{flex:1;white-space:nowrap}
+@media(max-width:850px){#ohliSocialShell .ohli-nav-link[data-page="create"] svg{width:28px!important;height:28px!important;stroke-width:2.4;transform:none!important}}
+
+
+/* ===== OHLI Social v2.0: privacy, profile lists, stories, communities, QR ===== */
+.ohli-profile-stats{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-top:16px}
+.ohli-profile-stats>button{flex:1 1 82px;min-width:74px;border:0;background:transparent;color:inherit;text-align:center;padding:8px 5px;border-radius:10px;cursor:pointer}
+.ohli-profile-stats>button:disabled{opacity:.42;cursor:not-allowed}
+.ohli-profile-stats>button:not(:disabled):hover{background:#7b8db51a}
+.ohli-profile-stats>button strong,.ohli-profile-stats>button small{display:block}
+.ohli-profile-stats>button strong{font-size:18px;font-weight:850;font-variant-numeric:tabular-nums}
+.ohli-profile-stats>button small{font-size:10px;color:var(--ohli-muted,#7b879f);margin-top:3px}
+.ohli-private-tag{display:inline-flex;vertical-align:middle;font-size:9px;letter-spacing:.08em;background:#eff1f8;color:#66718a;padding:3px 6px;border-radius:6px}
+.ohli-privacy-lock{display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 20px;gap:9px}
+.ohli-privacy-lock-icon{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:#eef1ff;color:#5867d9}
+.ohli-privacy-lock-icon svg{width:26px;height:26px}
+.ohli-privacy-lock p,.ohli-hint{color:var(--ohli-muted,#7b879f);font-size:12px;line-height:1.55}
+.ohli-field select{display:block;width:100%;margin-top:5px;border:1px solid #dfe5f1;border-radius:10px;padding:11px 12px;background:#fbfcff;color:#233151;font:inherit}
+.ohli-dark .ohli-field select{background:#111a30;border-color:#ffffff22;color:#eef1ff}
+.ohli-list-stack{display:flex;flex-direction:column;gap:8px;max-height:62vh;overflow:auto}
+.ohli-list-card{display:flex;align-items:center;gap:10px;min-width:0}
+.ohli-list-copy{flex:1;min-width:0}
+.ohli-list-copy strong,.ohli-list-copy p{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ohli-list-copy p{font-size:11px;color:var(--ohli-muted,#7b879f);margin:3px 0 0}
+.ohli-settings-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ohli-settings-sub{border-top:1px solid #8c98b52b;margin-top:17px;padding-top:12px}
+.ohli-settings-sub h3{font-size:14px;margin:0 0 8px}
+.ohli-qr-card{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:8px}
+.ohli-qr-card img{display:block;width:min(100%,300px);aspect-ratio:1;object-fit:contain;background:#fff;border-radius:15px;padding:9px}
+.ohli-qr-card strong{font-size:17px}.ohli-qr-card span{font-size:12px;opacity:.7}.ohli-qr-card p{font-size:12px;opacity:.75}
+.ohli-highlight-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
+.ohli-highlight-card{position:relative;min-width:0;border:0;background:transparent;color:inherit;text-align:center;padding:0;cursor:pointer}
+.ohli-highlight-card>span{display:grid;place-items:center;aspect-ratio:1;border-radius:18px;overflow:hidden;background:linear-gradient(145deg,#354a9a,#975bdb);color:#fff}
+.ohli-highlight-card img{width:100%;height:100%;object-fit:cover}
+.ohli-highlight-card strong{display:block;font-size:11px;margin-top:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ohli-highlight-card i{position:absolute;right:5px;top:5px;width:24px;height:24px;border-radius:50%;background:#111b;color:#fff;font-style:normal;font-size:18px;line-height:24px}
+.ohli-group-thread,.ohli-channel-posts{display:flex;flex-direction:column;gap:9px;max-height:55vh;overflow:auto;margin:8px 0 12px}
+.ohli-group-message{align-self:flex-start;max-width:88%;background:#eef1fa;color:#202c48;border-radius:13px 13px 13px 4px;padding:9px 11px}
+.ohli-group-message.mine{align-self:flex-end;background:#e4f8ef;color:#173b2c;border-radius:13px 13px 4px 13px}
+.ohli-group-message b,.ohli-group-message small{font-size:10px;opacity:.7}
+.ohli-group-message p{font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere;margin:4px 0}
+.ohli-comment-form{display:flex;gap:8px;align-items:center}
+.ohli-comment-form input{min-width:0;flex:1;border:1px solid #dfe5f1;border-radius:20px;padding:10px 13px;background:#fbfcff;color:#233151}
+.ohli-comment-form button{border:0;border-radius:20px;padding:10px 14px;background:#5867e8;color:#fff;font-weight:800}
+.ohli-channel-post{padding:13px}
+.ohli-channel-post small{display:block;font-size:10px;opacity:.6;margin-top:3px}
+.ohli-channel-post p{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.5}
+.ohli-story-foot{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;padding:10px 12px 14px;background:#10192d}
+.ohli-story-foot .ohli-story-stats{font-size:11px;color:#fff;opacity:.9;margin-right:auto}
+.ohli-story-foot .ohli-btn{font-size:11px;padding:8px 11px}
+.ohli-story-foot .is-liked{color:#ff6b8e;border-color:#ff6b8e}
+#ohliQrVideo{display:block;width:100%;max-height:58vh;background:#080d18;border-radius:14px}
+@media(max-width:850px){
+  .ohli-profile-stats>button{min-width:68px;flex-basis:68px}
+  .ohli-profile-stats>button strong{font-size:16px}
+  .ohli-story-foot{padding-bottom:max(12px,env(safe-area-inset-bottom))}
+  .ohli-modal{max-height:calc(var(--rkm-viewport-height,100dvh) - 20px);overscroll-behavior:contain}
+  #ohliSocialShell{min-height:0;min-height:0;overscroll-behavior:none;-webkit-overflow-scrolling:touch}
+}
+/* iOS WebKit recovery: avoid stale black viewport after keyboard/app foreground changes. */
+@supports (-webkit-touch-callout:none){
+  #ohliSocialShell,#app.app:not([hidden]){min-height:0;-webkit-transform:translateZ(0);transform:translateZ(0)}
+  #ohliSocialShell .ohli-stage,#app .main,#app .messages{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  #app .messages{background-color:var(--w-chat,#efeae2)}
+  #app .main{background-color:var(--w-panel,#fff)}
+  #app .compose{padding-bottom:max(8px,env(safe-area-inset-bottom))}
+}
+
+
+/* ===== OHLI Social v2.1: mobile overflow, profile sizing, compact reels, story rail ===== */
+#ohliSocialShell,#ohliSocialShell *{box-sizing:border-box}
+#ohliSocialShell{width:100%;max-width:100vw;min-width:0}
+.ohli-stage,.ohli-page-content,.ohli-home-grid,.ohli-feed-column,.ohli-rail-column,.ohli-card{min-width:0;max-width:100%}
+.ohli-stage-head{min-width:0;align-items:center}
+.ohli-stage-head>div:nth-child(2){min-width:0;flex:1}
+.ohli-internal-back{width:36px;height:36px;flex:none;border:1px solid var(--ohli-line);border-radius:11px;background:var(--ohli-surface);color:var(--ohli-ink);font-size:24px;line-height:1;display:grid;place-items:center;padding:0}
+.ohli-internal-back[hidden]{display:none!important}
+.ohli-profile-avatar-button{display:block;width:max-content;max-width:100%;margin-top:-38px;padding:0;border:0;border-radius:50%;background:transparent;cursor:zoom-in;position:relative;z-index:1}
+.ohli-profile-avatar-button .ohli-avatar{width:76px;height:76px;border:4px solid var(--ohli-surface);margin:0}
+.ohli-profile-photo-preview{display:flex;flex-direction:column;align-items:center;gap:10px}
+.ohli-profile-photo-preview img{display:block;width:min(78vw,420px);max-height:70vh;aspect-ratio:1;object-fit:contain;border-radius:16px;background:#10182d}
+.ohli-profile-photo-preview p{font-size:12px;color:var(--ohli-muted)}
+.ohli-story-own{position:relative}
+.ohli-story-own>i{position:absolute;right:-2px;bottom:-2px;width:22px;height:22px;border:2px solid var(--ohli-surface);border-radius:50%;display:grid;place-items:center;background:#4864f6;color:white;font-style:normal;font-size:17px;line-height:1}
+.ohli-double-heart{position:absolute;z-index:6;left:50%;top:50%;transform:translate(-50%,-50%) scale(.6);font-size:clamp(76px,18vw,130px);line-height:1;color:#ff477e;text-shadow:0 6px 24px #0008;pointer-events:none;animation:ohli-heart-pop .85s ease forwards}
+@keyframes ohli-heart-pop{0%{opacity:0;transform:translate(-50%,-50%) scale(.25)}35%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(.92)}}
+.ohli-post,.ohli-vwrap{position:relative}
+.ohli-reel-side{right:8px;bottom:22px;gap:8px}
+.ohli-reel-side .ohli-reel-btn{width:40px;height:40px;margin:0}
+.ohli-reel-side .ohli-reel-btn svg{width:20px;height:20px}
+.ohli-reel-info{right:60px;left:12px;bottom:18px}
+.ohli-reel-info p{max-height:3.2em;font-size:12px}
+.ohli-reels-top{padding-left:10px;padding-right:10px;gap:8px}
+.ohli-reels-tabs{min-width:0;gap:4px}
+.ohli-reels-tabs button{padding-left:10px;padding-right:10px;white-space:nowrap}
+@media(max-width:850px){
+  #ohliSocialShell{position:fixed;inset:0;width:100vw;max-width:100vw;overflow:hidden;grid-template-columns:minmax(0,1fr);grid-template-rows:56px minmax(0,1fr) calc(58px + env(safe-area-inset-bottom));grid-template-areas:"top" "stage" "nav"}
+  #ohliSocialShell .ohli-topbar{min-width:0;width:100%;height:56px;padding:0 9px;gap:8px}
+  #ohliSocialShell .ohli-brand{min-width:0;gap:6px}
+  #ohliSocialShell .ohli-brand strong{font-size:17px}
+  #ohliSocialShell .ohli-brand span span{display:none}
+  #ohliSocialShell .ohli-logo{width:30px;height:30px}
+  #ohliSocialShell .ohli-global-search{width:auto;min-width:0;flex:1;max-width:none;height:36px;padding:0 9px}
+  #ohliSocialShell .ohli-global-search input{font-size:12px}
+  #ohliSocialShell .ohli-status-pill,#ohliSocialShell .ohli-user-label{display:none}
+  #ohliSocialShell .ohli-user-top{padding:2px}
+  #ohliSocialShell .ohli-user-top .ohli-avatar{width:31px;height:31px}
+  #ohliSocialShell .ohli-sidebar{grid-area:nav;position:relative;display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:1fr;gap:0;min-width:0;width:100%;padding:4px 5px max(5px,env(safe-area-inset-bottom));overflow:visible;border:0;border-top:1px solid var(--ohli-line);background:var(--ohli-surface);box-shadow:0 -5px 20px #00000010;z-index:5}
+  #ohliSocialShell #ohliPrimaryNav,#ohliSocialShell #ohliCommunityNav{display:contents}
+  #ohliSocialShell .ohli-nav-caption,#ohliSocialShell .ohli-nav-spacer,#ohliSocialShell .ohli-nav-foot,#ohliSocialShell .ohli-theme-button{display:none!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link{display:none;min-width:0;width:100%;height:100%;min-height:0;align-self:stretch;justify-content:center;gap:0;padding:4px 0;border:0;border-radius:10px;background:transparent;font-size:0;}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="home"],#ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="videos"],#ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="create"],#ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="story"],#ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="chat"],#ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="profile"]{display:flex}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link svg{width:23px;height:23px}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="create"]{background:transparent;margin:0;min-height:0;color:#fff}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="create"] svg{width:34px;height:34px;padding:8px;border-radius:12px;background:linear-gradient(130deg,#4c63ff,#9657ff);box-shadow:0 5px 13px #5668ff42}
+  #ohliSocialShell .ohli-stage{grid-area:stage;width:100%;max-width:100vw;min-width:0;min-height:0;height:100%;overflow-x:hidden;overflow-y:auto;padding:13px 10px 14px;scrollbar-gutter:auto}
+  #ohliSocialShell .ohli-stage.is-reels{padding:0!important;overflow:hidden;min-height:0}
+  #ohliSocialShell .ohli-page-content{width:100%;max-width:100%;min-width:0}
+  #ohliSocialShell .ohli-home-grid{display:flex;flex-direction:column;width:100%;gap:13px}
+  #ohliSocialShell .ohli-feed-column,#ohliSocialShell .ohli-rail-column{width:100%;min-width:0;max-width:100%;gap:12px}
+  #ohliSocialShell .ohli-rail-column{display:none}
+  #ohliSocialShell .ohli-stage-head{width:100%;max-width:100%;gap:9px;margin:0 auto 13px}
+  #ohliSocialShell .ohli-stage-head h1{font-size:20px;overflow-wrap:anywhere}
+  #ohliSocialShell .ohli-stage-head p{font-size:10px}
+  #ohliSocialShell .ohli-stage-actions{max-width:45%;flex-wrap:wrap;justify-content:flex-end}
+  #ohliSocialShell .ohli-stage-actions .ohli-btn{min-height:34px;padding:7px 9px;font-size:10px}
+  #ohliSocialShell .ohli-profile-hero,#ohliSocialShell .ohli-post{width:100%;max-width:100%;overflow:hidden}
+  #ohliSocialShell .ohli-profile-summary{padding:0 13px 15px;min-width:0}
+  #ohliSocialShell .ohli-profile-title{display:flex;flex-direction:column;align-items:stretch;gap:10px;min-width:0}
+  #ohliSocialShell .ohli-profile-title>div{min-width:0;max-width:100%}
+  #ohliSocialShell .ohli-profile-title h2{font-size:18px;overflow-wrap:anywhere}
+  #ohliSocialShell .ohli-profile-title>div:last-child{display:flex;flex-wrap:wrap;gap:6px!important}
+  #ohliSocialShell .ohli-profile-title>div:last-child .ohli-btn{flex:1 1 auto;min-width:0;white-space:normal}
+  #ohliSocialShell .ohli-profile-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;width:100%}
+  #ohliSocialShell .ohli-profile-stats>button{min-width:0;width:100%;padding:7px 2px;overflow:hidden}
+  #ohliSocialShell .ohli-profile-stats>button strong{font-size:15px}
+  #ohliSocialShell .ohli-profile-stats>button small{font-size:9px;white-space:normal;overflow-wrap:anywhere}
+  #ohliSocialShell .ohli-tab-strip{display:flex;flex-wrap:nowrap;gap:4px;width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:4px}
+  #ohliSocialShell .ohli-tab-strip::-webkit-scrollbar{display:none}
+  #ohliSocialShell .ohli-tab-strip button{flex:0 0 auto;min-width:max-content;padding:0 12px;white-space:nowrap}
+  #ohliSocialShell .ohli-post{padding:13px 12px 11px}
+  #ohliSocialShell .ohli-post-stats{gap:5px;flex-wrap:wrap;font-size:9px}
+  #ohliSocialShell .ohli-post-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+  #ohliSocialShell .ohli-post-actions .ohli-btn{width:100%;font-size:10px;padding:8px 4px;white-space:normal}
+  #ohliSocialShell .ohli-media-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  #ohliSocialShell .ohli-story-row{gap:10px}
+  #ohliSocialShell .ohli-story-item{width:70px}
+  #ohliSocialShell .ohli-story-ring{width:60px;height:60px}
+  #ohliSocialShell .ohli-story-item strong{max-width:70px}
+  #ohliSocialShell .ohli-reels{width:100%;max-width:100%;height:100%}
+  #ohliSocialShell .ohli-reel-side{right:7px;bottom:max(70px,calc(58px + env(safe-area-inset-bottom)));gap:6px}
+  #ohliSocialShell .ohli-reel-side .ohli-reel-btn{width:36px;height:36px;margin:0}
+  #ohliSocialShell .ohli-reel-side .ohli-reel-btn svg{width:19px;height:19px}
+  #ohliSocialShell .ohli-reel-info{left:10px;right:52px;bottom:max(18px,calc(10px + env(safe-area-inset-bottom)))}
+  #ohliSocialShell .ohli-reel-info p{font-size:11px;max-height:3.2em}
+  #ohliSocialShell .ohli-story-foot{gap:5px;padding:8px 8px calc(10px + env(safe-area-inset-bottom))}
+  #ohliSocialShell .ohli-story-foot .ohli-story-stats{flex:1 1 100%;text-align:center;margin:0}
+  #ohliSocialShell .ohli-story-step{width:34px;height:34px;flex:none}
+  #ohliSocialShell .ohli-modal{width:calc(100% - 20px);max-width:480px;max-height:calc(var(--rkm-viewport-height,100dvh) - 20px);overflow:auto}
+  #ohliQrVideo{max-height:55dvh;object-fit:cover}
+}
+@media(max-width:390px){
+  #ohliSocialShell .ohli-brand strong{font-size:15px}
+  #ohliSocialShell .ohli-logo{width:27px;height:27px}
+  #ohliSocialShell .ohli-global-search input{font-size:11px}
+  #ohliSocialShell .ohli-profile-summary{padding-left:10px;padding-right:10px}
+  #ohliSocialShell .ohli-profile-stats>button strong{font-size:14px}
+  #ohliSocialShell .ohli-post-stats span{white-space:nowrap}
+}
+
+/* v2.1.1 mobile containment: stop page-level sideways drag; inner tab strips remain scrollable. */
+@media(max-width:850px){
+  html,body{max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
+  #ohliSocialShell,#ohliSocialShell *{box-sizing:border-box}
+  #ohliSocialShell{left:0;right:0;max-width:100%;overflow-x:clip}
+  #ohliSocialShell .ohli-stage,#ohliSocialShell .ohli-page-content,#ohliSocialShell .ohli-profile-hero,#ohliSocialShell .ohli-profile-summary{min-width:0;max-width:100%}
+  #ohliSocialShell .ohli-profile-hero{overflow:hidden}
+  #ohliSocialShell .ohli-reel-side{gap:5px}
+  #ohliSocialShell .ohli-reel-side .ohli-reel-btn{margin:0}
+}
+
+
+/* v2.4.0: comment moderation, music library/editor and real notification inbox */
+.ohli-comment{position:relative;display:flex;align-items:flex-start;gap:9px;padding:7px 0}.ohli-comment-copy{min-width:0;flex:1;border-radius:12px;padding:9px 11px;background:var(--ohli-surface,#f7f8fc);border:1px solid var(--ohli-line,#e6eaf2)}.ohli-comment-copy strong{font-size:11px}.ohli-comment-copy strong small{font-size:9px;font-weight:500;color:var(--ohli-muted,#8994aa)}.ohli-comment-copy p{margin:4px 0 0;font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}.ohli-comment-menu{flex:none;border:0;background:transparent;color:var(--ohli-muted,#8190aa);font-size:22px;line-height:1;padding:7px;border-radius:9px}.ohli-comments-locked{margin:10px 0;padding:12px;border:1px solid var(--ohli-line,#e5eaf2);border-radius:12px;text-align:center;color:var(--ohli-muted,#77839b);font-size:11px;background:var(--ohli-surface,#f7f8fc)}.ohli-post-audio{display:flex;align-items:center;gap:8px;width:100%;padding:8px 0;border:0;background:transparent;color:var(--ohli-accent,#725cff);text-align:left;font:600 11px system-ui;cursor:pointer}.ohli-post-audio span{margin-left:auto}.ohli-reel-audio{border:0;background:transparent;color:inherit;display:flex;align-items:center;gap:7px;padding:0;font:inherit;text-align:left;cursor:pointer}.ohli-notification-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.ohli-notification-list{display:flex;flex-direction:column;gap:8px}.ohli-notification{width:100%;display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--ohli-line,#e6eaf2);border-radius:15px;background:var(--ohli-surface,#fff);text-align:left;color:inherit;cursor:pointer}.ohli-notification.unread{border-color:#aaa1ff;background:color-mix(in srgb,#7665ff 8%,var(--ohli-surface,#fff))}.ohli-notification-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:4px}.ohli-notification-copy strong{font-size:12px}.ohli-notification-copy span{font-size:11px;color:var(--ohli-muted,#7f8ba3)}.ohli-notification-copy small{font-size:9px;color:var(--ohli-muted,#8792a9)}.ohli-notification-mark{font-size:20px;color:#e64d7c}.ohli-music-upload{padding:16px}.ohli-music-upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;align-items:end}.ohli-music-upload-grid .ohli-field{margin:6px 0}.ohli-music-upload-grid .ohli-btn{min-height:42px}.ohli-music-file{grid-column:1/-1}.ohli-music-card{display:flex;align-items:center;gap:13px;padding:14px;margin-bottom:10px}.ohli-music-icon{width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#7465f5,#a56cf2);color:white;font-size:23px;box-shadow:0 7px 18px #7867ef35}.ohli-music-icon.big{width:64px;height:64px;font-size:32px;margin:0 auto 8px}.ohli-music-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}.ohli-music-main strong{font-size:13px}.ohli-music-main small{font-size:10px;color:var(--ohli-muted,#8390a8)}.ohli-music-main audio,.ohli-music-detail audio{display:block;width:100%;height:34px;max-width:360px}.ohli-music-actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.ohli-music-actions .ohli-btn{font-size:10px;min-height:34px;padding:7px 10px}.ohli-music-detail{text-align:center}.ohli-music-detail h3{margin:7px 0;font-size:18px}.ohli-music-detail audio{max-width:100%;margin:12px auto}.ohli-music-detail h4{text-align:left;margin:22px 0 8px}.ohli-music-uses{display:flex;flex-direction:column;gap:8px;text-align:left}.ohli-music-use-row{display:flex;align-items:center;gap:10px;padding:9px;border-radius:12px;background:var(--ohli-surface,#f6f7fb)}.ohli-music-use-row img{width:50px;height:60px;object-fit:cover;border-radius:8px}.ohli-music-use-row span{display:flex;flex-direction:column;gap:4px;min-width:0}.ohli-music-use-row strong{font-size:11px}.ohli-music-use-row small{font-size:10px;color:var(--ohli-muted,#8490a8);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ohli-music-picker-list{max-height:42vh;overflow:auto;margin:12px 0}.ohli-music-picker-list .ohli-music-card{padding:10px}.ohli-music-local{border-top:1px solid var(--ohli-line,#e5eaf2);padding-top:10px}.ohli-music-local .ohli-field{margin:12px 0}.ohli-music-local input[type=file],.ohli-music-upload input[type=file]{width:100%;font:inherit;font-size:11px}.ohli-editor #crAudioStatus{margin:6px 0 10px;padding:8px 10px;border-radius:10px;background:var(--ohli-surface,#f5f6fb)}
+@media(max-width:650px){.ohli-music-card{align-items:flex-start;flex-wrap:wrap}.ohli-music-main{min-width:calc(100% - 60px)}.ohli-music-actions{width:100%;padding-left:57px}.ohli-music-upload-grid{grid-template-columns:1fr}.ohli-music-file{grid-column:auto}.ohli-notification-head{align-items:flex-start;flex-direction:column}}
+
+
+/* ===== OHLI Social v2.6.0 — Mobile polish, Story segments, audio-first playback, Liquid Glass ===== */
+.ohli-story-progress{display:flex;gap:4px;height:3px;margin:12px 12px 4px;background:transparent}
+.ohli-story-progress-segment{display:block;position:relative;flex:1;min-width:0;height:3px;border-radius:20px;overflow:hidden;background:rgba(255,255,255,.32)}
+.ohli-story-progress-segment i{display:block;width:0;height:100%;border-radius:20px;background:#fff}
+.ohli-story-progress-segment.is-complete i{width:100%}
+.ohli-story-tap-zone{position:absolute;top:0;bottom:0;width:34%;z-index:3;border:0;background:transparent;padding:0}
+.ohli-story-tap-zone.is-prev{left:0}.ohli-story-tap-zone.is-next{right:0}
+.ohli-story-media video{background:#000}
+.ohli-profile-highlights{display:flex;align-items:flex-start;gap:15px;overflow-x:auto;scrollbar-width:none;padding:14px 0 4px;margin:0 0 4px;overscroll-behavior-x:contain}
+.ohli-profile-highlights::-webkit-scrollbar{display:none}
+.ohli-profile-highlight{flex:0 0 68px;display:flex;flex-direction:column;align-items:center;gap:7px;padding:0;border:0;background:transparent;color:inherit;min-width:0}
+.ohli-profile-highlight-ring{display:grid;place-items:center;width:64px;height:64px;padding:3px;border-radius:50%;border:1px solid rgba(130,143,173,.65);background:linear-gradient(145deg,#4c63ff,#9257f5);overflow:hidden}
+.ohli-profile-highlight-ring img{width:100%;height:100%;object-fit:cover;border:2px solid var(--ohli-surface,#fff);border-radius:50%}
+.ohli-profile-highlight-ring b{display:grid;place-items:center;width:100%;height:100%;border:2px solid var(--ohli-surface,#fff);border-radius:50%;background:#192443;color:#fff;font-size:14px}
+.ohli-profile-highlight-ring.add{background:transparent;border:1.5px solid #9aa5bd}
+.ohli-profile-highlight-ring.add i{display:grid;place-items:center;width:100%;height:100%;border:2px solid var(--ohli-surface,#fff);border-radius:50%;background:rgba(118,130,155,.12);font-style:normal;font-size:30px;font-weight:300;color:var(--ohli-ink,#24304b)}
+.ohli-profile-highlight>strong{display:block;max-width:70px;font-size:10px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ohli-post-audio,.ohli-reel-audio{cursor:pointer}
+.ohli-original-audio-detail video{display:block;margin:12px auto}
+#ohliSocialShell.ohli-liquid-glass .ohli-topbar{background:rgba(9,19,41,.72);backdrop-filter:blur(24px) saturate(1.55);-webkit-backdrop-filter:blur(24px) saturate(1.55)}
+#ohliSocialShell.ohli-liquid-glass .ohli-card,#ohliSocialShell.ohli-liquid-glass .ohli-feed-tabs,#ohliSocialShell.ohli-liquid-glass .ohli-tab-strip{background:rgba(255,255,255,.68);backdrop-filter:blur(22px) saturate(1.45);-webkit-backdrop-filter:blur(22px) saturate(1.45);border-color:rgba(255,255,255,.5);box-shadow:0 12px 32px rgba(20,32,68,.09)}
+#ohliSocialShell.ohli-dark.ohli-liquid-glass .ohli-card,#ohliSocialShell.ohli-dark.ohli-liquid-glass .ohli-feed-tabs,#ohliSocialShell.ohli-dark.ohli-liquid-glass .ohli-tab-strip{background:rgba(16,27,51,.68);border-color:rgba(255,255,255,.12);box-shadow:0 12px 32px rgba(0,0,0,.18)}
+#ohliSocialShell.ohli-liquid-glass .ohli-sidebar{background:rgba(12,24,48,.72);backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);border-color:rgba(255,255,255,.12)}
+#ohliSocialShell.ohli-liquid-glass .ohli-nav-link.active{background:rgba(120,133,255,.22);border-color:rgba(180,190,255,.25);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+@media(max-width:850px){
+  #ohliSocialShell{grid-template-rows:58px minmax(0,1fr) calc(61px + env(safe-area-inset-bottom))}
+  #ohliSocialShell .ohli-sidebar{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;grid-template-rows:1fr!important;align-items:stretch;gap:0!important;padding:3px 9px max(4px,env(safe-area-inset-bottom))!important;overflow:visible!important}
+  #ohliSocialShell #ohliPrimaryNav,#ohliSocialShell #ohliCommunityNav{display:contents!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link{display:none!important;min-width:0!important;width:100%!important;height:100%!important;min-height:0!important;max-width:none!important;align-self:stretch!important;justify-self:stretch!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:12px!important;background:transparent!important;color:#7e8aa5!important;font-size:0!important;box-shadow:none!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-mobile-primary="true"]{display:flex!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="home"]{grid-column:1;grid-row:1}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="explore"]{grid-column:2;grid-row:1}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="create"]{grid-column:3;grid-row:1}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="videos"]{grid-column:4;grid-row:1}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="profile"]{grid-column:5;grid-row:1}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link>span{display:none!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link svg{display:block!important;width:24px!important;height:24px!important;stroke:currentColor!important;stroke-width:1.8!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link.active{color:#5968ee!important;background:rgba(104,120,255,.10)!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="create"]{color:#fff!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="create"] svg{width:38px!important;height:38px!important;padding:9px!important;border-radius:14px!important;background:linear-gradient(135deg,#4d65ff,#9859ff)!important;box-shadow:0 6px 18px rgba(83,96,240,.32)!important}
+  #ohliSocialShell .ohli-post-actions{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;align-items:center;gap:1px!important;flex-wrap:nowrap!important;width:100%;overflow:hidden}
+  #ohliSocialShell .ohli-post-actions .ohli-btn{display:flex!important;flex:initial!important;min-width:0!important;width:100%!important;min-height:42px!important;height:42px!important;padding:4px 0!important;flex-direction:column!important;justify-content:center!important;gap:2px!important;border:0!important;background:transparent!important;white-space:nowrap!important}
+  #ohliSocialShell .ohli-post-actions .ohli-btn svg{width:19px!important;height:19px!important;flex:none}
+  #ohliSocialShell .ohli-post-actions .ohli-btn span{display:block!important;max-width:100%;font-size:8px!important;line-height:1.05;overflow:hidden;text-overflow:ellipsis;white-space:nowrap!important}
+  #ohliSocialShell .ohli-post-actions .ohli-btn.is-active{color:#5968ef!important;background:rgba(100,115,255,.09)!important}
+  #ohliSocialShell .ohli-post-actions .ohli-btn.is-liked{color:#ed4d83!important}
+  #ohliSocialShell .ohli-post video.ohli-post-media{width:100%;aspect-ratio:9/16;max-height:68dvh;object-fit:cover;border-radius:13px}
+  #ohliSocialShell .ohli-story-progress{margin-top:max(10px,env(safe-area-inset-top))}
+  #ohliSocialShell .ohli-story-screen{height:100dvh;min-height:100dvh;width:100vw;max-width:100vw;border-radius:0}
+  #ohliSocialShell .ohli-profile-highlights{gap:13px}
+  #ohliSocialShell .ohli-profile-highlight{flex-basis:66px}
+  #ohliSocialShell .ohli-profile-highlight-ring{width:62px;height:62px}
+  #ohliSocialShell.ohli-liquid-glass .ohli-sidebar{background:rgba(245,247,255,.68)!important;backdrop-filter:blur(24px) saturate(1.65)!important;-webkit-backdrop-filter:blur(24px) saturate(1.65)!important;border-top:1px solid rgba(255,255,255,.55)!important;box-shadow:0 -8px 30px rgba(32,48,90,.10)!important}
+  #ohliSocialShell.ohli-dark.ohli-liquid-glass .ohli-sidebar{background:rgba(8,15,31,.66)!important;border-top-color:rgba(255,255,255,.13)!important}
+  #ohliSocialShell.ohli-liquid-glass .ohli-sidebar .ohli-nav-link{color:var(--ohli-ink)!important}
+  #ohliSocialShell.ohli-liquid-glass .ohli-sidebar .ohli-nav-link.active{background:rgba(118,130,255,.18)!important}
+}
+@media(max-width:850px){
+  #ohliSocialShell.ohli-transparent-reels{grid-template-rows:58px minmax(0,1fr) 0px!important}
+  #ohliSocialShell.ohli-transparent-reels .ohli-sidebar{position:absolute!important;left:0;right:0;bottom:0;height:calc(61px + env(safe-area-inset-bottom))!important;padding-bottom:max(4px,env(safe-area-inset-bottom))!important;background:rgba(0,0,0,0)!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;z-index:20}
+  #ohliSocialShell.ohli-transparent-reels .ohli-sidebar .ohli-nav-link{color:#fff!important;text-shadow:0 1px 5px rgba(0,0,0,.75)}
+  #ohliSocialShell.ohli-transparent-reels .ohli-sidebar .ohli-nav-link.active{background:rgba(255,255,255,.10)!important;color:#fff!important}
+  #ohliSocialShell.ohli-transparent-reels .ohli-stage.is-reels{padding:0!important}
+}
+
+@media(max-width:850px){
+  #ohliSocialShell.ohli-full-reels{grid-template-rows:0 minmax(0,1fr) calc(61px + env(safe-area-inset-bottom))!important}
+  #ohliSocialShell.ohli-full-reels>.ohli-topbar{display:none!important}
+  #ohliSocialShell.ohli-full-reels>.ohli-stage{grid-row:2!important;min-height:0!important;height:100%!important;padding:0!important;overflow:hidden!important}
+  #ohliSocialShell.ohli-full-reels .ohli-reels-wrap,#ohliSocialShell.ohli-full-reels .ohli-reels{height:100%!important;min-height:0!important}
+  #ohliSocialShell.ohli-full-reels .ohli-reel{height:100%!important;min-height:100%!important;scroll-snap-align:start}
+  #ohliSocialShell.ohli-full-reels .ohli-reel .ohli-vwrap{height:100%!important;min-height:100%!important;border-radius:0!important}
+  #ohliSocialShell.ohli-full-reels .ohli-reel .ohli-vwrap>video{width:100%!important;height:100%!important;object-fit:cover!important}
+  #ohliSocialShell.ohli-full-reels .ohli-reel-side{bottom:calc(80px + env(safe-area-inset-bottom))!important}
+  #ohliSocialShell.ohli-full-reels .ohli-reel-info{bottom:calc(24px + env(safe-area-inset-bottom))!important}
+  #ohliSocialShell.ohli-full-reels.ohli-transparent-reels{grid-template-rows:0 minmax(0,1fr) 0!important}
+  #ohliSocialShell.ohli-full-reels.ohli-transparent-reels .ohli-sidebar{height:calc(61px + env(safe-area-inset-bottom))!important}
+}
+
+/* Correct the inherited single-bar span rule so each Story clip gets its own segment. */
+.ohli-story-progress>.ohli-story-progress-segment{display:block;flex:1 1 0;width:auto!important;min-width:0;height:3px;background:rgba(255,255,255,.32)!important;overflow:hidden;border-radius:20px}
+.ohli-story-progress>.ohli-story-progress-segment>i{display:block;width:0;height:100%;background:#fff;border-radius:20px}
+.ohli-story-progress>.ohli-story-progress-segment.is-complete>i{width:100%}
+
+
+/* OHLI Social 3.0.0 — refined monochrome mobile-first system */
+:root{--ohli-navy:#111;--ohli-navy-2:#191919;--ohli-blue:#111;--ohli-violet:#555;--ohli-ink:#171717;--ohli-muted:#777;--ohli-line:#e8e8e8;--ohli-surface:#fff;--ohli-canvas:#f7f7f7;--ohli-shadow:0 8px 28px rgba(0,0,0,.045);--ohli-radius:16px}
+#ohliSocialShell{background:#f7f7f7;color:#171717}
+.ohli-topbar{background:#101010!important;border-bottom:1px solid #292929!important;color:#fff}
+.ohli-logo{background:#fff!important;box-shadow:none!important}.ohli-logo:after{background:#101010!important;box-shadow:5px 0 0 1px #fff!important}
+.ohli-brand strong{letter-spacing:-.6px;font-weight:760}
+.ohli-brand span{color:#bdbdbd!important}
+.ohli-global-search{background:#242424!important;border-color:#3a3a3a!important;color:#ddd}
+.ohli-global-search input{color:#fff!important}.ohli-global-search input::placeholder{color:#aaa!important}
+.ohli-topbar-notifications{width:40px;height:40px;display:grid;place-items:center;padding:0;border:0!important;border-radius:50%;background:transparent!important;color:#fff!important;box-shadow:none!important}
+.ohli-topbar-notifications svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8}
+.ohli-user-top{color:#fff!important}.ohli-user-label small{display:none!important}
+.ohli-sidebar{background:#fff!important;color:#555!important;border-right:1px solid #e8e8e8!important}
+.ohli-nav-caption{color:#999!important}.ohli-nav-link{color:#555!important;border-radius:11px!important}
+.ohli-nav-link:hover,.ohli-nav-link.active{background:#f1f1f1!important;color:#111!important;border-color:transparent!important;box-shadow:none!important}
+.ohli-nav-link.active{font-weight:800!important}.ohli-theme-button{background:#fafafa!important;color:#333!important;border-color:#e8e8e8!important}.ohli-nav-foot{color:#888!important;border-color:#eee!important}
+.ohli-stage{background:#f7f7f7!important}.ohli-stage-head h1{color:#111!important;font-weight:780!important;letter-spacing:-.6px}
+.ohli-stage-head p{color:#777!important}.ohli-card{border-color:#eaeaea!important;box-shadow:0 2px 12px rgba(0,0,0,.025)!important;border-radius:16px!important}
+.ohli-btn{background:#f7f7f7!important;border-color:#e7e7e7!important;color:#333!important;border-radius:10px!important}
+.ohli-btn:hover{background:#ededed!important;border-color:#ddd!important;color:#111!important}
+.ohli-btn-primary{background:#111!important;border-color:#111!important;color:#fff!important;box-shadow:none!important}
+.ohli-btn-primary:hover{background:#333!important;color:#fff!important}
+.ohli-btn-danger{background:#fff7f7!important;color:#a22!important;border-color:#f0dada!important}
+.ohli-feed-tabs{background:#eee!important}.ohli-feed-tab{color:#666!important}.ohli-feed-tab.active{color:#111!important;background:#fff!important;box-shadow:0 1px 4px #00000010!important}
+.ohli-post-author-copy strong,.ohli-profile-title h2,.ohli-rail-title{color:#171717!important}
+.ohli-post-author-copy small,.ohli-post-stats,.ohli-hint{color:#777!important}
+.ohli-post-text,.ohli-profile-bio{color:#333!important}
+.ohli-post-actions .ohli-btn{color:#555!important}.ohli-post-actions .ohli-btn.is-active{background:#f3f3f3!important;color:#111!important}.ohli-post-actions .ohli-btn.is-liked{color:#c33!important}
+.ohli-modal-backdrop{z-index:80!important;background:#0009!important;backdrop-filter:blur(3px)}
+.ohli-story-viewer{z-index:70!important}
+.ohli-modal{border-radius:18px!important;color:#171717!important}
+.ohli-modal-head h2{color:#111!important}
+.ohli-modal-close{background:#f3f3f3!important;color:#333!important}
+.ohli-profile-avatar-button.has-story:before{content:"";position:absolute;inset:-5px;border:3px solid #d3a23a;border-radius:50%;pointer-events:none}
+.ohli-profile-avatar-button.story-seen:before{border-color:#aaa}
+.ohli-profile-avatar-button.is-live:before{border-color:#e23b3b}
+.ohli-online-indicator{width:12px;height:12px;border:2px solid #fff;background:#22c55e;border-radius:50%;position:absolute;right:2px;bottom:3px}
+.ohli-online-indicator-inline{display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;vertical-align:middle}
+.ohli-profile-summary{color:#171717!important}
+.ohli-recent-searches{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px;padding:12px 14px;background:#fff;border:1px solid #eee;border-radius:13px}
+.ohli-recent-searches>span{width:100%;font-size:11px;font-weight:750;color:#666}
+.ohli-recent-search{display:inline-flex;align-items:center;gap:6px;border:1px solid #eee;border-radius:99px;background:#fafafa;padding:7px 10px;color:#444;font-size:11px}
+.ohli-recent-search svg{width:13px;height:13px;stroke:currentColor;fill:none}
+.ohli-history-list{display:flex;flex-direction:column;gap:2px;margin:12px 0}
+.ohli-history-row{display:flex;align-items:center;gap:12px;padding:11px 8px;border-bottom:1px solid #eee}
+.ohli-history-icon{width:34px;height:34px;display:grid;place-items:center;background:#f4f4f4;border-radius:10px;color:#444}
+.ohli-history-icon svg{width:17px;height:17px;stroke:currentColor;fill:none}
+.ohli-history-copy{min-width:0;display:flex;flex-direction:column;gap:4px}.ohli-history-copy strong{font-size:12px;color:#222}.ohli-history-copy small{font-size:10px;color:#888}
+.ohli-privacy-section-title{font-size:12px;font-weight:800;color:#222;margin:16px 0 8px}
+.ohli-thread-modal{position:fixed!important;inset:0!important;z-index:90!important;padding:0!important;align-items:stretch!important;justify-content:stretch!important;background:#f7f7f7!important}
+.ohli-thread-modal .ohli-modal{width:100%!important;max-width:none!important;height:100%!important;max-height:100%!important;min-height:100%!important;border-radius:0!important;padding:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;background:#f7f7f7!important}
+.ohli-thread-modal .ohli-modal-head{flex:none;padding:calc(12px + env(safe-area-inset-top)) 16px 12px!important;margin:0!important;border-bottom:1px solid #e8e8e8!important;background:#fff!important}
+.ohli-thread-modal .ohli-modal-head h2{font-size:16px!important;font-weight:800!important}
+.ohli-thread-modal #ohliModalContent{flex:1 1 auto!important;min-height:0!important;overflow:auto!important;padding:12px 14px calc(14px + env(safe-area-inset-bottom))!important;display:flex!important;flex-direction:column!important;gap:12px!important}
+.ohli-thread-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#777;font-size:11px;flex:none}
+.ohli-group-thread{display:flex;flex:1;min-height:180px;flex-direction:column;gap:9px;overflow:auto;overscroll-behavior:contain;padding:10px 2px}
+.ohli-group-message{max-width:min(88%,560px);align-self:flex-start;padding:10px 12px;background:#fff;border:1px solid #eee;border-radius:14px 14px 14px 4px;box-shadow:0 1px 3px #00000008}
+.ohli-group-message.mine{align-self:flex-end;background:#171717;color:#fff;border-color:#171717;border-radius:14px 14px 4px 14px}
+.ohli-group-message>b{display:block;font-size:10px;font-weight:800;color:#666;margin-bottom:4px}.ohli-group-message.mine>b{color:#ccc}
+.ohli-group-message p{margin:0;font-size:13px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.ohli-group-message small{display:block;margin-top:6px;color:#999;font-size:9px}.ohli-group-message.mine small{color:#aaa}
+.ohli-thread-composer{display:flex;gap:8px;flex:none;padding:8px;background:#fff;border:1px solid #e8e8e8;border-radius:14px;margin-top:auto}
+.ohli-thread-composer input{flex:1;min-width:0;border:0;outline:0;background:transparent;padding:8px 6px;color:#222;font-size:13px}
+.ohli-thread-composer button{border:0;border-radius:10px;background:#111;color:#fff;padding:0 16px;font-weight:750}
+.ohli-group-poll{max-width:min(94%,620px)!important}.ohli-group-poll>strong{display:block;font-size:14px;margin:5px 0 10px;color:#222}.ohli-group-message.mine.ohli-group-poll>strong{color:#fff}
+.ohli-poll-options{display:flex;flex-direction:column;gap:6px}.ohli-poll-option{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:10px;border:1px solid #e5e5e5;border-radius:10px;background:#fafafa;color:#333;text-align:left;font-size:12px}.ohli-poll-option.selected{border-color:#111;background:#eee}.ohli-poll-option b{font-variant-numeric:tabular-nums}
+.ohli-channel-posts{display:flex;flex-direction:column;gap:12px}.ohli-channel-post{padding:15px}.ohli-channel-post>strong{display:block;font-size:12px}.ohli-channel-post>small{font-size:10px;color:#888}.ohli-channel-post>p{font-size:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.ohli-channel-reactions{display:flex;flex-wrap:wrap;gap:6px}.ohli-channel-reactions button{border:1px solid #e8e8e8;border-radius:99px;background:#fafafa;color:#333;padding:6px 10px;font-size:12px}.ohli-channel-reactions button.active{background:#eee;border-color:#aaa}
+.ohli-ep .ohli-field{color:#444}.ohli-ep .ohli-field input,.ohli-ep .ohli-field textarea,.ohli-ep .ohli-field select{background:#fff;color:#222;border-color:#ddd}
+.ohli-profile-photo-preview img{max-height:70vh;object-fit:contain}
+@media(min-width:851px){.ohli-thread-modal .ohli-modal{height:100dvh!important}}
+@media(max-width:850px){
+  #ohliSocialShell{grid-template-columns:1fr;grid-template-rows:58px minmax(0,1fr) calc(62px + env(safe-area-inset-bottom));}
+  .ohli-topbar{padding:0 12px;gap:10px;min-height:58px}.ohli-brand strong{font-size:18px}.ohli-logo{width:30px;height:30px}.ohli-global-search{height:36px;border-radius:99px;padding:0 11px}.ohli-user-top{padding:0}.ohli-user-top .ohli-avatar{width:32px;height:32px}
+  .ohli-sidebar{grid-template-columns:repeat(5,minmax(0,1fr));padding:4px 5px max(5px,env(safe-area-inset-bottom));background:#fff!important}
+  .ohli-nav-link.active{background:#f1f1f1!important}.ohli-nav-link[data-page="create"]{color:#fff!important}.ohli-nav-link[data-page="create"] svg{background:#111!important;box-shadow:none!important;border-radius:12px!important}
+  .ohli-stage{padding:16px 10px max(20px,env(safe-area-inset-bottom))}.ohli-stage-head{margin-bottom:14px}.ohli-stage-head h1{font-size:21px}
+  .ohli-home-grid{grid-template-columns:minmax(0,1fr)}.ohli-rail-column{display:none}.ohli-post{padding:14px 12px 10px}.ohli-post-media{border-radius:10px;max-height:65vh}.ohli-post-actions{gap:0}.ohli-post-actions .ohli-btn{font-size:9px;padding:8px 3px;gap:4px}.ohli-post-actions .ohli-btn svg{width:14px;height:14px}
+  .ohli-modal-backdrop:not(.ohli-thread-modal){padding:10px;align-items:flex-end}.ohli-modal{width:100%;max-height:88dvh;border-radius:18px 18px 0 0!important;padding:17px}
+  .ohli-thread-modal{padding:0!important}.ohli-thread-modal .ohli-modal{border-radius:0!important}.ohli-thread-modal #ohliModalContent{padding-left:12px!important;padding-right:12px!important}
+  .ohli-story-viewer{z-index:70!important;padding:0}.ohli-story-screen{width:100%;height:100dvh;max-height:100dvh;border-radius:0;border:0}
+  .ohli-create,.ohli-editor{width:100%;max-width:100%}.ohli-ed-stage{max-height:66dvh}.ohli-ed-tools{display:flex;flex-wrap:wrap;gap:6px}.ohli-ed-tools button{flex:1 1 28%;min-height:38px}
+}
+
+/* OHLI 2.9.0: inline soundtrack for still-photo posts */
+.ohli-photo-audio{display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:10px 12px;margin:8px 0;border:1px solid var(--ohli-line,#e5e7eb);border-radius:12px;background:var(--ohli-surface,#f7f8fa);color:var(--ohli-text,#202124)}
+.ohli-photo-audio>span{font-size:11px;font-weight:650;overflow-wrap:anywhere}
+.ohli-photo-audio audio{width:100%;height:34px;max-width:100%}
+
+
+/* OHLI Social 3.0.0 — saved Story collections and single-open media */
+.ohli-story-collection-list{display:grid;gap:12px;max-height:min(72dvh,760px);overflow:auto;padding:2px 2px 10px}
+.ohli-collection-row{display:grid;grid-template-columns:minmax(88px,132px) minmax(0,1fr);gap:12px;align-items:start;padding:12px}
+.ohli-collection-row>img,.ohli-collection-row>video{width:100%;max-height:190px;aspect-ratio:9/14;object-fit:cover;border-radius:12px;background:#111}
+.ohli-collection-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.ohli-collection-actions .ohli-btn{font-size:12px;padding:7px 10px}
+.once-media-open{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin:7px 0;padding:9px 14px;border:1px solid var(--w-line,#d8dce2);border-radius:13px;background:var(--w-panel,#f7f8fa);color:var(--w-txt,#111);font:600 13px/1.35 inherit;cursor:pointer}
+.once-media-open:disabled{opacity:.65;cursor:default}
+.once-media-hidden{display:none!important}
+@media(max-width:540px){.ohli-collection-row{grid-template-columns:84px minmax(0,1fr);gap:9px;padding:9px}.ohli-collection-row>img,.ohli-collection-row>video{max-height:150px}.ohli-collection-actions .ohli-btn{padding:6px 8px}}
+
+
+/* OHLI Social v3.3 — restrained, unified light UI inspired by Instagram */
+:root{--ohli-navy:#fff;--ohli-navy-2:#fff;--ohli-blue:#0095f6;--ohli-violet:#0095f6;--ohli-ink:#111;--ohli-muted:#737373;--ohli-line:#dbdbdb;--ohli-surface:#fff;--ohli-canvas:#fafafa;--ohli-shadow:0 2px 12px rgba(0,0,0,.035);--ohli-radius:14px}
+#ohliSocialShell{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif!important;background:#fafafa!important;color:#111!important;grid-template-rows:64px minmax(0,1fr)!important;}
+#ohliSocialShell *{font-family:inherit}
+#ohliSocialShell .ohli-topbar{background:#fff!important;color:#111!important;border-bottom:1px solid #dbdbdb!important;box-shadow:none!important;padding-left:22px!important;padding-right:22px!important}
+#ohliSocialShell .ohli-brand{color:#111!important}
+#ohliSocialShell .ohli-brand strong{color:#111!important;font-size:21px!important;font-weight:750!important;letter-spacing:-.65px!important}
+#ohliSocialShell .ohli-brand span span{color:#737373!important}
+#ohliSocialShell .ohli-logo{background:#111!important;box-shadow:none!important}
+#ohliSocialShell .ohli-logo:after{background:#fff!important;box-shadow:none!important}
+#ohliSocialShell .ohli-global-search{background:#efefef!important;border:0!important;border-radius:10px!important;color:#262626!important}
+#ohliSocialShell .ohli-global-search input{color:#111!important}
+#ohliSocialShell .ohli-global-search input::placeholder{color:#8e8e8e!important}
+#ohliSocialShell .ohli-status-pill{color:#737373!important}
+#ohliSocialShell .ohli-status-dot{background:#20b26b!important;box-shadow:0 0 0 3px #20b26b18!important}
+#ohliSocialShell .ohli-topbar-notifications,#ohliSocialShell .ohli-user-top,#ohliSocialShell .ohli-mobile-menu{color:#262626!important;background:transparent!important}
+#ohliSocialShell .ohli-user-label strong{color:#111!important}
+#ohliSocialShell .ohli-user-label small{display:none!important}
+#ohliSocialShell .ohli-sidebar{background:#fff!important;color:#262626!important;border-right:1px solid #dbdbdb!important;padding:18px 12px!important}
+#ohliSocialShell .ohli-nav-caption{color:#8e8e8e!important}
+#ohliSocialShell .ohli-nav-link{color:#262626!important;background:transparent!important;border:0!important;border-radius:10px!important;font-weight:550!important;font-size:13px!important;box-shadow:none!important}
+#ohliSocialShell .ohli-nav-link:hover{background:#f5f5f5!important;color:#111!important}
+#ohliSocialShell .ohli-nav-link.active{background:#f5f5f5!important;color:#111!important;box-shadow:none!important;font-weight:750!important}
+#ohliSocialShell .ohli-nav-link.active svg{stroke-width:2.1!important}
+#ohliSocialShell .ohli-theme-button{display:none!important}
+#ohliSocialShell .ohli-nav-foot{border-top:1px solid #efefef!important;color:#8e8e8e!important}
+#ohliSocialShell .ohli-stage{background:#fafafa!important;padding:22px clamp(12px,2vw,28px) 34px!important}
+#ohliSocialShell .ohli-stage-head h1{color:#111!important;font-size:23px!important;font-weight:750!important;letter-spacing:-.55px!important}
+#ohliSocialShell .ohli-stage-head p{color:#737373!important}
+#ohliSocialShell .ohli-card{background:#fff!important;border:1px solid #efefef!important;border-radius:14px!important;box-shadow:none!important;color:#111!important}
+#ohliSocialShell .ohli-rail-title,#ohliSocialShell .ohli-post-author-copy strong,#ohliSocialShell .ohli-profile-name,#ohliSocialShell .ohli-card h2,#ohliSocialShell .ohli-card h3{color:#111!important}
+#ohliSocialShell .ohli-hint,#ohliSocialShell .ohli-rail-card p,#ohliSocialShell .ohli-post-author-copy small,#ohliSocialShell .ohli-list-meta{color:#737373!important}
+#ohliSocialShell .ohli-btn{background:#f5f5f5!important;border:1px solid #efefef!important;color:#262626!important;border-radius:9px!important;box-shadow:none!important;font-weight:650!important}
+#ohliSocialShell .ohli-btn:hover{background:#ededed!important;border-color:#e5e5e5!important;color:#111!important}
+#ohliSocialShell .ohli-btn-primary{background:#0095f6!important;border-color:#0095f6!important;color:#fff!important}
+#ohliSocialShell .ohli-btn-primary:hover{background:#1877f2!important;color:#fff!important}
+#ohliSocialShell .ohli-btn-danger{background:#fff4f4!important;color:#d93648!important;border-color:#f7dada!important}
+#ohliSocialShell .ohli-feed-tabs{background:#efefef!important;border-radius:10px!important}
+#ohliSocialShell .ohli-feed-tab{color:#737373!important}
+#ohliSocialShell .ohli-feed-tab.active{background:#fff!important;color:#111!important;box-shadow:0 1px 3px rgba(0,0,0,.08)!important}
+#ohliSocialShell .ohli-post{background:#fff!important}
+#ohliSocialShell .ohli-post-text{color:#262626!important}
+#ohliSocialShell .ohli-post-stats{color:#8e8e8e!important;border-color:#efefef!important}
+#ohliSocialShell .ohli-post-actions .ohli-btn{color:#737373!important;background:transparent!important;border:0!important}
+#ohliSocialShell .ohli-post-actions .ohli-btn.is-active{color:#0095f6!important;background:#f5faff!important}
+#ohliSocialShell .ohli-post-actions .ohli-btn.is-liked{color:#ed4956!important}
+#ohliSocialShell .ohli-avatar{background:#efefef!important;color:#262626!important}
+#ohliSocialShell .ohli-modal-backdrop{background:rgba(0,0,0,.42)!important;backdrop-filter:blur(2px)!important}
+#ohliSocialShell .ohli-modal{background:#fff!important;color:#111!important;border:1px solid #efefef!important;border-radius:18px!important;box-shadow:0 18px 55px rgba(0,0,0,.18)!important}
+#ohliSocialShell .ohli-modal-head{border-color:#efefef!important}
+#ohliSocialShell .ohli-modal-head h2{color:#111!important}
+#ohliSocialShell .ohli-modal-close{color:#262626!important;background:#f5f5f5!important}
+#ohliSocialShell input,#ohliSocialShell textarea,#ohliSocialShell select{background:#fff!important;color:#111!important;border-color:#dbdbdb!important;border-radius:9px!important}
+#ohliSocialShell .ohli-thread-modal{align-items:stretch!important;justify-content:stretch!important;padding:0!important}
+#ohliSocialShell .ohli-thread-modal .ohli-modal{width:min(780px,100%)!important;height:min(88dvh,900px)!important;max-height:100%!important;display:flex!important;flex-direction:column!important;border-radius:16px!important;overflow:hidden!important}
+#ohliSocialShell .ohli-thread-modal #ohliModalContent{display:flex!important;flex:1!important;min-height:0!important;flex-direction:column!important;overflow:hidden!important}
+#ohliSocialShell .ohli-thread-toolbar{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;flex-wrap:wrap!important;padding:12px 16px!important;border-bottom:1px solid #efefef!important;color:#737373!important;background:#fff!important}
+#ohliSocialShell .ohli-thread-toolbar-actions{display:flex!important;gap:7px!important;flex-wrap:wrap!important}
+#ohliSocialShell .ohli-group-thread,#ohliSocialShell .ohli-channel-posts{flex:1!important;min-height:0!important;overflow:auto!important;padding:14px 16px!important;background:#fafafa!important}
+#ohliSocialShell .ohli-thread-composer{flex:none!important;background:#fff!important;border-top:1px solid #efefef!important;padding:11px!important}
+#ohliSocialShell .ohli-group-message{background:#fff!important;border:1px solid #efefef!important;color:#111!important;border-radius:15px!important}
+#ohliSocialShell .ohli-group-message.mine{background:#eaf5ff!important;border-color:#d8edff!important}
+#ohliSocialShell .ohli-group-contact-picker{max-height:44vh;overflow:auto;border:1px solid #efefef;border-radius:12px;background:#fff}
+#ohliSocialShell .ohli-group-contact-choice{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #f1f1f1;cursor:pointer}
+#ohliSocialShell .ohli-group-contact-choice:last-child{border-bottom:0}
+#ohliSocialShell .ohli-group-contact-choice input{width:18px;height:18px;flex:none;accent-color:#0095f6}
+#ohliSocialShell .ohli-group-contact-choice .ohli-avatar{width:38px;height:38px;flex:none}
+#ohliSocialShell .ohli-group-contact-choice span:last-child{min-width:0;display:flex;flex-direction:column;gap:3px}
+#ohliSocialShell .ohli-group-contact-choice b{color:#111;font-size:13px}
+#ohliSocialShell .ohli-group-contact-choice small{color:#8e8e8e;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ohliSocialShell .ohli-list-card{border-color:#efefef!important}
+#ohliSocialShell .ohli-skeleton{background:linear-gradient(90deg,#f1f1f1 25%,#f7f7f7 50%,#f1f1f1 75%)!important}
+#ohliSocialShell.ohli-dark{background:#fafafa!important;color:#111!important}
+#ohliSocialShell.ohli-dark .ohli-topbar,#ohliSocialShell.ohli-dark .ohli-sidebar,#ohliSocialShell.ohli-dark .ohli-card,#ohliSocialShell.ohli-dark .ohli-modal{background:#fff!important;color:#111!important}
+@media(max-width:850px){
+ #ohliSocialShell{grid-template-rows:56px minmax(0,1fr) calc(58px + env(safe-area-inset-bottom))!important}
+ #ohliSocialShell .ohli-topbar{padding:0 12px!important;gap:10px!important}
+ #ohliSocialShell .ohli-brand strong{font-size:18px!important}
+ #ohliSocialShell .ohli-brand>span:nth-child(2)>span{display:none!important}
+ #ohliSocialShell .ohli-global-search{width:auto!important;max-width:none!important;flex:1!important;height:36px!important}
+ #ohliSocialShell .ohli-global-search input{font-size:12px!important}
+ #ohliSocialShell .ohli-status-pill{display:none!important}
+ #ohliSocialShell .ohli-user-label{display:none!important}
+ #ohliSocialShell .ohli-sidebar{background:#fff!important;border-top:1px solid #dbdbdb!important;box-shadow:none!important}
+ #ohliSocialShell .ohli-sidebar .ohli-nav-link.active{background:transparent!important;color:#0095f6!important}
+ #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="create"]{color:#fff!important}
+ #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="create"] svg{background:#111!important;box-shadow:none!important}
+ #ohliSocialShell .ohli-stage{padding:12px 0 20px!important}
+ #ohliSocialShell .ohli-stage-head{padding:0 14px!important;margin-bottom:14px!important}
+ #ohliSocialShell .ohli-home-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+ #ohliSocialShell .ohli-rail-column{display:none!important}
+ #ohliSocialShell .ohli-feed-column{gap:10px!important}
+ #ohliSocialShell .ohli-card{border-radius:0!important;border-left:0!important;border-right:0!important}
+ #ohliSocialShell .ohli-thread-modal{padding:0!important}
+ #ohliSocialShell .ohli-thread-modal .ohli-modal{width:100%!important;height:100dvh!important;max-height:100dvh!important;border-radius:0!important;border:0!important}
+ #ohliSocialShell .ohli-thread-toolbar{padding:10px!important}
+ #ohliSocialShell .ohli-thread-toolbar-actions .ohli-btn{min-height:34px!important;padding:7px 9px!important;font-size:11px!important}
+}
+
+
+/* v3.5.0: imported sticker preview and collection controls */
+#ohliSocialShell .ohli-sticker-preview{display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 0 4px;text-align:center}
+#ohliSocialShell .ohli-sticker-preview img{display:block;width:min(68vw,260px);height:min(38vh,260px);object-fit:contain;border:1px solid var(--ohli-border,#e5e5e5);border-radius:14px;background:var(--ohli-surface,#fff)}
+#ohliSocialShell .ohli-sticker-preview small{color:var(--ohli-muted,#8e8e8e);font-size:11px}
+#ohliSocialShell .ohli-sticker-preview-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;width:100%;padding-top:8px}
+#ohliSocialShell .ohli-sticker-item{position:relative;min-width:0}
+#ohliSocialShell .ohli-sticker-delete,#ohliSocialShell .ohli-sticker-save{position:absolute;top:3px;right:3px;width:26px;height:26px;border:0;border-radius:50%;background:#161616e8;color:#fff;font-weight:700;z-index:2}
+#ohliSocialShell .ohli-sticker-delete{background:#c93636}
+#ohliSocialShell .ohli-sticker-save{background:#333}
+#ohliSocialShell .ohli-orange{--ohli-accent:#e87924}
+#ohliSocialShell.ohli-orange .ohli-btn-primary,#ohliSocialShell.ohli-orange .ohli-nav-link.active,#ohliSocialShell.ohli-orange .ohli-feed-tab.active,#ohliSocialShell.ohli-orange .ohli-setting-toggle:focus-visible{border-color:#e87924!important}
+#ohliSocialShell.ohli-orange .ohli-btn-primary{background:#e87924!important;color:#fff!important}
+#ohliSocialShell.ohli-orange .ohli-nav-link.active,#ohliSocialShell.ohli-orange .ohli-feed-tab.active{color:#d96813!important}
+#ohliSocialShell.ohli-orange .ohli-avatar-ring{border-color:#e87924!important}
+@media(max-width:850px){
+ #ohliSocialShell.ohli-reels-nav-transparent .ohli-sidebar{background:transparent!important;border-top-color:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
+ #ohliSocialShell.ohli-reels-nav-transparent .ohli-sidebar .ohli-nav-link{color:#fff!important;background:transparent!important;text-shadow:0 1px 5px #000b}
+ #ohliSocialShell.ohli-reels-nav-transparent .ohli-sidebar .ohli-nav-link.active{color:#fff!important;background:rgba(0,0,0,.24)!important;border-radius:12px!important}
+ #ohliSocialShell.ohli-reels-nav-transparent .ohli-sidebar .ohli-nav-link[data-page="create"]{color:#fff!important}
+ #ohliSocialShell.ohli-reels-nav-transparent .ohli-sidebar .ohli-nav-link[data-page="create"] svg{background:transparent!important;filter:drop-shadow(0 1px 4px #000b)}
+ #ohliSocialShell.ohli-reels-nav-black .ohli-sidebar{background:#090a0e!important;border-top:1px solid #24262b!important;box-shadow:none!important}
+ #ohliSocialShell.ohli-reels-nav-black .ohli-sidebar .ohli-nav-link{color:#fff!important;background:transparent!important}
+ #ohliSocialShell.ohli-reels-nav-black .ohli-sidebar .ohli-nav-link.active{color:#fff!important;background:#ffffff18!important}
+ #ohliSocialShell.ohli-reels-nav-black .ohli-sidebar .ohli-nav-link[data-page="create"] svg{background:#111!important}
+}
+
+/* v3.5.2 targeted mobile editor and share-sheet refinements */
+#ohliSocialShell .ohli-ed-tools-scroll{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:thin;padding:2px 0 7px}
+#ohliSocialShell .ohli-ed-tools{display:flex;flex-wrap:nowrap;gap:7px;width:max-content;min-width:100%;}
+#ohliSocialShell .ohli-ed-tools button{flex:0 0 auto;white-space:nowrap;min-height:40px;padding:9px 13px;border-radius:999px;}
+#ohliSocialShell .ohli-share-grid button[data-action="share-download"]{background:#111;color:#fff;border-color:#111}
+@media(max-width:760px){
+ #ohliSocialShell .ohli-ed-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:stretch}
+ #ohliSocialShell .ohli-ed-row select{grid-column:1/-1;width:100%;min-width:0}
+ #ohliSocialShell .ohli-ed-row .ohli-download-setting{grid-column:1/-1;min-width:0;white-space:normal;line-height:1.35}
+ #ohliSocialShell .ohli-ed-row button{width:100%;min-width:0;white-space:nowrap}
+ #ohliSocialShell .ohli-ed-row #crGo{grid-column:1/-1;min-height:44px}
+ #ohliSocialShell .ohli-share-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+ #ohliSocialShell .ohli-share-grid button{min-width:0;white-space:normal}
+}
+
+/* OHLI Social v3.6.2 — focused iOS full-bleed feed + LIVE layout overrides */
+@supports (height: 100dvh) {
+  #ohliSocialShell.ohli-full-reels[data-page="videos"] {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 50 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    max-height: 100dvh !important;
+    grid-template-rows: 0 minmax(0,1fr) 0 !important;
+    overflow: hidden !important;
+    background: #000 !important;
+  }
+}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 50 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 0 !important;
+  max-height: 100dvh !important;
+  grid-template-rows: 0 minmax(0,1fr) 0 !important;
+  overflow: hidden !important;
+  background: #000 !important;
+  isolation: isolate;
+}
+html:has(#ohliSocialShell.ohli-full-reels[data-page="videos"]),
+body:has(#ohliSocialShell.ohli-full-reels[data-page="videos"]) {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100% !important;
+  overflow: hidden !important;
+  background: #000 !important;
+}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] > .ohli-topbar { display: none !important; }
+#ohliSocialShell.ohli-full-reels[data-page="videos"] > .ohli-stage {
+  position: absolute !important;
+  inset: 0 !important;
+  grid-row: 2 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #000 !important;
+}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-page-content,
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reels-wrap,
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reels,
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reel,
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reel .ohli-vwrap {
+  width: 100% !important; height: 100% !important; min-height: 0 !important;
+  max-height: none !important; margin: 0 !important; padding: 0 !important;
+  border: 0 !important; border-radius: 0 !important; background: #000 !important;
+}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reel .ohli-vwrap > video {
+  display: block !important; width: 100% !important; height: 100% !important;
+  max-height: none !important; object-fit: cover !important; background: #000 !important;
+}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-sidebar {
+  position: fixed !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+  z-index: 80 !important; display: grid !important;
+  grid-template-columns: repeat(5,minmax(0,1fr)) !important;
+  height: calc(58px + env(safe-area-inset-bottom)) !important;
+  min-height: 0 !important; padding: 3px 9px env(safe-area-inset-bottom) !important;
+  margin: 0 !important; background: transparent !important; border: 0 !important;
+  border-top: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-sidebar .ohli-nav-link,
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-sidebar .ohli-nav-link.active {
+  background: transparent !important; border: 0 !important; box-shadow: none !important;
+  color: #fff !important; text-shadow: 0 1px 5px #000,0 0 8px #000b !important;
+}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-sidebar .ohli-nav-link svg {
+  filter: drop-shadow(0 1px 3px #000) drop-shadow(0 0 4px #0009) !important;
+}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-sidebar .ohli-nav-link[data-page="create"] svg {
+  background: #fff !important; color: #111 !important; padding: 8px !important;
+  border-radius: 13px !important; filter: drop-shadow(0 2px 5px #0008) !important;
+}
+
+/* LIVE modal: full-screen broadcaster/viewer stage, controls remain the existing handlers. */
+#modalBackdrop.rkm-live-fullscreen {
+  position: fixed !important; inset: 0 !important; z-index: 9999 !important;
+  display: flex !important; align-items: stretch !important; justify-content: stretch !important;
+  width: 100vw !important; height: 100vh !important; height: 100dvh !important;
+  max-height: 100dvh !important; padding: 0 !important; margin: 0 !important;
+  overflow: hidden !important; background: #000 !important;
+}
+#modalBackdrop.rkm-live-fullscreen #modalContent {
+  position: fixed !important; inset: 0 !important; width: 100vw !important;
+  height: 100vh !important; height: 100dvh !important; max-width: none !important;
+  max-height: 100dvh !important; margin: 0 !important; padding: 0 !important;
+  overflow: hidden !important; border: 0 !important; border-radius: 0 !important;
+  background: #000 !important; box-shadow: none !important;
+}
+#modalBackdrop.rkm-live-fullscreen .rkm-live-modal {
+  position: absolute !important; inset: 0 !important; display: block !important;
+  width: 100% !important; height: 100% !important; min-height: 0 !important;
+  max-height: none !important; margin: 0 !important; padding: 0 !important;
+  overflow: hidden !important; border: 0 !important; border-radius: 0 !important;
+  background: #000 !important; color: #fff !important; box-shadow: none !important;
+}
+#modalBackdrop.rkm-live-fullscreen .rkm-live-stage {
+  position: absolute !important; inset: 0 !important; display: block !important;
+  width: 100% !important; height: 100% !important; min-height: 0 !important;
+  max-height: none !important; margin: 0 !important; padding: 0 !important;
+  border: 0 !important; border-radius: 0 !important; background: #000 !important;
+  overflow: hidden !important;
+}
+#modalBackdrop.rkm-live-fullscreen .rkm-live-preview {
+  position: absolute !important; inset: 0 !important; display: block !important;
+  width: 100% !important; height: 100% !important; min-height: 0 !important;
+  max-height: none !important; aspect-ratio: auto !important; object-fit: cover !important;
+  border: 0 !important; border-radius: 0 !important; background: #000 !important;
+}
+#modalBackdrop.rkm-live-fullscreen .rkm-live-gradient { position: absolute !important; left: 0 !important; right: 0 !important; height: 22% !important; pointer-events: none !important; z-index: 1 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-gradient-top { top: 0 !important; background: linear-gradient(#0009,transparent) !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-gradient-bottom { bottom: 0 !important; background: linear-gradient(transparent,#000a) !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-head {
+  position: absolute !important; z-index: 5 !important; top: env(safe-area-inset-top) !important;
+  left: 0 !important; right: 0 !important; display: flex !important; align-items: center !important;
+  gap: 9px !important; min-height: 54px !important; padding: 7px 12px !important;
+  background: transparent !important; border: 0 !important;
+}
+#modalBackdrop.rkm-live-fullscreen .rkm-live-host-chip { display: flex !important; align-items: center !important; gap: 8px !important; flex: 1 1 auto !important; min-width: 0 !important; background: transparent !important; border: 0 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-profile { width: 34px !important; height: 34px !important; border: 1.5px solid #fff !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-host-copy b { color: #fff !important; font-size: 13px !important; text-shadow: 0 1px 4px #000 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-host-copy small { color: #fff !important; font-size: 10px !important; text-shadow: 0 1px 4px #000 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-badge { flex: none !important; background: #f12b62 !important; color: #fff !important; border: 0 !important; border-radius: 5px !important; padding: 5px 8px !important; font-size: 10px !important; font-weight: 850 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-close { width: 40px !important; height: 40px !important; min-width: 40px !important; background: transparent !important; border: 0 !important; color: #fff !important; font-size: 27px !important; text-shadow: 0 1px 5px #000 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-overlay {
+  position: absolute !important; z-index: 4 !important; inset: 0 !important; display: flex !important;
+  flex-direction: column !important; justify-content: flex-end !important; gap: 8px !important;
+  padding: 0 12px calc(76px + env(safe-area-inset-bottom)) !important;
+  background: transparent !important; pointer-events: none !important;
+}
+#modalBackdrop.rkm-live-fullscreen .rkm-live-overlay > * { pointer-events: auto !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-overlay-title { display: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-state { align-self: flex-start !important; margin: 0 0 6px !important; padding: 0 !important; color: #fff !important; background: transparent !important; border: 0 !important; font-size: 11px !important; text-shadow: 0 1px 4px #000 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-comments {
+  display: flex !important; flex-direction: column !important; justify-content: flex-end !important;
+  width: min(78%,520px) !important; max-height: 35dvh !important; min-height: 0 !important;
+  margin: 0 !important; padding: 0 !important; overflow-y: auto !important; overflow-x: hidden !important;
+  background: transparent !important; border: 0 !important; border-radius: 0 !important;
+  mask-image: linear-gradient(to bottom,transparent 0%,#000 18%) !important;
+  -webkit-mask-image: linear-gradient(to bottom,transparent 0%,#000 18%) !important;
+  scrollbar-width: none !important;
+}
+#modalBackdrop.rkm-live-fullscreen .rkm-live-comment { display: flex !important; width: fit-content !important; max-width: 100% !important; margin: 2px 0 !important; padding: 6px 10px !important; background: #0007 !important; border: 0 !important; border-radius: 16px !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-comment-copy b,
+#modalBackdrop.rkm-live-fullscreen .rkm-live-comment-copy span { color: #fff !important; text-shadow: 0 1px 3px #000 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-actions-rail { position: absolute !important; z-index: 6 !important; top: 72px !important; right: 9px !important; bottom: auto !important; display: flex !important; flex-direction: column !important; gap: 14px !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-rail-btn { width: 44px !important; height: 44px !important; min-width: 44px !important; min-height: 44px !important; padding: 8px !important; background: transparent !important; border: 0 !important; border-radius: 50% !important; color: #fff !important; box-shadow: none !important; text-shadow: 0 1px 4px #000 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-rail-btn svg { width: 23px !important; height: 23px !important; fill: none !important; stroke: currentColor !important; stroke-width: 1.8 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-comment-form {
+  position: absolute !important; z-index: 8 !important; left: 12px !important; right: 12px !important;
+  bottom: calc(8px + env(safe-area-inset-bottom)) !important; display: flex !important;
+  width: auto !important; max-width: none !important; margin: 0 !important; padding: 0 !important;
+  gap: 8px !important; background: transparent !important; border: 0 !important;
+}
+#modalBackdrop.rkm-live-fullscreen .rkm-live-comment-form input {
+  flex: 1 1 auto !important; min-width: 0 !important; min-height: 44px !important;
+  padding: 10px 15px !important; font-size: 16px !important; line-height: 1.25 !important;
+  color: #fff !important; background: #0005 !important; border: 1px solid #ffffffa8 !important;
+  border-radius: 24px !important; outline: none !important; -webkit-appearance: none !important;
+}
+#modalBackdrop.rkm-live-fullscreen .rkm-live-comment-form input::placeholder { color: #ffffffd0 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-send { width: 44px !important; height: 44px !important; min-width: 44px !important; border: 0 !important; border-radius: 50% !important; background: #f12b62 !important; color: #fff !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-send svg { width: 20px !important; height: 20px !important; fill: none !important; stroke: currentColor !important; stroke-width: 1.8 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-camera-error { position: absolute !important; z-index: 12 !important; inset: 50% auto auto 50% !important; transform: translate(-50%,-50%) !important; display: flex !important; flex-direction: column !important; align-items: center !important; gap: 12px !important; width: min(88vw,340px) !important; padding: 22px !important; border-radius: 18px !important; background: #17191fee !important; color: #fff !important; text-align: center !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-camera-error[hidden] { display: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-note { display: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-menu { position: static !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-menu > summary { display: grid !important; place-items: center !important; width: 40px !important; height: 40px !important; list-style: none !important; cursor: pointer !important; color: #fff !important; background: transparent !important; border: 0 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-menu > summary::-webkit-details-marker { display: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-menu > summary svg { width: 23px !important; height: 23px !important; fill: currentColor !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-sheet-backdrop { display: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-menu[open] .rkm-live-sheet-backdrop { display: block !important; position: fixed !important; inset: 0 !important; z-index: 20 !important; width: 100vw !important; height: 100dvh !important; border: 0 !important; background: #0009 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-sheet-panel { display: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-menu[open] .rkm-live-sheet-panel {
+  position: fixed !important; z-index: 21 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+  display: block !important; width: 100% !important; max-height: min(78dvh,720px) !important;
+  overflow-y: auto !important; padding: 10px 16px calc(20px + env(safe-area-inset-bottom)) !important;
+  border: 1px solid #ffffff18 !important; border-bottom: 0 !important; border-radius: 22px 22px 0 0 !important;
+  background: #17191f !important; color: #fff !important; box-shadow: 0 -14px 45px #0008 !important;
+  animation: ohliLiveSheetIn .25s ease-out both !important;
+}
+#modalBackdrop.rkm-live-fullscreen .rkm-live-sheet-handle { width: 38px !important; height: 4px !important; margin: 2px auto 14px !important; border-radius: 8px !important; background: #858892 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-sheet-title { margin: 0 0 14px !important; font-size: 16px !important; font-weight: 750 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-studio-card { width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-studio-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-studio-grid label { color: #e8e8ec !important; font-size: 11px !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-studio-grid input,
+#modalBackdrop.rkm-live-fullscreen .rkm-live-studio-grid select { width: 100% !important; min-height: 42px !important; font-size: 16px !important; color: #fff !important; background: #252832 !important; border: 1px solid #414652 !important; border-radius: 10px !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-comments-setting { display: flex !important; align-items: center !important; gap: 8px !important; color: #fff !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-sheet-actions { display: flex !important; gap: 9px !important; margin-top: 14px !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-sheet-actions button { flex: 1 1 0 !important; min-height: 46px !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-confirm { position: fixed !important; z-index: 40 !important; inset: 0 !important; display: grid !important; place-items: center !important; padding: 20px !important; background: #000a !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-confirm[hidden] { display: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-confirm-card { width: min(100%,360px) !important; padding: 20px !important; border-radius: 18px !important; background: #1b1d23 !important; color: #fff !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-confirm-card button { width: 100% !important; min-height: 44px !important; margin-top: 8px !important; border: 0 !important; border-radius: 12px !important; background: #e83255 !important; color: #fff !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-confirm-card button:last-child { background: #333640 !important; }
+@keyframes ohliLiveSheetIn { from { transform: translateY(24px); opacity: .8; } to { transform: translateY(0); opacity: 1; } }
+@media(max-width:600px) {
+  #modalBackdrop.rkm-live-fullscreen .rkm-live-head { top: env(safe-area-inset-top) !important; padding-left: 10px !important; padding-right: 8px !important; }
+  #modalBackdrop.rkm-live-fullscreen .rkm-live-comments { max-height: 35dvh !important; width: calc(100% - 58px) !important; }
+  #modalBackdrop.rkm-live-fullscreen .rkm-live-studio-grid { grid-template-columns: 1fr !important; }
+}
+@media(prefers-reduced-motion:reduce) { #modalBackdrop.rkm-live-fullscreen .rkm-live-sheet-panel { animation: none !important; } }
+/* Preparation stage: keep the existing LIVE settings and start action in a docked sheet. */
+#modalBackdrop.rkm-live-fullscreen .rkm-live-modal.is-host:not(.is-live) .rkm-live-menu > summary { display: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-modal.is-host:not(.is-live) .rkm-live-menu:not([open]) > .rkm-live-sheet-panel,
+#modalBackdrop.rkm-live-fullscreen .rkm-live-modal.is-host:not(.is-live) .rkm-live-menu[open] > .rkm-live-sheet-panel {
+  position: fixed !important; z-index: 7 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+  display: block !important; width: 100% !important; max-height: min(56dvh,560px) !important;
+  overflow-y: auto !important; padding: 12px 16px calc(16px + env(safe-area-inset-bottom)) !important;
+  border: 1px solid #ffffff18 !important; border-bottom: 0 !important; border-radius: 22px 22px 0 0 !important;
+  background: #17191f !important; color: #fff !important; box-shadow: 0 -14px 45px #0008 !important;
+}
+#modalBackdrop.rkm-live-fullscreen .rkm-live-modal.is-host:not(.is-live) .rkm-live-sheet-handle { display: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-modal.is-host:not(.is-live) .rkm-live-sheet-title { display: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-modal.is-host:not(.is-live) .rkm-live-menu:not([open]) > .rkm-live-sheet-backdrop { display: none !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-modal.is-host:not(.is-live) .rkm-live-stage { bottom: 0 !important; }
+#modalBackdrop.rkm-live-fullscreen .rkm-live-modal.is-host:not(.is-live) .rkm-live-overlay { padding-bottom: calc(min(56dvh,560px) + 12px) !important; }
+
+
+/* OHLI Social v3.6.4 — dedicated friendship page */
+.ohli-friends-toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:14px 16px;border:1px solid var(--ohli-line);border-radius:14px;background:var(--ohli-surface)}
+.ohli-friends-toolbar>div{display:flex;flex-direction:column;gap:4px;flex:1;min-width:150px}
+.ohli-friends-toolbar strong{font-size:13px;color:var(--ohli-ink)}
+.ohli-friends-toolbar span{font-size:10px;color:var(--ohli-muted)}
+.ohli-friend-row{flex-wrap:wrap}
+.ohli-friend-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-left:auto}
+.ohli-friend-actions .ohli-btn{min-height:34px;padding:7px 10px}
+@media(max-width:600px){.ohli-friends-toolbar{align-items:stretch}.ohli-friends-toolbar>div{flex-basis:100%}.ohli-friend-row{gap:9px}.ohli-friend-actions{width:100%;margin-left:57px}.ohli-friend-actions .ohli-btn{flex:1;min-width:70px}}
+
+/* OHLI v3.6.8 — keep Story in RKM Chat; hide only the OHLI Social mobile Story shortcut. */
+@media(max-width:759px){
+  #app .nav-tabs{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:5px!important;padding-left:8px!important;padding-right:8px!important}
+  #app .nav-tabs .nav-tab[data-section="status"]{display:flex!important}
+  #app .nav-tabs .nav-tab{min-width:0!important;min-height:50px!important;padding-left:3px!important;padding-right:3px!important;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  #ohliSocialShell .ohli-sidebar{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="story"]{display:none!important}
+}
+
+/* Story History and Highlight management */
+.ohli-story-history-entry{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px;padding:12px 14px;border:1px solid var(--ohli-border,#e4e7ec);border-radius:14px;background:var(--ohli-panel,#fff)}
+.ohli-story-history-list{display:grid;gap:10px;max-height:min(68vh,680px);overflow:auto;padding:2px}
+.ohli-story-history-card{border:1px solid var(--ohli-border,#e4e7ec);border-radius:14px;padding:10px;background:var(--ohli-panel,#fff)}
+.ohli-story-history-open{display:flex;align-items:center;gap:12px;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:0;cursor:pointer}
+.ohli-story-history-open>img,.ohli-story-history-open>span:first-child{width:68px;height:88px;flex:0 0 68px;object-fit:cover;border-radius:9px;background:var(--ohli-soft,#eef0f5);display:grid;place-items:center}
+.ohli-story-history-copy{min-width:0;display:grid;gap:5px}.ohli-story-history-copy strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ohli-story-history-copy small{color:var(--ohli-muted,#73808b)}
+.ohli-story-history-actions,.ohli-highlight-manage{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.ohli-highlight-card-wrap{min-width:0;text-align:center}.ohli-highlight-card-wrap .ohli-highlight-card{width:100%}.ohli-highlight-manage{justify-content:center}.ohli-highlight-manage .ohli-btn{font-size:11px;padding:5px 8px}
+
+
+/* OHLI Social v3.6.19 — remove misplaced reel shade and stabilize iOS full-screen video. */
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reel-shade{display:none!important}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reel{position:relative!important;isolation:isolate!important}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reel .ohli-vwrap{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;overflow:hidden!important;background:#000!important}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reel .ohli-vwrap>video{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center center!important;background:#000!important}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reel-info{z-index:6!important}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reel-side{z-index:7!important}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reels-top{z-index:8!important;pointer-events:none}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reels-top button{pointer-events:auto}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reels{height:100%!important;min-height:0!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important}
+#ohliSocialShell.ohli-full-reels[data-page="videos"] .ohli-reel{scroll-snap-align:start;scroll-snap-stop:always}
+
+/* v3.6.19: controllable Highlight thumbnails and media-first Story History. */
+#ohliSocialShell[data-highlight-shape="circle"] .ohli-highlight-card>span{border-radius:50%!important;aspect-ratio:1}
+#ohliSocialShell[data-highlight-shape="rounded"] .ohli-highlight-card>span{border-radius:18px!important;aspect-ratio:1}
+#ohliSocialShell[data-highlight-shape="square"] .ohli-highlight-card>span{border-radius:3px!important;aspect-ratio:1}
+#ohliSocialShell[data-highlight-fit="contain"] .ohli-highlight-card img{object-fit:contain!important;background:#111}
+#ohliSocialShell[data-highlight-fit="top"] .ohli-highlight-card img{object-fit:cover!important;object-position:center top!important}
+#ohliSocialShell .ohli-story-history-day{margin:12px 0 18px}
+#ohliSocialShell .ohli-story-history-day>h3{font-size:13px;margin:10px 0;color:var(--ohli-ink)}
+#ohliSocialShell .ohli-story-history-card{display:grid;grid-template-columns:minmax(112px,34%) 1fr;gap:11px;align-items:start;padding:10px;border:1px solid var(--ohli-border);border-radius:14px;margin:8px 0;background:var(--ohli-surface)}
+#ohliSocialShell .ohli-story-history-media img,#ohliSocialShell .ohli-story-history-media video{display:block;width:100%;max-height:220px;aspect-ratio:9/16;object-fit:cover;border-radius:10px;background:#080b12}
+#ohliSocialShell .ohli-story-history-copy{min-width:0;display:flex;flex-direction:column;gap:6px}
+#ohliSocialShell .ohli-story-history-copy>strong{font-size:12px;overflow-wrap:anywhere}
+#ohliSocialShell .ohli-story-history-copy small{font-size:10px;color:var(--ohli-muted)}
+#ohliSocialShell .ohli-story-history-actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+#ohliSocialShell .ohli-story-history-tools{display:flex;align-items:end;gap:8px;flex-wrap:wrap;margin:10px 0}
+#ohliSocialShell .ohli-story-history-tools .ohli-field{flex:1;min-width:180px}
+#ohliSocialShell .ohli-audio-mix-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;padding:10px;border:1px solid var(--ohli-border);border-radius:12px;margin:8px 0}
+#ohliSocialShell .ohli-audio-mix-controls .ohli-field{margin:0;font-size:11px}
+#ohliSocialShell .ohli-audio-mix-controls input[type=range]{display:block;width:100%;accent-color:var(--ohli-blue)}
+#ohliSocialShell .ohli-audio-mix-controls output{font-weight:800;font-size:11px}
+@media(max-width:600px){#ohliSocialShell .ohli-story-history-card{grid-template-columns:112px minmax(0,1fr);gap:8px;padding:8px}#ohliSocialShell .ohli-story-history-media img,#ohliSocialShell .ohli-story-history-media video{max-height:190px}#ohliSocialShell .ohli-story-history-actions .ohli-btn{font-size:10px;padding:6px}}
+
+
+/* v3.6.20 — lock profile Story/Highlight thumbnails to a true circle on narrow screens. */
+#ohliSocialShell .ohli-profile-highlight{flex:0 0 74px!important;width:74px!important;max-width:74px!important;min-width:74px!important;align-items:center!important;}
+#ohliSocialShell .ohli-profile-highlight-ring{box-sizing:border-box!important;display:grid!important;flex:0 0 66px!important;width:66px!important;height:66px!important;min-width:66px!important;max-width:66px!important;min-height:66px!important;max-height:66px!important;aspect-ratio:1/1!important;border-radius:50%!important;overflow:hidden!important;position:relative!important;}
+#ohliSocialShell .ohli-profile-highlight-ring>img,#ohliSocialShell .ohli-profile-highlight-ring>b,#ohliSocialShell .ohli-profile-highlight-ring.add>i{box-sizing:border-box!important;display:grid!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;aspect-ratio:1/1!important;border-radius:50%!important;object-fit:cover!important;}
+#ohliSocialShell .ohli-profile-highlight>strong{max-width:74px!important;width:74px!important;text-align:center!important;}
+
+
+/* v3.6.21 visual viewing history: square 1:1 media tiles like a gallery. */
+.ohli-history-section{margin:16px 0 20px}.ohli-history-section-title{font-size:13px;font-weight:850;color:var(--ohli-ink,#182b2a);margin:0 0 10px}.ohli-history-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.ohli-history-tile{display:flex;min-width:0;flex-direction:column;gap:6px;padding:0;border:0;background:transparent;text-align:left;cursor:pointer;color:inherit}.ohli-history-square{position:relative;display:block;width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:13px;background:#e9edf0}.ohli-history-square img,.ohli-history-square video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}.ohli-history-media-badge{position:absolute;right:7px;bottom:7px;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#0009;color:white;backdrop-filter:blur(8px)}.ohli-history-media-badge svg{width:14px;height:14px;stroke:currentColor;fill:none}.ohli-history-tile-copy{display:flex;min-width:0;flex-direction:column;gap:3px;padding:0 2px}.ohli-history-tile-copy strong{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ohli-history-tile-copy small{font-size:10px;color:#87918f}.ohli-history-row[data-action="history-open"]{width:100%;border:0;background:transparent;text-align:left;cursor:pointer}.ohli-history-row[data-action="history-open"]:active,.ohli-history-tile:active{opacity:.78}
+@media(max-width:360px){.ohli-history-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
+
+
+/* OHLI Social v3.6.27 — refined cream / charcoal / warm-yellow visual system. */
+#ohliSocialShell{
+  --ohli-canvas:#f1f0e8!important;
+  --ohli-surface:#fffef8!important;
+  --ohli-ink:#1a1a16!important;
+  --ohli-muted:#77766d!important;
+  --ohli-line:#e6e2d6!important;
+  --ohli-blue:#191916!important;
+  --ohli-violet:#d6bd42!important;
+  --ohli-accent:#e4ca42!important;
+  background:var(--ohli-canvas)!important;
+  color:var(--ohli-ink)!important;
+}
+#ohliSocialShell:not(.ohli-dark) .ohli-topbar{
+  background:#fbfaf4!important;color:#171713!important;border-bottom:1px solid #e8e5da!important;
+  box-shadow:0 3px 18px rgba(31,29,18,.025)!important;
+}
+#ohliSocialShell:not(.ohli-dark) .ohli-brand{color:#171713!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-brand>span:nth-child(2)>span{color:#888579!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-logo{background:#171713!important;box-shadow:0 0 0 5px #17171308!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-logo:after{background:#f4df62!important;box-shadow:5px 0 0 1px #f4df62!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-global-search{background:#f2f0e7!important;border:1px solid #e5e1d4!important;color:#77766d!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-global-search input{color:#171713!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-global-search input::placeholder{color:#898679!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-status-pill{color:#69685f!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-status-dot{background:#3aa77b!important;box-shadow:0 0 0 4px #3aa77b18!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-user-top{color:#181815!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-user-label small{color:#858276!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-sidebar{background:#f8f7f0!important;color:#77766c!important;border-right:1px solid #e6e2d6!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-nav-caption{color:#aaa696!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-nav-link{color:#66655c!important;border-radius:14px!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-nav-link:hover{background:#eeece2!important;color:#171713!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-nav-link.active{background:#171713!important;color:#fff!important;border-color:#171713!important;box-shadow:none!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-nav-foot{border-top-color:#e6e2d6!important;color:#8a887b!important}
+#ohliSocialShell:not(.ohli-dark) .ohli-theme-button{background:#efede3!important;color:#34342d!important;border:1px solid #e3dfd2!important}
+#ohliSocialShell .ohli-stage{background:var(--ohli-canvas)!important;padding-top:30px!important}
+#ohliSocialShell .ohli-stage-head h1{font-size:clamp(22px,2vw,29px)!important;letter-spacing:-.85px!important;font-weight:760!important}
+#ohliSocialShell .ohli-stage-head p{color:#858276!important;font-size:12px!important}
+#ohliSocialShell .ohli-home-grid{gap:22px!important;grid-template-columns:minmax(0, min(760px,1.7fr)) minmax(230px,.72fr)!important}
+#ohliSocialShell .ohli-feed-column,#ohliSocialShell .ohli-rail-column{gap:16px!important}
+#ohliSocialShell .ohli-card{background:var(--ohli-surface)!important;border:1px solid var(--ohli-line)!important;border-radius:22px!important;box-shadow:0 8px 26px rgba(32,30,18,.035)!important;overflow:hidden}
+#ohliSocialShell .ohli-compose{background:#fff9d9!important;border-color:#f0e5a1!important;padding:19px!important}
+#ohliSocialShell .ohli-avatar{background:linear-gradient(145deg,#eddc74,#cbb548)!important;color:#242318!important}
+#ohliSocialShell .ohli-btn{background:#f5f3eb!important;border:1px solid #e7e3d7!important;border-radius:999px!important;color:#4f4e45!important;min-height:40px!important}
+#ohliSocialShell .ohli-btn:hover{background:#ece9dc!important;border-color:#d7d1bd!important;color:#171713!important}
+#ohliSocialShell .ohli-btn-primary{background:#171713!important;border:1px solid #171713!important;color:#fff!important;box-shadow:none!important}
+#ohliSocialShell .ohli-btn-primary:hover{background:#303027!important;color:#fff!important}
+#ohliSocialShell .ohli-btn-danger{background:#fff1ef!important;color:#aa3c36!important;border-color:#f3d4ce!important}
+#ohliSocialShell .ohli-feed-tabs{background:#e9e6db!important;border-radius:999px!important;padding:4px!important}
+#ohliSocialShell .ohli-feed-tab{border-radius:999px!important;color:#77766d!important}
+#ohliSocialShell .ohli-feed-tab.active{background:#171713!important;color:#fff!important;box-shadow:none!important}
+#ohliSocialShell .ohli-audience{border-radius:999px!important;background:#fffef8!important;border-color:#e7dfbf!important;color:#5e5a44!important}
+#ohliSocialShell .ohli-compose textarea{color:#26251e!important}
+#ohliSocialShell .ohli-post-author-copy strong,#ohliSocialShell .ohli-post-text,#ohliSocialShell .ohli-rail-title,#ohliSocialShell .ohli-user-copy strong,#ohliSocialShell .ohli-profile-title h2,#ohliSocialShell .ohli-profile-stats strong{color:var(--ohli-ink)!important}
+#ohliSocialShell .ohli-post-author-copy small,#ohliSocialShell .ohli-post-stats,#ohliSocialShell .ohli-hint{color:#898679!important}
+#ohliSocialShell .ohli-comment-copy{background:#f3f1e8!important;border-radius:15px!important}
+#ohliSocialShell .ohli-post-actions .ohli-btn{background:transparent!important;border:0!important;border-radius:999px!important}
+#ohliSocialShell .ohli-post-actions .ohli-btn.is-active{background:#f7f0c7!important;color:#26251d!important}
+#ohliSocialShell .ohli-post-actions .ohli-btn.is-liked{color:#c94f68!important}
+#ohliSocialShell .ohli-modal{background:#fffef8!important;color:#1a1a16!important;border:1px solid #e8e4d8!important;border-radius:22px!important;box-shadow:0 25px 90px rgba(19,18,12,.2)!important}
+#ohliSocialShell .ohli-modal-backdrop{background:rgba(25,24,18,.48)!important;backdrop-filter:blur(6px)!important}
+#ohliSocialShell .ohli-modal-head{border-bottom:1px solid #ece8dc!important}
+#ohliSocialShell:not(.ohli-dark) input,#ohliSocialShell:not(.ohli-dark) textarea,#ohliSocialShell:not(.ohli-dark) select{background:#fffef9!important;color:#191914!important;border-color:#e4e0d4!important}
+#ohliSocialShell .ohli-history-row{display:flex!important;align-items:center!important;gap:13px!important;width:100%!important;margin:0 0 9px!important;padding:15px!important;border:0!important;border-radius:19px!important;text-align:left!important;color:#171713!important;box-shadow:0 5px 17px rgba(0,0,0,.045)!important}
+#ohliSocialShell .ohli-history-row:nth-child(4n+1){background:#5ac4ec!important}
+#ohliSocialShell .ohli-history-row:nth-child(4n+2){background:#f5df48!important}
+#ohliSocialShell .ohli-history-row:nth-child(4n+3){background:#d8d0a1!important}
+#ohliSocialShell .ohli-history-row:nth-child(4n){background:#d77be0!important}
+#ohliSocialShell .ohli-history-row .ohli-history-icon{background:rgba(255,255,255,.35)!important;color:#171713!important;border-radius:50%!important}
+#ohliSocialShell .ohli-history-row .ohli-history-copy strong{color:#171713!important}
+#ohliSocialShell .ohli-history-row .ohli-history-copy small{color:#49483f!important}
+#ohliSocialShell .ohli-history-square{border-radius:17px!important}
+#ohliSocialShell .ohli-performance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0 2px}
+#ohliSocialShell .ohli-performance-metric{padding:13px;border-radius:16px;background:#f2f0e5;border:1px solid #e7e2d2;min-width:0}
+#ohliSocialShell .ohli-performance-metric small{display:block;color:#828071;font-size:10px;font-weight:750;letter-spacing:.04em;text-transform:uppercase}
+#ohliSocialShell .ohli-performance-metric strong{display:block;margin-top:7px;color:#191914;font-size:19px;font-weight:800;letter-spacing:-.5px;overflow-wrap:anywhere}
+#ohliSocialShell .ohli-performance-note{font-size:11px;color:#858276;line-height:1.55;margin:8px 0 0}
+#ohliSocialShell.ohli-dark{
+  --ohli-canvas:#171815!important;--ohli-surface:#22231f!important;--ohli-ink:#f4f1e5!important;
+  --ohli-muted:#aaa797!important;--ohli-line:#383930!important;--ohli-blue:#efdb69!important;
+  --ohli-violet:#efdb69!important;--ohli-accent:#efdb69!important;
+  background:#171815!important;color:#f4f1e5!important;
+}
+#ohliSocialShell.ohli-dark .ohli-topbar{background:#1c1d19!important;color:#f4f1e5!important;border-bottom:1px solid #383930!important}
+#ohliSocialShell.ohli-dark .ohli-brand,#ohliSocialShell.ohli-dark .ohli-user-top{color:#f4f1e5!important}
+#ohliSocialShell.ohli-dark .ohli-brand>span:nth-child(2)>span,#ohliSocialShell.ohli-dark .ohli-user-label small{color:#aaa797!important}
+#ohliSocialShell.ohli-dark .ohli-logo{background:#efdb69!important;box-shadow:0 0 0 5px #efdb6915!important}
+#ohliSocialShell.ohli-dark .ohli-logo:after{background:#1a1b17!important;box-shadow:5px 0 0 1px #1a1b17!important}
+#ohliSocialShell.ohli-dark .ohli-global-search{background:#262720!important;border-color:#3c3d32!important;color:#aaa797!important}
+#ohliSocialShell.ohli-dark .ohli-global-search input{background:transparent!important;color:#f4f1e5!important}
+#ohliSocialShell.ohli-dark .ohli-global-search input::placeholder{color:#898879!important}
+#ohliSocialShell.ohli-dark .ohli-sidebar{background:#1b1c18!important;color:#aaa797!important;border-color:#383930!important}
+#ohliSocialShell.ohli-dark .ohli-nav-caption{color:#747465!important}
+#ohliSocialShell.ohli-dark .ohli-nav-link{color:#c4c1b4!important}
+#ohliSocialShell.ohli-dark .ohli-nav-link:hover{background:#2b2c25!important;color:#fff!important}
+#ohliSocialShell.ohli-dark .ohli-nav-link.active{background:#efdb69!important;color:#1a1b17!important;border-color:#efdb69!important;box-shadow:none!important}
+#ohliSocialShell.ohli-dark .ohli-theme-button{background:#292a23!important;color:#efdb69!important;border-color:#414236!important}
+#ohliSocialShell.ohli-dark .ohli-stage-head h1,#ohliSocialShell.ohli-dark .ohli-post-author-copy strong,#ohliSocialShell.ohli-dark .ohli-post-text,#ohliSocialShell.ohli-dark .ohli-rail-title,#ohliSocialShell.ohli-dark .ohli-profile-title h2,#ohliSocialShell.ohli-dark .ohli-profile-stats strong{color:#f4f1e5!important}
+#ohliSocialShell.ohli-dark .ohli-stage-head p,#ohliSocialShell.ohli-dark .ohli-post-author-copy small,#ohliSocialShell.ohli-dark .ohli-post-stats,#ohliSocialShell.ohli-dark .ohli-hint{color:#aaa797!important}
+#ohliSocialShell.ohli-dark .ohli-card,#ohliSocialShell.ohli-dark .ohli-modal{background:#22231f!important;border-color:#383930!important;color:#f4f1e5!important}
+#ohliSocialShell.ohli-dark .ohli-compose{background:#39351d!important;border-color:#655b2b!important}
+#ohliSocialShell.ohli-dark .ohli-compose textarea{background:transparent!important;color:#f4f1e5!important}
+#ohliSocialShell.ohli-dark .ohli-btn:not(.ohli-btn-primary){background:#2c2d27!important;border-color:#414238!important;color:#e3e0d4!important}
+#ohliSocialShell.ohli-dark .ohli-btn-primary{background:#efdb69!important;border-color:#efdb69!important;color:#1a1b17!important}
+#ohliSocialShell.ohli-dark .ohli-feed-tabs{background:#2c2d27!important}
+#ohliSocialShell.ohli-dark .ohli-feed-tab{color:#aaa797!important}
+#ohliSocialShell.ohli-dark .ohli-feed-tab.active{background:#efdb69!important;color:#1a1b17!important}
+#ohliSocialShell.ohli-dark .ohli-comment-copy{background:#2b2c25!important}
+#ohliSocialShell.ohli-dark input,#ohliSocialShell.ohli-dark textarea,#ohliSocialShell.ohli-dark select{background:#292a23!important;color:#f4f1e5!important;border-color:#45463a!important}
+#ohliSocialShell.ohli-dark .ohli-performance-metric{background:#2b2c25!important;border-color:#414238!important}
+#ohliSocialShell.ohli-dark .ohli-performance-metric strong{color:#f4f1e5!important}
+#ohliSocialShell.ohli-dark .ohli-performance-metric small,#ohliSocialShell.ohli-dark .ohli-performance-note{color:#aaa797!important}
+#ohliSocialShell.ohli-dark .ohli-history-row{color:#171713!important}
+#ohliSocialShell.ohli-orange{--ohli-accent:#d9bd3d!important;--ohli-blue:#171713!important;--ohli-violet:#d9bd3d!important}
+#ohliSocialShell.ohli-orange .ohli-btn-primary{background:#171713!important;color:#fff!important}
+@media(max-width:850px){
+  #ohliSocialShell{grid-template-rows:56px minmax(0,1fr) calc(62px + env(safe-area-inset-bottom))!important}
+  #ohliSocialShell .ohli-topbar{background:#fbfaf4!important;padding:0 12px!important;gap:9px!important}
+  #ohliSocialShell.ohli-dark .ohli-topbar{background:#1c1d19!important}
+  #ohliSocialShell .ohli-stage{padding:15px 11px calc(17px + env(safe-area-inset-bottom))!important}
+  #ohliSocialShell .ohli-stage-head{padding:0 3px!important;margin:0 0 14px!important}
+  #ohliSocialShell .ohli-home-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+  #ohliSocialShell .ohli-feed-column{gap:12px!important}
+  #ohliSocialShell .ohli-card{border-radius:20px!important;border:1px solid var(--ohli-line)!important;margin:0!important}
+  #ohliSocialShell .ohli-compose{padding:15px!important}
+  #ohliSocialShell .ohli-post{padding:15px!important}
+  #ohliSocialShell .ohli-sidebar{background:#fbfaf4!important;border-top:1px solid #e5e1d5!important;box-shadow:0 -7px 23px rgba(25,24,18,.06)!important;padding:4px 8px max(5px,env(safe-area-inset-bottom))!important}
+  #ohliSocialShell.ohli-dark .ohli-sidebar{background:#1b1c18!important;border-top-color:#383930!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link{color:#77766d!important;border-radius:13px!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link.active{background:#171713!important;color:#fff!important}
+  #ohliSocialShell.ohli-dark .ohli-sidebar .ohli-nav-link{color:#c4c1b4!important}
+  #ohliSocialShell.ohli-dark .ohli-sidebar .ohli-nav-link.active{background:#efdb69!important;color:#1a1b17!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="create"]{color:#fff!important}
+  #ohliSocialShell .ohli-sidebar .ohli-nav-link[data-page="create"] svg{background:#efdb69!important;color:#171713!important;box-shadow:none!important;border-radius:13px!important}
+  #ohliSocialShell .ohli-post-actions{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+  #ohliSocialShell .ohli-performance-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #ohliSocialShell .ohli-history-row{padding:13px!important;border-radius:17px!important}
+}
+@media(max-width:380px){
+  #ohliSocialShell .ohli-brand strong{font-size:16px!important}
+  #ohliSocialShell .ohli-global-search{min-width:80px!important}
+  #ohliSocialShell .ohli-performance-grid{grid-template-columns:1fr 1fr}
+}
+
+
+/* ===== v3.6.27 reference refresh: legacy chat shares the social shell palette ===== */
+#app{--w-bg:#f1efe6;--w-panel:#fffef8;--w-head:#f7f5ed;--w-line:#e5e0d3;--w-txt:#191914;--w-mut:#77766d;--w-out:#f5e9a5;--w-in:#fffef8;--w-inp:#fffef8;--w-g:#171713;--w-wall:#f1efe6}
+body.v5-light #app{--w-bg:#f1efe6;--w-panel:#fffef8;--w-head:#f7f5ed;--w-line:#e5e0d3;--w-txt:#191914;--w-mut:#77766d;--w-out:#f5e9a5;--w-in:#fffef8;--w-inp:#fffef8;--w-wall:#f1efe6}
+#app .app-brand-copy strong{color:#171713!important}
+#app .nav-tab.active{color:#171713!important}
+#app .nav-tab.active .oi{color:#171713!important}
+#app .contact:hover,#app .contact.active{background:#f1eedf!important;border-radius:15px!important}
+#app .main-head{background:#fffef8!important}
+#app .bubble{border-radius:17px!important;box-shadow:0 3px 12px rgba(35,32,20,.045)!important}
+#app .bubble-row.mine .bubble{background:#f5e9a5!important;color:#191914!important}
+#app .day-label{border-radius:99px!important;background:#e9e5d8!important;color:#77766d!important}
+#app .compose{background:#fffef8!important;border-top:1px solid #e5e0d3!important}
+#app .compose textarea,#app .compose input,#app #messageInput{border:1px solid #e5e0d3!important;border-radius:999px!important}
+#app .send-btn{background:#171713!important;color:#fff!important}
+#app .view-card{border-radius:21px!important;box-shadow:0 7px 24px rgba(30,28,20,.045)!important}
+@media(max-width:759px){
+  #app .nav-tabs{background:#fffef8!important;border-top-color:#e5e0d3!important}
+  #app .nav-tab.active{background:#f5e9a5!important;border-radius:14px!important}
+  #app .main-head{padding-top:max(9px,env(safe-area-inset-top))!important}
+}
+
+/* Dark legacy Chat palette: preserve the original night-mode behavior in charcoal/yellow. */
+body:not(.v5-light) #app{--w-bg:#171815;--w-panel:#22231f;--w-head:#1c1d19;--w-line:#383930;--w-txt:#f4f1e5;--w-mut:#aaa797;--w-out:#484020;--w-in:#2b2c25;--w-inp:#292a23;--w-wall:#171815}
+body:not(.v5-light) #app .side-head,body:not(.v5-light) #app .nav-tabs,body:not(.v5-light) #app .main-head,body:not(.v5-light) #app .compose{background:#1c1d19!important;color:#f4f1e5!important;border-color:#383930!important}
+body:not(.v5-light) #app .sidebar,body:not(.v5-light) #app .items,body:not(.v5-light) #app .side-bottom{background:#22231f!important;color:#f4f1e5!important;border-color:#383930!important}
+body:not(.v5-light) #app .app-brand-copy strong,body:not(.v5-light) #app .contact-name,body:not(.v5-light) #app .peer-title,body:not(.v5-light) #app .call-line{color:#f4f1e5!important}
+body:not(.v5-light) #app .contact-preview,body:not(.v5-light) #app .contact-time,body:not(.v5-light) #app .peer-subtitle,body:not(.v5-light) #app .subtle{color:#aaa797!important}
+body:not(.v5-light) #app .contact:hover,body:not(.v5-light) #app .contact.active{background:#303127!important;border-radius:15px!important}
+body:not(.v5-light) #app .main,body:not(.v5-light) #app .messages,body:not(.v5-light) #app .welcome-view,body:not(.v5-light) #app .status-view,body:not(.v5-light) #app .calls-view{background:#171815!important;color:#f4f1e5!important}
+body:not(.v5-light) #app .view-card{background:#22231f!important;color:#f4f1e5!important;border-color:#383930!important}
+body:not(.v5-light) #app .bubble{background:#2b2c25!important;color:#f4f1e5!important;border-color:#414238!important}
+body:not(.v5-light) #app .bubble-row.mine .bubble{background:#484020!important;color:#fff8d7!important}
+body:not(.v5-light) #app .bubble-meta,body:not(.v5-light) #app .bubble .message-time{color:#aaa797!important}
+body:not(.v5-light) #app .compose textarea,body:not(.v5-light) #app .compose input,body:not(.v5-light) #app #messageInput{background:#292a23!important;color:#f4f1e5!important;border-color:#45463a!important}
+body:not(.v5-light) #app .send-btn{background:#efdb69!important;color:#1a1b17!important}
+body:not(.v5-light) #app .nav-tab{color:#aaa797!important}
+body:not(.v5-light) #app .nav-tab.active{background:#efdb69!important;color:#1a1b17!important}
+body:not(.v5-light) #app .icon-btn{color:#c4c1b4!important}
+body:not(.v5-light) #app .day-label{background:#2c2d27!important;color:#aaa797!important;border-color:#414238!important}
+
+
+/* Auth and document canvas follow the same warm neutral / charcoal system. */
+body.v5-light{background:#f1efe6!important;color:#191914!important}
+body.v5-light .auth-screen{background:radial-gradient(circle at 85% 8%,#f8e98b88,transparent 38%),linear-gradient(145deg,#f1efe6,#faf9f2)!important}
+body.v5-light .auth-card{background:#fffef8!important;color:#191914!important;border:1px solid #e5e0d3!important;box-shadow:0 22px 60px rgba(36,32,16,.09)!important}
+body.v5-light .brand-icon{background:#171713!important;color:#f7e66b!important}
+body.v5-light .auth-card h2,body.v5-light .brand h1{color:#191914!important}
+body.v5-light .field label{color:#6f6b58!important}
+body.v5-light .field input,body.v5-light .field textarea{background:#fff!important;color:#191914!important;border-color:#e5e0d3!important}
+body.v5-light .btn-primary{background:#171713!important;color:#fff!important}
+body.v5-light .btn-light{background:#f0eee5!important;color:#191914!important;border-color:#e5e0d3!important}
+body.v5-light .auth-switch{color:#817027!important}
+body:not(.v5-light){background:#171815!important;color:#f4f1e5!important}
+body:not(.v5-light) .auth-screen{background:radial-gradient(circle at 85% 8%,#5c52234d,transparent 38%),linear-gradient(145deg,#171815,#20211d)!important}
+body:not(.v5-light) .auth-card{background:#22231f!important;color:#f4f1e5!important;border:1px solid #383930!important;box-shadow:0 24px 70px rgba(0,0,0,.35)!important}
+body:not(.v5-light) .brand-icon{background:#efdb69!important;color:#191a16!important}
+body:not(.v5-light) .auth-card h2,body:not(.v5-light) .brand h1{color:#f4f1e5!important}
+body:not(.v5-light) .field label{color:#aaa797!important}
+body:not(.v5-light) .field input,body:not(.v5-light) .field textarea{background:#292a23!important;color:#f4f1e5!important;border-color:#45463a!important}
+body:not(.v5-light) .btn-primary{background:#efdb69!important;color:#191a16!important}
+body:not(.v5-light) .btn-light{background:#2c2d27!important;color:#e3e0d4!important;border-color:#414238!important}
+body:not(.v5-light) .auth-switch{color:#efdb69!important}

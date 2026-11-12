@@ -1,0 +1,12 @@
+OHLI Social v3.6.14
+
+- Memisahkan Riwayat Story akun sendiri dari daftar Story aktif 24 jam dan koleksi Story teman.
+- Menyimpan historyAt, memigrasikan Story lama yang masih tersedia, dan memberi daftar History bertanggal.
+- Menyediakan buka ulang, bagikan ulang, tambah ke Sorotan, lihat penonton, dan hapus dari History.
+- Mengizinkan Sorotan mengelola nama dan privasi, menghapus satu item, atau menghapus seluruh koleksi tanpa menghapus Story asli di History. Satu Story dapat disimpan pada beberapa koleksi, sedangkan duplikasi pada koleksi tujuan yang sama dicegah.
+- Mencatat replay pada Story kedaluwarsa saat ditonton melalui Sorotan yang memiliki izin.
+- Menambahkan Pusat Notifikasi di MainActivity APK server dengan badge, daftar event, salin OTP yang masih aktif, dan menyembunyikan OTP kedaluwarsa.
+- Mencatat notifikasi login/daftar berhasil serta server mulai/berhenti/error.
+- VersionName 3.6.14, versionCode 43; cache-busting aset dan health endpoint mengikuti versi.
+
+Verifikasi statis tidak setara dengan build Gradle atau pengujian runtime pada dua akun/perangkat.

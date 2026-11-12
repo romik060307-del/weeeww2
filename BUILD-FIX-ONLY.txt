@@ -1,0 +1,17 @@
+OHLI Social v3.6.27 — BUILD FIX ONLY
+
+This patch addresses the exact GitHub Actions failure reported for the ARMv7 Cloudflare build:
+NDK 27.2.12479018 did not provide the armv7a-linux-androideabi19-clang convenience wrapper.
+
+Only .github/workflows/build-apk.yml was changed. The workflow now creates that missing wrapper
+using the NDK universal clang driver with explicit target armv7a-linux-androideabi19, and runs
+a compiler syntax probe before starting the Go build. The source ZIP locator was also updated
+to recognize this exact BUILD-FIX ZIP filename.
+
+No application Java/Kotlin, UI, CSS, JavaScript, database, API, AI, chat, VC, manifest, or Gradle
+configuration was changed. Android minSdk remains 19. The ARMv7 compiler is still targeted at API 19.
+
+Validation performed here: workflow YAML parsed; both modified workflow steps passed bash -n;
+ZIP integrity passed. Not performed here: GitHub-hosted NDK compiler execution, full Go builds for
+all ABIs, Gradle APK build, installation, or device runtime testing. Re-run GitHub Actions to
+verify the hosted runner.

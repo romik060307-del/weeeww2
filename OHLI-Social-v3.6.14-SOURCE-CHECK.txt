@@ -1,0 +1,22 @@
+OHLI Social v3.6.14 — SOURCE CHECK
+
+Result: 168 static source checks passed.
+Commands:
+- node --check app/src/main/assets/ohli-social.js
+- node --check tools/source-verify.mjs
+- node tools/source-verify.mjs
+- ZIP archive integrity check (unzip -t)
+
+Coverage includes:
+- Story History endpoints and private owner access
+- Story History migration, dates, delete, repost and viewer counts
+- Highlight collection grouping, editing, privacy, deleting one item or collection
+- Adding a Story to an existing or a new Highlight; the same Story can exist in different collections, but duplicates in one collection are rejected
+- Replay tracking for expired Stories viewed from an authorized Highlight
+- Android server notification inbox, unread badge, OTP copy/expiry and server lifecycle events
+- Android versionName 3.6.14 / versionCode 43 and workflow source selection
+
+Limitations:
+- Static checks do not replace Android Gradle compilation.
+- APK build and live tests with two accounts/devices were not run in this environment.
+- Server storage remains JSON files with a global data lock; this release does not claim the overall server-latency issue is fully resolved.

@@ -1,0 +1,14 @@
+OHLI SOCIAL v3.6.17 — PERBAIKAN SHORT VIDEO MOBILE DAN PEMUATAN BERTAHAP
+
+Basis: source v3.6.16.
+
+Perubahan terarah:
+1. Menonaktifkan shade/gradient dekoratif pada setiap reel yang pada Safari iPhone dapat tampak sebagai bidang gelap terpisah di area video.
+2. Menegaskan video reel mengisi stage secara absolut dari tepi ke tepi, dengan object-fit: cover dan posisi tengah; kontrol/info tetap berada di atas video.
+3. Video reel tidak lagi mengunduh metadata seluruh daftar sekaligus: src dipasang ketika video menjadi aktif, preload=none, dan playVid memuat sumber secara on-demand.
+4. Feed video pendek meminta 8 item pertama, kemudian mengambil 8 item berikutnya saat pengguna mendekati akhir daftar. API /api/feed mendukung limit dan before.
+5. Tidak mengubah login, database, Story, Chat, LIVE signaling, kamera, mikrofon, atau endpoint pesan.
+
+Build Android: versionName 3.6.17, versionCode 46.
+
+Batas pengujian: pemeriksaan sintaks dan source otomatis bukan pengganti tes Safari iPhone/Android nyata. Belum ada benchmark server produksi; pengurangan beban ini terutama pada jumlah video yang dirender dan dimuat oleh browser.

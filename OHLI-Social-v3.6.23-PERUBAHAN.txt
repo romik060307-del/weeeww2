@@ -1,0 +1,23 @@
+OHLI Social v3.6.23 — ringkasan perubahan source
+
+- VC dan LIVE: transactional switch kamera agar stream kamera lama tidak dihentikan sebelum track baru sukses diambil dan dipasang.
+- LIVE: single host tile memakai stage penuh; preview lokal tidak lagi dipaksa circular/center-only.
+- Tunnel: menghapus unduhan binary Linux saat runtime. Service menjalankan cloudflared Android yang seharusnya tertanam di nativeLibraryDir.
+- Build workflow: checkout source resmi cloudflare/cloudflared tag 2026.10.7, setup Go dari go.mod, cross-build android/arm64, android/arm, android/amd64 dengan Android NDK, memasukkan executable ke jniLibs, memverifikasi file dalam APK, lalu assembleDebug.
+- BootReceiver memulihkan tunnel bila sebelumnya diaktifkan. Retry tunnel berlanjut dengan jeda hingga 60 detik ketika proses keluar; stop manual menghentikannya.
+- Manifest memperbaiki deklarasi ganda CloudflareTunnelService dan mengaktifkan extractNativeLibs.
+- VersionName 3.6.23; versionCode 52.
+
+Verifikasi yang sudah dijalankan di lingkungan ini:
+- `node tools/source-verify.mjs`: 225 pemeriksaan statis lulus.
+- `node --check` untuk JavaScript utama dan pemeriksa source.
+- XML manifest diperiksa parse-nya.
+- YAML workflow diperiksa parse-nya.
+- ZIP akan divalidasi setelah pengemasan.
+
+Belum dilakukan:
+- GitHub Actions build cloudflared Android/Gradle.
+- Eksekusi cloudflared pada HP Android sesungguhnya.
+- Tes dua HP untuk VC/LIVE/pergantian kamera.
+- Tes tunnel publik, retry internet, reboot, dan uptime 24 jam.
+- Benchmark performa lokal dan publik.

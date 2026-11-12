@@ -1,0 +1,9 @@
+OHLI Social v3.6.16 — Tombol hapus Story aktif milik sendiri
+
+- Menambahkan aksi Hapus Story langsung pada footer pemutar Story aktif milik sendiri.
+- Tombol hanya muncul untuk Story aktif yang dimiliki akun login; Story orang lain tidak dapat dihapus.
+- Memakai endpoint `/api/status/delete` yang sudah memvalidasi token dan kepemilikan di server.
+- Setelah penghapusan, daftar Story aktif dimuat ulang dan strip Story diperbarui.
+- Riwayat Story dan salinan Sorotan sengaja tetap ada; pengguna bisa menghapusnya terpisah dari halaman Riwayat atau Sorotan.
+- Memperkuat smoke-test agar mengecek Story hilang dari daftar aktif namun tetap ada di History.
+- Android versionName 3.6.16, versionCode 45.

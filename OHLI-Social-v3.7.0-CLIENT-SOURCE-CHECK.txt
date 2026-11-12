@@ -1,0 +1,21 @@
+OHLI Social Android Client v3.7.0 — Source Check
+Tanggal pemeriksaan: 2026-11-12
+
+HASIL:
+- 26/26 pemeriksaan statis source lulus.
+- JavaScript inline pada index.html lolos pemeriksaan sintaks Node.js.
+- ohli-social.js lolos pemeriksaan sintaks Node.js.
+- AndroidManifest.xml dan styles.xml lolos parsing XML.
+- Workflow GitHub Actions lolos parsing YAML.
+- Referensi aset ikon dan 3 file nada ditemukan.
+- Pemeriksaan parser Java tidak menemukan kesalahan sintaks yang terdeteksi.
+
+BELUM DIVERIFIKASI:
+- Kompilasi Gradle dan pembuatan APK belum dilakukan karena lingkungan pemeriksaan tidak menyediakan Gradle maupun Android SDK.
+- Pemeriksaan javac bukan kompilasi Android penuh: paket android.* tidak tersedia tanpa android.jar.
+- Instalasi di HP dan pengujian dua akun/perangkat belum dilakukan.
+- API aktif di domain Netlify belum dapat diverifikasi dari lingkungan ini.
+- Netlify Functions/proxy /api tidak ditemukan dalam source ZIP ini.
+- Kamera, mikrofon, lokasi, balasan notif, suara notifikasi, offline restart, antrean reconnect, VC, LIVE dan push saat proses dimatikan masih memerlukan uji perangkat/backend.
+
+Kesimpulan: source client telah disiapkan dan lulus validasi statis. Jangan menganggap APK sudah dibangun atau siap produksi sebelum workflow GitHub Actions sukses dan seluruh uji perangkat selesai.

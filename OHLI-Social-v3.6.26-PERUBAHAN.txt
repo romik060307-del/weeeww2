@@ -1,0 +1,23 @@
+OHLI SOCIAL v3.6.26 — AI PERFORMANCE ENGINE
+
+PERUBAHAN UTAMA
+1. Menanam OhliAdaptiveEngine.java langsung pada proses server Android. Mesin berjalan offline tanpa API AI eksternal, tidak memproses isi pesan, foto, video, atau identitas akun sebagai data pelatihan.
+2. Model logistic online v2 memakai enam sinyal: antrean request, worker aktif, tekanan heap, latensi, rasio exception server, dan bias. Bobot diperbarui dari hasil metrik runtime.
+3. Mesin mengubah ukuran worker ThreadPoolExecutor secara terbatas menurut kelas memori Android, heap runtime, CPU, beban antrean, dan estimasi risiko. Kapasitas antrean tetap dibatasi.
+4. Menyimpan bobot dan baseline latensi ke SharedPreferences privat Android secara berkala dan saat service berhenti. Model v2 dapat memigrasikan state lima-bobot dari engine v1; pemulihan state dilakukan atomik.
+5. Statistik jalur, latensi, jumlah error/reject, heap, serta worker hanya tersedia lewat endpoint login GET /api/performance. Endpoint publik /health hanya mengembalikan ok, service, dan version.
+6. UI OHLI Social menampilkan mode AI, risiko overload, error-rate, worker, dan antrean melalui endpoint terautentikasi. Panel APK juga menampilkan status mesin.
+7. Indeks akun dan sesi mempercepat lookup dari JSON; rotasi backup menggunakan rename satu direktori; respons JSON besar memakai GZIP adaptif jika ukuran dan tekanan heap memungkinkan.
+8. Versi dinaikkan menjadi Android versionName 3.6.26 / versionCode 55; cache-busting aset dan workflow build APK ikut diperbarui.
+
+VALIDASI LINGKUNGAN KERJA
+- Pemeriksaan statis source: 244 checks lulus pada source 3.6.26.
+- JavaScript utama dan skrip inline HTML diperiksa dengan Node.js.
+- OhliAdaptiveEngine.java diuji kompilasi Java 8 terpisah menggunakan stub org.json dan harness yang memeriksa batas worker, pembelajaran berbasis error, restore model v2, migrasi model v1, pemulihan atomik, dan snapshot.
+- ZIP diuji integritas setelah dibuat.
+
+BATAS PENGUJIAN DAN KEMAMPUAN
+- Build APK Android penuh dan tes perangkat belum dapat dilakukan tanpa Android SDK/NDK/Gradle dan perangkat fisik.
+- Belum ada validasi runtime pada dua HP, Cloudflare publik, burst traffic, atau uji 24 jam.
+- Ini adalah model ML kecil untuk keputusan performa, bukan chatbot/LLM setara GPT, Gemini, atau Claude.
+- Backend masih menggunakan file JSON dan satu lock global; tidak ada jaminan zero-lag, skalabilitas tak terbatas, atau kesetaraan dengan infrastruktur perusahaan besar.

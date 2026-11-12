@@ -1,0 +1,22 @@
+OHLI Social v3.6.24 — perbaikan audit performa, signaling, tampilan VC, dan publikasi
+
+Perubahan:
+- Memisahkan polling signaling panggilan dari polling feed/kontak. Saat tidak ada panggilan, signaling diperiksa setiap 1,8 detik pada halaman aktif; saat panggilan berlangsung, setiap 0,9 detik. Tab latar menggunakan jeda lebih panjang.
+- Menyatukan aturan CSS VC yang sebelumnya saling menimpa. Video lawan tetap menjadi stage penuh; preview kamera sendiri adalah tile portrait membulat. Tinggi overlay mengikuti visual viewport agar lebih konsisten pada Android WebView lama.
+- Quick Tunnel tidak lagi mengumumkan `ONLINE` hanya dari log URL. Service memverifikasi `https://<tunnel>/health` dan hanya menampilkan link setelah respons OHLI yang valid diterima.
+- HTML, CSS, dan JavaScript mendukung gzip dengan cache kompresi di memori sehingga ukuran transfer awal lebih kecil. Parser `Accept-Encoding` tetap kompatibel dengan Java 8.
+- Tombol Stop tetap aktif selama pemeriksaan link publik berjalan.
+- Workflow Gradle mengganti setup action yang sebelumnya gagal 504 dengan unduhan retry, endpoint mirror, dan checksum SHA-256.
+- Android versionName 3.6.24; versionCode 53.
+
+Validasi yang dijalankan pada source:
+- `node tools/source-verify.mjs`: 234 pemeriksaan statis lulus.
+- `node --check app/src/main/assets/ohli-social.js` dan `node --check tools/source-verify.mjs`.
+- Pemeriksaan sintaks Java 8 terhadap 4 file Java (parse-only, tanpa Android type-check).
+- Pemeriksaan XML Manifest, YAML workflow, dan `bash -n` terhadap 6 blok perintah shell lulus.
+
+Batas pengujian:
+- APK belum dapat dibangun pada sesi ini karena lingkungan tidak menyediakan Gradle dan Android SDK.
+- Belum ada uji fisik dua perangkat untuk kamera/WebRTC, uji Quick Tunnel dari jaringan seluler, atau benchmark HP.
+- Backend tetap menyimpan data JSON dengan satu lock global; gzip dan polling yang lebih tepat mengurangi sebagian beban, tetapi tidak mengubahnya menjadi infrastruktur server berskala perusahaan.
+- Tidak ada model bahasa GPT/Gemini buatan sendiri yang ditanamkan. Kode lokal tidak bisa menjadi model setara LLM tanpa bobot model, data pelatihan, dan sumber daya inferensi yang besar.

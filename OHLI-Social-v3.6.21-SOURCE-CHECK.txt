@@ -1,0 +1,220 @@
+PASS 1: JavaScript OHLI Social dapat diparse
+PASS 2: 15 blok CSS inline HTML seimbang
+PASS 3: 3 skrip inline HTML dapat diparse
+PASS 4: Kurung blok CSS Social seimbang
+PASS 5: endpoint riwayat server tersedia
+PASS 6: endpoint penemuan akun Social terpisah dari Chat tersedia
+PASS 7: endpoint daftar Chat memakai serializer nomor privat
+PASS 8: endpoint daftar Social memakai ID publik
+PASS 9: pencarian nomor menggunakan hasil izin akses
+PASS 10: pencarian nomor tidak mengungkap akun yang melarang DM
+PASS 11: riwayat memiliki penyimpanan server
+PASS 12: endpoint koleksi Story tersedia
+PASS 13: penghapusan Story milik sendiri tersedia
+PASS 14: penghapusan grup oleh pemilik tersedia
+PASS 15: penghapusan Channel oleh pemilik tersedia
+PASS 16: pin/arsip Story memiliki penyimpanan server
+PASS 17: endpoint klaim teks sekali lihat tersedia
+PASS 18: media 1× memiliki kunci sesi server
+PASS 19: media 1× menolak permintaan tanpa kunci sesi
+PASS 20: isi teks 1× disamarkan dari daftar chat penerima
+PASS 21: API Social mengganti nomor dengan ID publik stabil
+PASS 22: endpoint pemungutan suara grup tersedia
+PASS 23: endpoint reaksi Channel tersedia
+PASS 24: aturan DM diperiksa di server saat pengiriman
+PASS 25: nomor penulis postingan tidak bocor bahkan kepada pemiliknya
+PASS 26: nomor pemberi komentar, like, dan repost disamarkan
+PASS 27: penanda repost tidak mengembalikan nomor akun sendiri
+PASS 28: respons komentar dan nama penulis Social disanitasi, termasuk akun lama yang nama tampilannya berupa nomor
+PASS 29: respons publik pembuatan Story dan Sorotan tidak membocorkan nomor
+PASS 30: nomor penulis dan pemberi reaksi Channel selalu disamarkan
+PASS 31: respons Grup menampilkan ID sosial dan nama aman
+PASS 32: nomor pemilik dan pemberi like Story Social selalu disamarkan
+PASS 33: UI Social tidak lagi meminta daftar nomor telepon Chat
+PASS 34: UI Story mengenali Story sendiri tanpa mengandalkan nomor telepon
+PASS 35: pemilik dapat menghapus Story aktif dari pemutar Story tanpa menghapus salinan Riwayat dan Sorotan
+PASS 36: UI feed, Story, dan komentar memakai penanda isMine saat nomor disamarkan
+PASS 37: klaim kedua teks 1× ditolak server
+PASS 38: media 1× mendukung Range untuk sesi yang sama dan no-store
+PASS 39: poll memvalidasi opsi sebelum mengubah suara
+PASS 40: reaksi Channel memeriksa akses Channel privat
+PASS 41: tema terang minimalis dan font sistem Apple berlaku sebagai override paling akhir
+PASS 42: halaman login dan panggilan mengikuti tema netral yang sama
+PASS 43: profil diri Chat dan navigasi Social tidak disembunyikan tema lama
+PASS 44: nama akun lama yang sama dengan nomor tidak tampil sebagai identitas Social
+PASS 45: pemilih grup menggabungkan kontak Chat dan koneksi Social
+PASS 46: pemilih teman Social tidak menampilkan nomor ketika nama akun lama sama dengan nomor
+PASS 47: backend mengizinkan undangan kontak atau koneksi Social yang berelasi
+PASS 48: formulir buat grup mengirim teman pilihan sebagai ID sosial
+PASS 49: pemilik grup dapat menambah kontak atau koneksi Social setelah grup dibuat
+PASS 50: ruang grup menampilkan aksi anggota dan tambah teman
+PASS 51: profil diri Chat memuat nomor pribadi dari endpoint akun terautentikasi
+PASS 52: username Social bisa diedit dari profil akun Chat
+PASS 53: kontrol warna yang tidak selaras dihapus dari pengaturan Social
+PASS 54: identitas build Android sesuai v3.6.21
+PASS 55: navigasi mobile menyederhanakan tab dengan menghilangkan pintasan Story/Status dan memberi ruang sentuh lebih lega
+PASS 56: polling Chat dan fitur latar dijarangkan untuk mengurangi beban request
+PASS 57: tes integrasi memeriksa direktori Social tanpa nomor
+PASS 58: tes integrasi memeriksa riwayat lintas sesi
+PASS 59: tes integrasi memeriksa pin dan arsip Story
+PASS 60: tes integrasi memeriksa klaim View Once dari sesi kedua
+PASS 61: tes integrasi memeriksa tambah dan keluarkan anggota grup
+PASS 62: tes integrasi memeriksa data profil pribadi Chat
+PASS 63: tes integrasi memeriksa polling grup
+PASS 64: tes integrasi memeriksa reaksi Channel
+PASS 65: tes integrasi membersihkan grup uji
+PASS 66: tes integrasi membersihkan Channel uji
+PASS 67: workflow memilih source v3.6.21 dan menjalankan Gradle dari root Android yang terdeteksi
+PASS 68: settings.gradle dan build.gradle root melengkapi proyek Android multi-project
+PASS 69: properti Gradle dan versionCode 50 tersedia
+PASS 70: resolver Chat dari profil menyertakan token melalui runtime bridge autentikasi
+PASS 71: tombol Chat menggunakan Social ID dari profil yang sedang aktif
+PASS 72: request resolve lama tidak dapat menimpa target Chat yang lebih baru
+PASS 73: Chat memvalidasi target, membuka peer spesifik, lalu menyegarkan riwayat server
+PASS 74: preferensi warna ikon dan tulisan disimpan lokal
+PASS 75: UI simpan dan reset warna tema tersedia
+PASS 76: ikon plus dan lonceng video pendek diatur putih
+PASS 77: menu tiga titik LIVE tersedia sejak tahap persiapan dan sheet dikendalikan buka/tutup
+PASS 78: pengaturan judul, Mulai LIVE, dan Akhiri LIVE tetap tersedia
+PASS 79: impor stiker memiliki pratinjau dan upload server setelah konfirmasi
+PASS 80: koleksi Stiker Saya dibaca dari server dan penghapusan memakai pemeriksaan pemilik
+PASS 81: backend menyediakan daftar dan hapus stiker milik akun
+PASS 82: Audio Saya tersimpan server dengan durasi dan batas ukuran upload
+PASS 83: endpoint health menampilkan versi source v3.6.21
+PASS 84: smoke test dua akun memiliki skenario upload/persistensi/hapus stiker dan audio biner
+PASS 85: Audio Saya dapat dimuat ulang dan menampilkan durasi file impor
+PASS 86: latar navigasi video Hitam/Transparan tersimpan tanpa menyembunyikan ikon
+PASS 87: Tema Orange menjadi opsi tersimpan di Chat dan Social
+PASS 88: CSS tambahan hanya menargetkan pratinjau stiker, latar nav video, dan aksen Orange
+PASS 89: unduhan membuat salinan video ber-watermark OHLI dan memeriksa izin pemilik
+PASS 90: server tetap menolak unduhan bila pemilik menonaktifkannya
+PASS 91: profil menyediakan mode video Transparan dan Terbatas
+PASS 92: komentar mendukung balasan bertingkat dan like server-side
+PASS 93: stiker bawaan, impor, dan koleksi favorit terhubung ke server
+PASS 94: studio LIVE mengatur kamera, mikrofon, kualitas, dan komentar realtime
+PASS 95: LIVE memakai signaling WebRTC P2P dan memberi batas kapasitas yang jujur
+PASS 96: Chat otomatis mengikuti pesan terbaru yang dikirim tanpa melompat saat membaca pesan lama
+PASS 97: menahan komentar membuka alur Balas
+PASS 98: Story dijeda saat ditahan dan dilanjutkan dari posisi saat dilepas
+PASS 99: menu Copy bawaan diblokir hanya pada video dan teks komentar Social
+PASS 100: Mode Malam tersimpan dan mencakup Chat serta Social
+PASS 101: panel komentar punya aksi berjarak, balasan tahan, dan penyesuaian keyboard HP
+PASS 102: pesan yang digeser benar-benar mengirim kutipan balasan dan membersihkan bar setelah berhasil
+PASS 103: gesture swipe memetakan bubble yang benar dan membersihkan sentuhan yang dibatalkan
+PASS 104: tombol download video pendek dipindahkan ke dalam menu Bagikan dengan pemeriksaan izin
+PASS 105: toolbar editor unggahan memiliki wadah geser horizontal tanpa mengubah aksi alat
+PASS 106: toolbar editor mendukung swipe HP dan tidak mengambil alih scroll vertikal
+PASS 107: baris pengaturan upload responsif dan tombol Bagikan tetap terlihat di layar HP
+PASS 108: panel LIVE menggunakan latar solid tanpa efek transparan
+PASS 109: navigasi bawah video pendek hanya menampilkan ikon tanpa panel latar
+PASS 110: versi Android dinaikkan ke v3.6.21
+PASS 111: backend Sorotan mendukung beberapa Story dalam satu koleksi dan tetap membaca data Sorotan lama
+PASS 112: indeks koleksi Sorotan dideklarasikan sebelum dipakai untuk mengelompokkan Story
+PASS 113: UI dapat memilih Sorotan lama atau membuat baru dan memutar isinya dengan Story Viewer layar penuh
+PASS 114: permintaan pendukung profil berjalan paralel dan Sorotan memakai pemutar Story responsif
+PASS 115: feed video memakai viewport penuh, tema browser hitam, dan fallback viewport dinamis
+PASS 116: LIVE memiliki menu pengaturan, overlay error kamera, dan dialog akhiri siaran
+PASS 117: LIVE menyesuaikan keyboard iOS, bottom sheet, dan fade komentar
+PASS 118: Chat dari profil memakai ID pada tombol profil yang benar, bukan target profil sebelumnya
+PASS 119: warna ikon dan tulisan dapat diterapkan ke Social serta Chat
+PASS 120: tombol tiga titik LIVE membuka pengaturan lengkap termasuk mulai siaran
+PASS 121: backend menyediakan daftar teman dan siklus permintaan pertemanan
+PASS 122: relasi pertemanan disimpan terpisah di server Android
+PASS 123: permintaan teman memicu notifikasi dan pembatasan spam server-side
+PASS 124: profil dan halaman Teman terhubung ke API permintaan pertemanan
+PASS 125: UI menyediakan tambah, terima, tolak, batalkan, dan hapus teman
+PASS 126: halaman Teman memiliki layout responsif tanpa mengganti tema lama
+PASS 127: health endpoint melaporkan v3.6.21
+PASS 128: smoke test dua akun mencakup siklus permintaan teman
+PASS 129: smoke test dua akun memverifikasi penggabungan Story dan penghapusan seluruh Sorotan
+PASS 130: aksi pesan mendukung unduh media, hapus dari chat sendiri, dan hapus untuk semua
+PASS 131: alur penonton, aktivasi peserta, tile kamera sendiri, dan keluar panggung terhubung
+PASS 132: undangan memakai daftar teman OHLI dan permintaan tampil memakai endpoint server
+PASS 133: undangan privat diizinkan dan heartbeat menjaga host tetap menjadi peserta LIVE
+PASS 134: polling latar dijarangkan dan worker server tetap mendukung request bersamaan
+PASS 135: indikator mikrofon tiap tile LIVE dan jeda permintaan ulang tersedia
+PASS 136: tile Host menyembunyikan avatar saat kamera aktif dan menampilkannya saat kamera dimatikan
+PASS 137: Chat memaksa posisi pesan terbaru saat membuka percakapan dan sesudah pesan berhasil dikirim
+PASS 138: peserta yang disetujui menambahkan track kamera/mikrofon dan renegosiasi dua arah ke Host
+PASS 139: renegosiasi WebRTC dicoba ulang bila SDP awal belum stabil
+PASS 140: track remote streamless digabung dan polling LIVE tidak saling menumpuk
+PASS 141: Story/Pembaruan Chat dikembalikan sementara pintasan Story OHLI Social disembunyikan dengan selector terpisah
+PASS 142: versi Android dan health endpoint diperbarui ke v3.6.21
+PASS 143: pendaftaran dan login baru melewati alur permintaan dan verifikasi OTP server-side
+PASS 144: OTP disimpan sebagai HMAC dengan kunci privat dan hash dihapus saat kode dipakai
+PASS 145: OTP kedaluwarsa 5 menit, dibatasi 5 percobaan, dan memiliki cooldown permintaan
+PASS 146: permintaan OTP diberi rate-limit IP/nomor dan diteruskan sebagai notifikasi Android admin
+PASS 147: notifikasi OTP menyembunyikan isi di lock screen dan menampilkan kode pada perangkat admin yang terbuka
+PASS 148: kode OTP kedaluwarsa, sekali pakai, dan terkunci setelah percobaan berlebih
+PASS 149: endpoint pendaftaran/login lama ditolak agar tidak melewati OTP
+PASS 150: layar login dan daftar meminta serta memverifikasi OTP enam digit
+PASS 151: token request API dikirim melalui header dan tidak lagi ditempel ke query fetch normal
+PASS 152: respons server menambahkan header keamanan browser
+PASS 153: CSS dan JavaScript dicache dengan cache-busting versi agar pemuatan ulang lebih ringan
+PASS 154: IP asli Cloudflare hanya dipercaya dari reverse proxy lokal yang tepercaya
+PASS 155: tabel pembatas permintaan OTP dibatasi agar tidak tumbuh tanpa batas di RAM
+PASS 156: navigasi mobile menghilangkan ikon Story saja dan mengembalikan Chat sebagai item keenam
+PASS 157: Shorts mobile memakai snap vertikal dengan panel info kiri dan aksi vertikal kanan
+PASS 158: video pendek menunggu interaksi pengguna sebelum autoplay bersuara sesuai kebijakan browser
+PASS 159: overlay gradasi reel yang berpotensi menjadi bidang gelap dihapus dan posisi video mobile distabilkan
+PASS 160: sumber video pendek dimuat on-demand hanya saat video mulai aktif
+PASS 161: feed video pendek dimuat bertahap delapan item dan mengambil batch berikutnya saat scroll
+PASS 162: video reel mobile mengisi stage penuh dan scroll-snap tetap berada di dalam feed
+PASS 163: Story History memiliki endpoint daftar, hapus, dan bagikan ulang
+PASS 164: riwayat Story disimpan terpisah dan dimigrasikan dari Story lama tanpa menghapus data aktif
+PASS 165: Sorotan mendukung edit nama, privasi, dan hapus satu Story dari koleksi
+PASS 166: Story dapat ditambahkan ke Sorotan berbeda tanpa duplikat dalam koleksi yang sama
+PASS 167: tayangan ulang Story kedaluwarsa dicatat hanya melalui Sorotan yang boleh dilihat
+PASS 168: UI Riwayat Story membuka media dan menampilkan tanggal lengkap
+PASS 169: History dapat ditambahkan ke Sorotan, dibagikan ulang, dan dihapus
+PASS 170: profil menyediakan edit/hapus koleksi dan hapus Story satu per satu
+PASS 171: media History hanya dapat dibuka pemilik dan replay Story Sorotan dicatat
+PASS 172: APK server menyediakan pusat notifikasi dengan badge belum dibaca
+PASS 173: notifikasi admin disimpan di file privat perangkat dan bisa dibaca ulang
+PASS 174: pusat notifikasi dapat menyalin OTP aktif dan menyembunyikan OTP kedaluwarsa
+PASS 175: pusat notifikasi mencatat server mulai, berhenti, dan error
+PASS 176: foto + musik dirender menjadi file video nyata melalui Canvas capture dan MediaRecorder
+PASS 177: video hasil gabungan dipratinjau sebelum diunggah sebagai media video
+PASS 178: editor menyediakan volume suara asli, volume musik, dan durasi foto-video terpisah
+PASS 179: jalur upload postingan, Story, dan kamera diarahkan ke editor foto/video yang sama
+PASS 180: durasi katalog audio dan pengaturan volume diteruskan ke proses render
+PASS 181: UI menjelaskan batas sumber Live Photo dan tidak mengklaim foto diam memiliki gerakan asli
+PASS 182: Riwayat Story memiliki filter kalender tanggal dan pengelompokan harian
+PASS 183: Riwayat Story merender media foto/video asli dan kontrol untuk membuka Story penuh
+PASS 184: pemilik dapat memilih ulang sampul Sorotan dari item Story yang ada dan server memvalidasi kepemilikan koleksi
+PASS 185: bentuk thumbnail Sorotan dan cara crop/fit dapat diatur
+PASS 186: halaman login menyediakan alur Lupa kata sandi memakai mode reset OTP
+PASS 187: backend reset kata sandi mewajibkan OTP yang sesuai sebelum mengganti hash sandi
+PASS 188: FYP menyusun skor personal dari sinyal OHLI: pencarian, tonton selesai, lewati, dan tidak tertarik
+PASS 189: FYP juga mempertimbangkan like, simpan, mengikuti, dan durasi tontonan dari interaksi OHLI
+PASS 190: sinyal video selesai dicatat pada event ended atau saat mendekati akhir video
+PASS 191: cache-busting aset, Gradle, dan health endpoint sama-sama menggunakan v3.6.21
+PASS 192: workflow Android mengemas source dan artifact APK dengan versi v3.6.21
+PASS 193: ServerService mengimpor Set dan HashSet yang digunakan algoritma FYP
+PASS 194: panggilan video memiliki topbar, kontrol layar penuh, dan tombol ganti kamera
+PASS 195: ketukan pada jendela video menukar video utama dan pratinjau diri
+PASS 196: video teman memenuhi layar dan video sendiri menjadi jendela mengambang
+PASS 197: thumbnail Sorotan dipaksa menjadi lingkaran dengan ukuran tetap
+PASS 198: polling adaptif mengurangi request ketika tab tidak aktif dan mencegah request bertumpuk
+PASS 199: Story, saran pengguna, dan trending dimuat paralel dengan feed
+PASS 200: pemuatan awal data dipindahkan dari thread utama Android
+PASS 201: antrean server dibatasi tanpa membuat accept thread menjalankan request berat
+PASS 202: HTML, CSS, dan JavaScript disimpan di cache memori server
+PASS 203: pergantian kamera VC mengganti track WebRTC dan mempertahankan kamera lama ketika gagal
+PASS 204: pergantian kamera LIVE memakai rollback track jika penggantian di salah satu peer gagal
+PASS 205: riwayat tontonan memakai thumbnail 1:1 dan aksi buka ulang konten
+PASS 206: riwayat panggilan disimpan di server per akun dan dapat disinkronkan lintas perangkat
+PASS 207: riwayat panggilan menyinkronkan tanggal, durasi, jenis, dan hapus ke server
+PASS 208: server memperbarui Wi-Fi lock saat status Wi-Fi berubah dan melepas receiver saat berhenti
+PASS 209: service server memakai foreground restart dan CPU wake lock untuk dukungan operasi layar mati
+PASS 210: refresh panel server dikurangi menjadi setiap tiga detik
+PASS 211: heartbeat memperbarui status online berkala tanpa menulis sessions JSON pada setiap request
+PASS 212: versi Gradle dan health endpoint selaras pada v3.6.21
+
+Lulus 212 pemeriksaan statis. Ini bukan pengganti build APK atau tes runtime pada dua perangkat.
+
+VALIDASI TAMBAHAN
+PASS: AndroidManifest.xml valid sebagai XML.
+PASS: javac berhasil mem-parsing ketiga file Java tanpa diagnostik sintaks (kompilasi penuh tidak dapat dilakukan karena Android SDK/API tidak tersedia).
+SKIP: Build APK Gradle tidak dijalankan karena ANDROID_HOME/ANDROID_SDK_ROOT dan Gradle lokal tidak tersedia.
+SKIP: Kamera nyata, WebRTC dua perangkat, Doze/battery OEM, tunnel Cloudflare, dan benchmark beban server memerlukan perangkat/jaringan eksternal.

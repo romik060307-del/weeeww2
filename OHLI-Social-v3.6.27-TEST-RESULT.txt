@@ -1,0 +1,20 @@
+OHLI SOCIAL v3.6.27 — HASIL PEMERIKSAAN WORKSPACE
+
+PASS
+- 251 pemeriksaan statis source (tools/source-verify.mjs).
+- Sintaks JavaScript utama: node --check.
+- Sintaks tools/source-verify.mjs: node --check.
+- AndroidManifest.xml berhasil diparse sebagai XML.
+- Identitas Gradle, endpoint /health, cache-busting CSS/JS, nama ZIP workflow, dan nama artifact APK selaras pada v3.6.27 / versionCode 56.
+- Pemeriksaan sintaks Java dengan parser javac tidak menemukan diagnostik sintaks seperti illegal start, expected, not a statement, atau reached end of file.
+
+BELUM DILAKUKAN
+- Build Gradle/APK penuh: tidak tersedia Gradle, gradle wrapper, atau Android SDK di workspace ini.
+- Instalasi pada perangkat Android.
+- Pengujian runtime notifikasi Wi-Fi dan watchdog pada perangkat nyata.
+- Pengujian Cloudflare dari jaringan luar.
+- Pengujian dua perangkat untuk login, feed, media, chat, dan VC.
+- Pengukuran load test/concurrency dengan banyak pengguna nyata.
+
+PENTING
+Pemeriksaan statis tidak membuktikan bebas bug. Android dapat menghentikan proses melalui force-stop, crash, tekanan memori, atau kebijakan baterai OEM. Pemantau dapat mencoba pemulihan hanya selama Android masih menjalankan service atau mengizinkan service dijadwalkan ulang. Mesin OHLI AI Performance Engine adalah pengendali optimasi offline berbasis metrik runtime, bukan chatbot generatif setara GPT/Gemini. Backend data masih berbasis JSON pada satu perangkat Android.

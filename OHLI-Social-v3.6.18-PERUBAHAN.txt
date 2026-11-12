@@ -1,0 +1,25 @@
+OHLI SOCIAL v3.6.19 — FOTO + MUSIK MENJADI VIDEO, RIWAYAT STORY, SOROTAN, OTP RESET, FYP
+
+PERUBAHAN
+1. Foto + musik dirender sebagai file video nyata menggunakan Canvas captureStream, Web Audio, dan MediaRecorder. Pratinjau video hasil render ditampilkan sebelum upload.
+2. Volume musik dapat diatur terpisah dari audio asli video sumber; foto memiliki pengaturan durasi 3–180 detik. Audio hasil mixing ikut di dalam file video, bukan diposting sebagai pemutar audio terpisah.
+3. Pemilih foto pada upload Postingan, Story, dan kamera diarahkan ke editor yang sama agar musik dapat ditambahkan pada alur tersebut.
+4. Halaman Riwayat Story menampilkan media foto/video yang tersimpan, tanggal dan jam, pengelompokan per tanggal, filter kalender, daftar penonton, tambah ke Sorotan, bagikan ulang, dan hapus dari Riwayat.
+5. Sorotan dapat memilih ulang thumbnail dari Story yang menjadi isi koleksi. Bentuk thumbnail (lingkaran/sudut membulat/kotak) dan fit/crop dapat diatur dari Pengaturan. Server memvalidasi sampul harus berasal dari Story dalam koleksi milik pemilik.
+6. Lupa kata sandi memakai alur reset OTP admin yang sudah tersedia: permintaan OTP, validasi, perubahan password hash, dan pembatalan sesi lama.
+7. FYP menyusun skor berdasarkan aktivitas OHLI: pencarian, tontonan video selesai/dilewati, like, simpan, mengikuti, dan feedback Tidak tertarik. Perhitungan ranking dipra-hitung sebelum sorting.
+8. Gradle versionName 3.6.19 / versionCode 48, health endpoint dan cache-busting aset diselaraskan. Workflow GitHub Actions memilih arsip v3.6.19.
+
+BATASAN
+- Foto diam + musik menjadi video dengan frame foto statis; tidak menciptakan gerakan kamera palsu.
+- Gerakan Live Photo iPhone memerlukan MOV hasil ekspor dari Photos bila browser tidak menyerahkan pasangan HEIC+MOV. Content Identifier pairing serta Loop/Bounce/Smooth Loop native belum diimplementasikan.
+- Format hasil bergantung dukungan MediaRecorder browser (MP4/WebM). HEIC hanya dapat diproses bila browser dapat mendekode file tersebut.
+- Riwayat Story teman hanya menampilkan Story yang dipin/diarsipkan dan bisa dilihat sesuai privasi, bukan semua Story teman yang kedaluwarsa.
+- FYP adalah heuristik OHLI dari data aktivitas OHLI, bukan algoritma TikTok dan tidak membaca aktivitas pribadi pengguna di aplikasi lain.
+- Backend JSON + lock global masih menjadi batas performa; pembaruan ini bukan migrasi database atau benchmark server.
+
+PENGUJIAN
+- 192 pemeriksaan statis source (lihat SOURCE-CHECK).
+- Syntax check JavaScript utama, smoke-test, dan pemeriksa source.
+- ZIP integrity test.
+- Build Gradle penuh serta tes perangkat dua akun belum dijalankan.

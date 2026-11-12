@@ -1,0 +1,22 @@
+OHLI SOCIAL v3.6.27 — CATATAN PERUBAHAN
+
+UI
+- Tema dirapikan mengikuti referensi: permukaan krem, teks/tombol charcoal, aksen kuning, radius kartu lebih besar, dan mode malam charcoal.
+- Tema yang sama diterapkan ke shell sosial, halaman chat legacy, dan dashboard native Android.
+- Mengganti tombol dashboard dengan bentuk rounded dan warna netral agar konsisten.
+
+SERVER / APK
+- Menambah pemantau operasional interval 12 detik di foreground service.
+- Mendeteksi transisi Wi-Fi aktif ke terputus dan mengirim notifikasi; notifikasi pemulihan dikirim setelah tersambung kembali.
+- Mendeteksi listener lokal yang berhenti dan mencoba memulihkan server secara terkendali.
+- Menghindari peringatan palsu saat aplikasi pertama kali dijalankan tanpa Wi-Fi.
+- Menambahkan kanal notifikasi khusus untuk peringatan server/jaringan.
+
+RILIS
+- versionName 3.6.27, versionCode 56.
+- Endpoint /health, asset cache-buster, workflow, dan nama artifact diselaraskan.
+- Cloudflare Quick Tunnel tetap perlu diaktifkan dari panel; link publik hanya sah dibagikan setelah public /health check berhasil.
+
+BATAS VERIFIKASI
+- Status statis/sintaks tidak membuktikan aplikasi bebas bug. Build APK penuh dan uji fisik pada satu host + dua perangkat eksternal tetap wajib. Android dapat menghentikan proses melalui force-stop, crash, baterai, atau kebijakan OEM.
+- Engine adaptif adalah pengendali performa lokal, bukan model generatif setara GPT/Gemini.

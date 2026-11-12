@@ -1,0 +1,21 @@
+OHLI SOCIAL v3.6.19 — PERBAIKAN BUILD JAVA
+
+Perbaikan berdasarkan log GitHub Actions dari v3.6.18:
+1. ServerService.java menggunakan Set<String> dan HashSet<String> pada
+   algoritma rekomendasi FYP, tetapi kedua tipe belum diimpor.
+2. Menambahkan import java.util.Set dan import java.util.HashSet.
+3. Tidak mengubah algoritma FYP, data pengguna, API, Story, Sorotan,
+   Live Photo/photo-to-video, OTP, atau alur autentikasi.
+4. Menambahkan pemeriksaan regresi source yang memastikan kedua import
+   tersedia agar kesalahan yang sama tertangkap oleh source-verify.
+5. Menaikkan versionName ke 3.6.19 dan versionCode ke 48.
+6. Workflow, cache-busting aset, health endpoint, dan nama artifact APK
+   diselaraskan ke v3.6.19.
+
+Validasi:
+- tools/source-verify.mjs dijalankan setelah perubahan.
+- JavaScript frontend diperiksa oleh source verifier.
+- Smoke test dua akun tidak dijalankan karena membutuhkan dua sesi OTP
+  aktif (OHLI_PHONE_A/OHLI_TOKEN_A dan OHLI_PHONE_B/OHLI_TOKEN_B).
+- Gradle build penuh tidak dijalankan di container ini karena Gradle dan
+  Android SDK tidak tersedia. Build harus dikonfirmasi melalui GitHub Actions.

@@ -1,0 +1,33 @@
+OHLI SOCIAL v3.6.21 — SERVER RELIABILITY, CAMERA, HISTORY & ADMIN PATCH
+
+PERUBAHAN SOURCE
+
+1. Video call 1:1 memakai stage layar penuh: video lawan bicara menjadi tampilan utama dan kamera sendiri menjadi floating preview. Mengetuk preview menukar tampilan utama dan kecil.
+2. Pergantian kamera video call dan LIVE mengambil track kamera baru terlebih dahulu, mengganti track WebRTC, lalu menghentikan kamera lama setelah sukses. Jika penggantian gagal, track lama dipertahankan/dikembalikan agar tidak sengaja meninggalkan layar hitam.
+3. Thumbnail Sorotan/Story di profil ditetapkan berbentuk lingkaran dengan dimensi tetap. Riwayat tontonan menampilkan kartu media 1:1, metadata waktu, serta aksi membuka ulang konten selama file dan izin masih tersedia.
+4. Riwayat panggilan mencatat audio/video, arah, waktu mulai, status, waktu tersambung/berakhir dan durasi. Data disimpan di server per akun, disinkronkan lintas perangkat pada host yang sama, dan penghapusan hanya mengenai riwayat akun yang sedang login.
+5. Server memperbarui status aktif sesi secara berkala di memori dan membatasi penulisan ulang file sesi agar daftar pengguna aktif lebih akurat tanpa menulis JSON pada setiap request.
+6. Wi-Fi lock menyesuaikan perubahan status Wi-Fi melalui receiver, dan dilepas ketika service berhenti. Service tetap menggunakan foreground mode, START_STICKY, CPU partial wake lock, serta receiver boot untuk mencoba mulai kembali setelah reboot bila sebelumnya diaktifkan.
+7. Panel pengelola server menampilkan pengguna, status online, notifikasi, serta tindakan suspend sementara, nonaktifkan, soft-delete, dan pulihkan. Tindakan moderasi lokal mencabut sesi agar pengguna perlu login ulang.
+8. Panel tunnel menyimpan, menampilkan, dan menyalin link publik serta perintah Quick Tunnel. Panel menjelaskan bahwa proses cloudflared harus tetap berjalan dan akses publik memerlukan internet.
+9. Refresh panel pengelola diperlambat dari 1 detik menjadi 3 detik untuk mengurangi beban polling.
+10. Versi Android/health endpoint/cache-busting: 3.6.21, versionCode 50.
+
+BATASAN PENTING — WAJIB DIBACA
+
+- Tidak ada jaminan uptime 100% pada Android. Battery optimization, pengelola daya OEM, force-stop, reboot, panas, kehabisan baterai, atau sistem yang menghentikan proses dapat menghentikan server. Pengguna perlu menonaktifkan battery optimization dan mengaktifkan auto-start bila perangkat menyediakannya.
+- Jika internet mati, server lokal dapat tetap berjalan dan menyimpan data di perangkat. Namun pengguna dari internet publik tidak dapat mencapai server sampai internet kembali. Cloudflare Tunnel memerlukan proses cloudflared yang hidup dan koneksi internet.
+- APK ini belum menyertakan binary cloudflared Android dan belum menjalankan tunnel sendiri. Panel hanya menyimpan link dan membantu menyalin konfigurasi/perintah; jangan menganggap link publik aktif otomatis.
+- Penyimpanan backend masih berupa file JSON pada satu perangkat Android dengan lock bersama. Belum ada migrasi SQLite, object storage, database multi-host, SFU/TURN produksi, atau benchmark performa. Jangan mengklaim bebas lag/batas tanpa uji perangkat dan beban nyata.
+- History playback tidak dapat membuka file yang telah dihapus atau konten yang izin aksesnya sudah tidak berlaku; endpoint tetap menerapkan pembatasan pemilik/izin.
+- Fitur kamera/WebRTC membutuhkan uji runtime di dua perangkat. Jika browser/jaringan memerlukan TURN, konfigurasi TURN tetap harus disediakan. Source check tidak membuktikan kamera atau panggilan bebas bug pada semua perangkat.
+- Build Gradle/APK belum dijalankan di lingkungan pembuatan ini karena Android SDK/Gradle tidak tersedia. Build dapat dijalankan melalui workflow GitHub Actions yang disertakan.
+
+SEBELUM UPGRADE
+
+1. Buat backup dari menu aplikasi pengelola dan salin ke perangkat lain.
+2. Jangan uninstall atau memilih Hapus Data pada APK lama.
+3. Build APK v3.6.21 dan instal sebagai pembaruan dengan applicationId yang sama.
+4. Pastikan data akun, pesan, media, story dan pengaturan tetap terbaca sebelum menghapus backup lama.
+
+Lihat docs/V3.6.21-TEST-PLAN.md untuk langkah uji perangkat.
