@@ -1,0 +1,97 @@
+name: Build OHLI Social Client APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build OHLI Social Android Client
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout OHLI repository
+        uses: actions/checkout@v4
+
+      - name: Locate Android client project
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f "$GITHUB_WORKSPACE/settings.gradle" ] && [ -f "$GITHUB_WORKSPACE/app/build.gradle" ]; then
+            echo "SOURCE_DIR=$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+          else
+            SETTINGS_FILE=$(find . -mindepth 2 -maxdepth 6 -type f -name settings.gradle -print -quit)
+            if [ -z "$SETTINGS_FILE" ]; then
+              echo "settings.gradle tidak ditemukan. Unggah isi ZIP source OHLI Social ke root repository atau folder proyek." >&2
+              exit 1
+            fi
+            SOURCE_DIR="$(cd "$(dirname "$SETTINGS_FILE")" && pwd)"
+            echo "SOURCE_DIR=$SOURCE_DIR" >> "$GITHUB_ENV"
+          fi
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
+
+      - name: Set up Gradle 8.9
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Verify OHLI client source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$SOURCE_DIR"
+          test -f settings.gradle
+          test -f app/src/main/assets/index.html
+          test -f app/src/main/assets/ohli-social.css
+          test -f app/src/main/assets/ohli-social.js
+          test -s app/src/main/res/raw/ohli_message.wav
+          test -s app/src/main/res/raw/ohli_call.wav
+          test -s app/src/main/res/raw/ohli_activity.wav
+          grep -q 'versionName "3.7.0"' app/build.gradle
+          grep -q 'https://ohlisocial.netlify.app/' app/src/main/java/com/rk/server/MainActivity.java
+          node tools/client-source-verify.mjs
+          python3 - <<'PYXML'
+          import xml.etree.ElementTree as ET
+          ET.parse('app/src/main/AndroidManifest.xml')
+          ET.parse('app/src/main/res/values/styles.xml')
+          print('Android XML valid')
+          PYXML
+
+      - name: Build debug APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$SOURCE_DIR"
+          gradle :app:assembleDebug --stacktrace
+
+      - name: Verify APK package
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK="$SOURCE_DIR/app/build/outputs/apk/debug/app-debug.apk"
+          test -s "$APK"
+          unzip -l "$APK" | grep -q 'assets/index.html'
+          unzip -l "$APK" | grep -q 'res/raw/ohli_message.wav'
+          unzip -l "$APK" | grep -q 'res/raw/ohli_call.wav'
+          unzip -l "$APK" | grep -q 'res/raw/ohli_activity.wav'
+
+      - name: Upload installable APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: OHLI-Social-Client-APK-v3.7.0
+          path: ${{ env.SOURCE_DIR }}/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
